@@ -28,29 +28,30 @@
 \section{Projektplan}
 
 \subsection{Programbeskrivning}
-Programmet skall underhålla två användare genom att låta dessa kriga mot varandra med var sin virtuell stridsvagn. 
-
-\subsection{test}
+Programmet skall underhålla och stjäla tid från användaren.
 
 \subsection{Användarbeskrivning}
-Vi förutsätter att användarna har ``lagom'' datorvana, det vill säga att de vet hur man startar en dator, kör ett program och interagerar med mus och tangentbord. En ungefärlig åldersskala är 8-60 år.
+Användaren förutsätts ha ``lagom'' datorvana, det vill säga vetskap om hur man startar en dator, kör ett program och interagerar med mus och tangentbord. En ungefärlig åldersskala är 6-60 år.
 
 \subsection{Användarscenarier}
-Spelet kräver två användare, nedan kallade * och **.
+Nedan följer två vanliga scenarier.
 
 \subsubsection{Scenario I}
 \begin{enumerate}
-	\item * kör programmet och möts av en meny med valen \emph{New Game} och \emph{Quit}.
-	\item * väljer det första alternativet och ett nytt spel startas.
-	\item En översiktsvy över en tvådimensionell karta presenteras. På kartan är två stridsvagnar och ett antal hinder utplacerade.
-	\item * styr den högra stridsvagnen med piltangenterna och avfyrar skott med högra CTRL-knappen. ** styr den vänstra med tangenterna W, A, S och D och skjuter med vänstra CTRL-knappen.
-	\item * lyckas förstöra **:s stridsvagn tre gånger genom att skjuta på den och vinner spelet.
-	\item en meny med valen \emph{Play Again} och \emph{Quit} visas.
-	\item * väljer det senare alternativet och spelet avslutas.
+	\item Användaren startar programmet och möts av en vy innehållandes ett block längst ned som går att styra, en hord av block längst upp som ej går att styra samt en studsande boll.
+	\item Användaren styr bottenblocket genom att röra på datormusen så att bollen studsar på det.
+	\item Blocken längst upp försvinner successivt i och med att de får kontakt med bollen.
+	\item Alla 'toppblock' har slutligen försvunnit och användaren vinner spelet.
+	\item En meny med valen \emph{Play again} och \emph{Quit} visas och användaren väljer det sistnämnda.
 \end{enumerate}
 
 \subsubsection{Scenario II}
-TODO
+\begin{enumerate}
+	\item Användaren startar programmet och möts av samma vy som i föregående scenario.
+	\item Användaren styr bottenblocket genom att röra på datormusen men lyckas inte få bollen att studsa på det.
+	\item Användaren missar bollen tre gånger och förlorar därmed spelet.
+	\item En meny med valen \emph{Play again} och \emph{Quit} visas. Användaren väljer att avsluta.
+\end{enumerate}
 
 \subsection{Testplan}
 Vi skall testa ett flygplan.
