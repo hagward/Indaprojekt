@@ -1,20 +1,22 @@
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 /**
- * @author Anders Hagward
- * @version 2010-04-05
+ * @author Anders Hagward & Fredrik Hillnertz
+ * @version 2010-04-07
  */
 public class MainMenuState extends BasicGameState {
 	private int id = -1;
-	
+	private Image background = null;
+
 	public MainMenuState(int stateID) {
 		id = stateID;
 	}
-	
+
 	@Override
 	public int getID() {
 		return id;
@@ -23,21 +25,21 @@ public class MainMenuState extends BasicGameState {
 	@Override
 	public void init(GameContainer arg0, StateBasedGame arg1)
 			throws SlickException {
-		// TODO Auto-generated method stub
-		
+		background = new Image("data/mainmenu.png");
+
 	}
 
 	@Override
 	public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2)
 			throws SlickException {
-		// TODO Auto-generated method stub
-		
+		background.draw();
+
 	}
 
 	@Override
 	public void update(GameContainer arg0, StateBasedGame arg1, int arg2)
 			throws SlickException {
 		// TODO Auto-generated method stub
-		
+
 	}
 }

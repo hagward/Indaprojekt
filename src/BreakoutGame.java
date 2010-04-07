@@ -9,7 +9,7 @@ import org.newdawn.slick.state.StateBasedGame;
  */
 public class BreakoutGame extends StateBasedGame {
 	private static final int MAINMENUSTATE = 0;
-	private static final int GAMEPLAYSTATE = 0;
+	private static final int GAMEPLAYSTATE = 1;
 	
 	public BreakoutGame() {
 		super("Breakout");
