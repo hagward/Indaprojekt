@@ -1,20 +1,20 @@
 import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
 
 /**
+ * @author Anders Hagward
  * @author Fredrik Hillnertz
- * @version 2010-04-07
+ * @version 2010-04-08
  */
 public class Ball extends GameObject implements Movable {
 	private float xSpeed, ySpeed, radius;
 
-	public Ball(float xPos, float yPos, float xSpeed, float ySpeed,
-			float radius, Image image) {
-		this.xPos = xPos;
-		this.yPos = yPos;
-		this.xSpeed = xSpeed;
-		this.ySpeed = ySpeed;
-		this.radius = radius;
-		this.image = image;
+	public Ball(float xPos, float yPos)
+			throws SlickException {
+		super(xPos, yPos, new Image("data/ball.png"));
+		this.radius = 8;
+		this.xSpeed = -1;
+		this.ySpeed = -1;
 	}
 
 	@Override
@@ -41,6 +41,26 @@ public class Ball extends GameObject implements Movable {
 	@Override
 	public void setYSpeed(float YSpeed) {
 		this.ySpeed = YSpeed;
+	}
+	
+	/**
+	 * Sets the coordinate for the ball's center on the horizontal axis.
+	 * 
+	 * @param xPos the x coordinate of the ball's center
+	 */
+	@Override
+	public void setXPos(float xPos) {
+		this.xPos = xPos - radius;
+	}
+	
+	/**
+	 * Sets the coordinate for the ball's center on the vertical axis.
+	 * 
+	 * @param xPos the y coordinate of the ball's center
+	 */
+	@Override
+	public void setYPos(float yPos) {
+		this.yPos = yPos - radius;
 	}
 
 	@Override

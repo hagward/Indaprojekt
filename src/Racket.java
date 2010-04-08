@@ -1,19 +1,19 @@
 import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
 
 /**
+ * @author Anders Hagward
  * @author Fredrik Hillnertz
- * @version 2010-04-07
+ * @version 2010-04-08
  */
 public class Racket extends GameObject implements Movable {
-	private float xSpeed, length;
+	private float xSpeed;
 	private final float ySpeed = 0;
 
-	public Racket(float xPos, float yPos, float xSpeed, Image image) {
-		this.xPos = xPos;
-		this.yPos = yPos;
+	public Racket(float xPos, float yPos, float xSpeed)
+			throws SlickException {
+		super(xPos, yPos, new Image("data/racket.png"));
 		this.xSpeed = xSpeed;
-		this.image = image;
-		length = image.getWidth();
 	}
 
 	@Override
@@ -24,13 +24,6 @@ public class Racket extends GameObject implements Movable {
 	@Override
 	public void setYSpeed(float YSpeed) {
 		return;
-	}
-	
-	public void setXPos(float xPos) {
-		this.xPos = xPos;
-	}
-	public void setYPos(float yPos) {
-		this.yPos = yPos;
 	}
 
 	@Override
@@ -57,23 +50,4 @@ public class Racket extends GameObject implements Movable {
 	public void move() {
 		xPos += xSpeed;
 	}
-
-	public void setLength(float length) {
-		this.length = length;
-	}
-
-	public float getLength() {
-		return length;
-	}
-
-	public void draw() {
-		image.draw(xPos, yPos);
-	}
-
-	@Override
-	public void setImage(Image image) {
-		this.image = image;
-		length = image.getWidth();
-	}
-
 }

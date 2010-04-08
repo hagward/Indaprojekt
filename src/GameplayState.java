@@ -10,23 +10,24 @@ import org.newdawn.slick.state.StateBasedGame;
 
 /**
  * @author Anders Hagward
- * @version 2010-04-05
+ * @author Fredrik Hillnertz
+ * @version 2010-04-08
  */
 public class GameplayState extends BasicGameState {
 	private int id = -1;
 	private Racket racket;
 	private Image hud;
-	private STATES currentState;
+	private State currentState;
 	private ArrayList<Ball> balls;
-	private final float defaultBallSpeed = 10;
 	
-
-	private enum STATES {
-		START_GAME_STATE, WON_LEVEL_STATE, NEXT_LEVEL_STATE, PAUSE_GAME_STATE, HIGHSCORE_STATE, GAME_OVER_STATE
+	private enum State {
+		START, PLAYING, PAUSED, LEVEL_WON, NEXT_LEVEL, HIGHSCORE,
+		GAME_OVER
 	}
 
 	public GameplayState(int stateID) {
 		id = stateID;
+		currentState = State.START;
 	}
 
 	@Override
@@ -38,16 +39,18 @@ public class GameplayState extends BasicGameState {
 	public void init(GameContainer gc, StateBasedGame sbg)
 			throws SlickException {
 		hud = new Image("data/hud.png");
-		racket = new Racket(400, 550, (float) 1, new Image(
-				"data/racket.png"));
-	
+		racket = new Racket(400, 550, 1);
+		balls = new ArrayList<Ball>();
+		balls.add(new Ball(400, 534));
 	}
 
 	@Override
-	public void render(GameContainer gc, StateBasedGame sbg, Graphics arg2)
+	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
 			throws SlickException {
 		hud.draw(0, 0);
 		racket.draw();
+		for (Ball ball : balls)
+			ball.draw();
 	}
 
 	@Override
@@ -58,9 +61,27 @@ public class GameplayState extends BasicGameState {
 		int mouseX = input.getMouseX();
 		
 		updateRacket(mouseX);
+		
+		for (Ball ball : balls) {
+			if (currentState == State.START) {
+				ball.setXPos(racket.getXPos() + racket.getWidth()/2);
+			} else if (currentState == State.PLAYING) {
+				ball.move();
+				
+				// Collision detection
+				if (ball.getXPos() <= 0 || ball.getXPos() >= 800)
+					ball.setXSpeed(-ball.getXSpeed());
+				if (ball.getYPos() <= 0 || ball.getYPos() >= 600)
+					ball.setYSpeed(-ball.getYSpeed());
+			}
+		}
+		
+		if (input.isMouseButtonDown(1) && currentState == State.START) {
+			currentState = State.PLAYING;
+		}
 	}
 	
 	private void updateRacket(int xPos) {
-		racket.setXPos(xPos - racket.getLength()/2);
+		racket.setXPos(xPos - racket.getWidth()/2);
 	}
 }
