@@ -8,12 +8,12 @@ public class Racket extends GameObject implements Movable {
 	private float xSpeed, length;
 	private final float ySpeed = 0;
 
-	public Racket(float xPos, float yPos, float xSpeed, float length,
-			Image image) {
+	public Racket(float xPos, float yPos, float xSpeed, Image image) {
 		this.xPos = xPos;
 		this.yPos = yPos;
 		this.xSpeed = xSpeed;
 		this.image = image;
+		length = image.getWidth();
 	}
 
 	@Override
@@ -24,6 +24,13 @@ public class Racket extends GameObject implements Movable {
 	@Override
 	public void setYSpeed(float YSpeed) {
 		return;
+	}
+	
+	public void setXPos(float xPos) {
+		this.xPos = xPos;
+	}
+	public void setYPos(float yPos) {
+		this.yPos = yPos;
 	}
 
 	@Override
@@ -57,6 +64,16 @@ public class Racket extends GameObject implements Movable {
 
 	public float getLength() {
 		return length;
+	}
+
+	public void draw() {
+		image.draw(xPos, yPos);
+	}
+
+	@Override
+	public void setImage(Image image) {
+		this.image = image;
+		length = image.getWidth();
 	}
 
 }

@@ -5,7 +5,7 @@ public abstract class GameObject {
 	protected Image image;
 	protected float xPos, yPos;
 	
-	public float getXPox() {
+	public float getXPos() {
 		return xPos;
 	}
 	public float getYPos() {
