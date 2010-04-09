@@ -19,10 +19,9 @@ public class GameplayState extends BasicGameState {
 	private Image hud;
 	private State currentState;
 	private ArrayList<Ball> balls;
-	
+
 	private enum State {
-		START, PLAYING, PAUSED, LEVEL_WON, NEXT_LEVEL, HIGHSCORE,
-		GAME_OVER
+		START, PLAYING, PAUSED, LEVEL_WON, NEXT_LEVEL, HIGHSCORE, GAME_OVER
 	}
 
 	public GameplayState(int stateID) {
@@ -56,32 +55,65 @@ public class GameplayState extends BasicGameState {
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
 			throws SlickException {
-		
+
 		Input input = gc.getInput();
 		int mouseX = input.getMouseX();
-		
+
 		updateRacket(mouseX);
-		
+
 		for (Ball ball : balls) {
 			if (currentState == State.START) {
-				ball.setXPos(racket.getXPos() + racket.getWidth()/2);
+				if (input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON)) {
+					ball.setXSpeed(0.1f);
+					ball.setYSpeed(0.1f);
+
+					currentState = State.PLAYING;
+				}
+				ball.setXPos(racket.getXPos() + racket.getWidth() / 2);
 			} else if (currentState == State.PLAYING) {
 				ball.move();
-				
+
 				// Collision detection
 				if (ball.getXPos() <= 0 || ball.getXPos() >= 800)
 					ball.setXSpeed(-ball.getXSpeed());
 				if (ball.getYPos() <= 0 || ball.getYPos() >= 600)
 					ball.setYSpeed(-ball.getYSpeed());
+				if (insideRacket(ball))
+					racketCollision(ball);				
 			}
 		}
-		
-		if (input.isMouseButtonDown(1) && currentState == State.START) {
-			currentState = State.PLAYING;
-		}
+
 	}
-	
+
 	private void updateRacket(int xPos) {
-		racket.setXPos(xPos - racket.getWidth()/2);
+		racket.setXPos(xPos - racket.getWidth() / 2);
+	}
+	//Inte perfekt
+	private boolean insideRacket(Ball ball) {
+		float r = ball.getRadius();
+		float x = ball.getXPos() + r;
+		float y = ball.getYPos() + r;
+		
+		if(x + r >= racket.getXPos() && x - r <= racket.getXPos() + racket.getWidth())
+			if(y + r >= racket.getYPos() && y -r <= racket.getYPos() + racket.getHeight())
+				return true;
+		return false;
+	}
+	//Ideer?
+	private void racketCollision(Ball ball) {
+		float r = ball.getRadius();
+		float x = ball.getXPos() + r;
+		float y = ball.getYPos() + r;
+		float xDif = x - (racket.getXPos() + racket.getWidth() / 2);
+		float yDif = y - (racket.getYPos() + racket.getHeight() / 2);
+		
+		float xSpeed = ball.getXSpeed();
+		float ySpeed = ball.getYSpeed();
+		
+		//xSpeed = ??
+		//ySpeed = ??
+			
+		ball.setYSpeed(ySpeed);
+		ball.setXSpeed(xSpeed);
 	}
 }

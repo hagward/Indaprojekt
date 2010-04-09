@@ -76,6 +76,10 @@ public class Ball extends GameObject implements Movable {
 	public void setRadius(float radius) {
 		this.radius = radius;
 	}
+	
+	public float getRadius() {
+		return radius;
+	}
 
 	public void incrementRadius(float increment) {
 		radius += increment;
