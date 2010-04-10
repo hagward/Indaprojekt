@@ -7,23 +7,26 @@ import org.newdawn.slick.SlickException;
  * @version 2010-04-08
  */
 public class Block extends GameObject {
-	private int hits;
+	private int health;
 
-	public Block(float xPos, float yPos, int hits, Image image)
+	public Block(float xPos, float yPos, int health)
 			throws SlickException {
-		super(xPos, yPos, image);
+		super(xPos, yPos, new Image("data/block.png"));
 		this.xPos = xPos;
 		this.yPos = yPos;
-		this.hits = hits;
-		setImage(image);
+		this.health = health;
 	}
 
-	public void hit() throws SlickException {
-		hits--;
-		setImage();
+	public void hit() {
+		health--;
+//		setImage();
+	}
+	
+	public int getHealth() {
+		return health;
 	}
 
 	private void setImage() throws SlickException {
-		setImage(new Image("data/block" + hits + ".jpg"));
+		setImage(new Image("data/block" + health + ".jpg"));
 	}
 }

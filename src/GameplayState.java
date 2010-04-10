@@ -19,6 +19,7 @@ public class GameplayState extends BasicGameState {
 	private Image hud;
 	private State currentState;
 	private ArrayList<Ball> balls;
+	private ArrayList<Block> blocks;
 
 	private enum State {
 		START, PLAYING, PAUSED, LEVEL_WON, NEXT_LEVEL, HIGHSCORE, GAME_OVER
@@ -41,6 +42,11 @@ public class GameplayState extends BasicGameState {
 		racket = new Racket(400, 550, 1);
 		balls = new ArrayList<Ball>();
 		balls.add(new Ball(400, 534));
+		
+		blocks = new ArrayList<Block>();
+		for (int i = 1; i <= 11; i++) {
+			blocks.add(new Block(60*i, 40, 1));
+		}
 	}
 
 	@Override
@@ -48,8 +54,15 @@ public class GameplayState extends BasicGameState {
 			throws SlickException {
 		hud.draw(0, 0);
 		racket.draw();
-		for (Ball ball : balls)
+		for (Ball ball : balls) {
 			ball.draw();
+		}
+		
+		for (Block block : blocks) {
+			if (block.getHealth() > 0) {
+				block.draw();
+			}
+		}
 	}
 
 	@Override
@@ -63,57 +76,61 @@ public class GameplayState extends BasicGameState {
 
 		for (Ball ball : balls) {
 			if (currentState == State.START) {
-				if (input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON)) {
-					ball.setXSpeed(0.1f);
-					ball.setYSpeed(0.1f);
-
+				if (input.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
 					currentState = State.PLAYING;
 				}
 				ball.setXPos(racket.getXPos() + racket.getWidth() / 2);
 			} else if (currentState == State.PLAYING) {
 				ball.move();
 
-				// Collision detection
+				// Kollision med väggar och tak
 				if (ball.getXPos() <= 0 || ball.getXPos() >= 800)
 					ball.setXSpeed(-ball.getXSpeed());
 				if (ball.getYPos() <= 0 || ball.getYPos() >= 600)
 					ball.setYSpeed(-ball.getYSpeed());
-				if (insideRacket(ball))
-					racketCollision(ball);				
+				
+				// Kollision med racket
+				if (ball.collidesWithTop(racket))
+					racketCollision(ball);
+				
+				// Kollision med block
+				for (Block block : blocks) {
+					if (block.getHealth() > 0) {
+						if (ball.collidesWithLeft(block) ||
+								ball.collidesWithRight(block)) {
+							ball.setXSpeed(-ball.getXSpeed());
+							block.hit();
+						} else if (ball.collidesWithTop(block)
+								|| ball.collidesWithBottom(block)) {
+							ball.setYSpeed(-ball.getYSpeed());
+							block.hit();
+						}
+					}
+				}
 			}
 		}
-
 	}
-
+	
 	private void updateRacket(int xPos) {
 		racket.setXPos(xPos - racket.getWidth() / 2);
 	}
-	//Inte perfekt
-	private boolean insideRacket(Ball ball) {
-		float r = ball.getRadius();
-		float x = ball.getXPos() + r;
-		float y = ball.getYPos() + r;
-		
-		if(x + r >= racket.getXPos() && x - r <= racket.getXPos() + racket.getWidth())
-			if(y + r >= racket.getYPos() && y -r <= racket.getYPos() + racket.getHeight())
-				return true;
-		return false;
-	}
-	//Ideer?
+	
+	// TODO: Fixa så att den bollen studsar olika beroende på var på racketet
+	//       den träffar.
 	private void racketCollision(Ball ball) {
-		float r = ball.getRadius();
-		float x = ball.getXPos() + r;
-		float y = ball.getYPos() + r;
-		float xDif = x - (racket.getXPos() + racket.getWidth() / 2);
-		float yDif = y - (racket.getYPos() + racket.getHeight() / 2);
+//		float r = ball.getRadius();
+//		float x = ball.getXPos();
+//		float y = ball.getYPos();
+//		float xDif = x - (racket.getXPos() + racket.getWidth() / 2);
+//		float yDif = y - (racket.getYPos() + racket.getHeight() / 2);
+//		
+//		float xSpeed = ball.getXSpeed();
+//		float ySpeed = ball.getYSpeed();
+//		
+//		xSpeed = ??
+//		ySpeed = ??
 		
-		float xSpeed = ball.getXSpeed();
-		float ySpeed = ball.getYSpeed();
-		
-		//xSpeed = ??
-		//ySpeed = ??
-			
-		ball.setYSpeed(ySpeed);
-		ball.setXSpeed(xSpeed);
+		//ball.setXSpeed(xSpeed);
+		ball.setYSpeed(-ball.getYSpeed());
 	}
 }

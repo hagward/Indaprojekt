@@ -48,7 +48,7 @@ public class MainMenuState extends BasicGameState {
 			insideNewGame = true;
 
 		if (insideNewGame) {
-			if (input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON)) {
+			if (input.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
 				sb.enterState(BreakoutGame.GAMEPLAYSTATE);
 			}
 		}

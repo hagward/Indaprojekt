@@ -50,4 +50,28 @@ public abstract class GameObject {
 	protected Image getImage() {
 		return image;
 	}
+	
+	protected boolean collidesWithTop(GameObject go) {
+		return (insideXArea(go) && (int)(yPos+getHeight()) == (int)go.yPos);
+	}
+	
+	protected boolean collidesWithRight(GameObject go) {
+		return (insideYArea(go) && (int)xPos == (int)go.xPos+go.getWidth());
+	}
+	
+	protected boolean collidesWithBottom(GameObject go) {
+		return (insideXArea(go) && (int)yPos == (int)go.yPos+go.getHeight());
+	}
+	
+	protected boolean collidesWithLeft(GameObject go) {
+		return (insideYArea(go) && (int)(xPos+getWidth()) == (int)go.xPos);
+	}
+	
+	private boolean insideXArea(GameObject go) {
+		return (xPos >= go.getXPos() && xPos <= go.getXPos() + go.getWidth());
+	}
+	
+	private boolean insideYArea(GameObject go) {
+		return (yPos >= go.getYPos() && yPos <= go.getYPos() + go.getHeight());
+	}
 }

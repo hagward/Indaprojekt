@@ -13,8 +13,8 @@ public class Ball extends GameObject implements Movable {
 			throws SlickException {
 		super(xPos, yPos, new Image("data/ball.png"));
 		this.radius = 8;
-		this.xSpeed = -1;
-		this.ySpeed = -1;
+		this.xSpeed = -0.3f;
+		this.ySpeed = -0.3f;
 	}
 
 	@Override
@@ -41,6 +41,22 @@ public class Ball extends GameObject implements Movable {
 	@Override
 	public void setYSpeed(float YSpeed) {
 		this.ySpeed = YSpeed;
+	}
+	
+	/**
+	 * @return the coordinate for the ball's center on the horizontal axis
+	 */
+	@Override
+	public float getXPos() {
+		return xPos + radius;
+	}
+	
+	/**
+	 * @return the coordinate for the ball's center on the vertical axis
+	 */
+	@Override
+	public float getYPos() {
+		return yPos + radius;
 	}
 	
 	/**
