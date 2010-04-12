@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="13" height="32" tilewidth="60" tileheight="14">
+ <tileset firstgid="1" name="block" tilewidth="60" tileheight="14">
+  <image source="block.png"/>
+  <tile id="0">
+   <properties>
+    <property name="health" value="1"/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer name="Layer 1" width="13" height="32">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC2NgIA8wkoAp0UMuwGcOLjl66aEUkBNO9NID00eqGkJ8bOK42OTYR0gfLcJgFIyCkQ4ADemL8IAGAAA=
+  </data>
+ </layer>
+</map>

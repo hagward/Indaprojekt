@@ -7,6 +7,7 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
+import org.newdawn.slick.tiled.TiledMap;
 
 /**
  * @author Anders Hagward
@@ -20,6 +21,7 @@ public class GameplayState extends BasicGameState {
 	private State currentState;
 	private ArrayList<Ball> balls;
 	private ArrayList<Block> blocks;
+	private TiledMap level;
 
 	private enum State {
 		START, PLAYING, PAUSED, LEVEL_WON, NEXT_LEVEL, HIGHSCORE, GAME_OVER
@@ -42,10 +44,21 @@ public class GameplayState extends BasicGameState {
 		racket = new Racket(400, 550, 1);
 		balls = new ArrayList<Ball>();
 		balls.add(new Ball(400, 534));
-		
+		level = new TiledMap("data/level1.tmx");
+
 		blocks = new ArrayList<Block>();
-		for (int i = 1; i <= 11; i++) {
-			blocks.add(new Block(60*i, 40, 1));
+		int tileHeight = level.getTileHeight();
+		int tileWidth = level.getTileWidth();
+		for (int xAxis = 0; xAxis < level.getWidth(); xAxis++) {
+			for (int yAxis = 0; yAxis < level.getHeight(); yAxis++) {
+				int tileID = level.getTileId(xAxis, yAxis, 0);
+				String value = level.getTileProperty(tileID, "health", "0");
+				int health = new Integer(value);
+				if (health > 0) {
+					blocks.add(new Block(tileWidth * xAxis, tileHeight * yAxis,
+							health));
+				}
+			}
 		}
 	}
 
@@ -57,7 +70,7 @@ public class GameplayState extends BasicGameState {
 		for (Ball ball : balls) {
 			ball.draw();
 		}
-		
+
 		for (Block block : blocks) {
 			if (block.getHealth() > 0) {
 				block.draw();
@@ -88,16 +101,16 @@ public class GameplayState extends BasicGameState {
 					ball.setXSpeed(-ball.getXSpeed());
 				if (ball.getYPos() <= 0 || ball.getYPos() >= 600)
 					ball.setYSpeed(-ball.getYSpeed());
-				
+
 				// Kollision med racket
 				if (ball.collidesWithTop(racket))
 					racketCollision(ball);
-				
+
 				// Kollision med block
 				for (Block block : blocks) {
 					if (block.getHealth() > 0) {
-						if (ball.collidesWithLeft(block) ||
-								ball.collidesWithRight(block)) {
+						if (ball.collidesWithLeft(block)
+								|| ball.collidesWithRight(block)) {
 							ball.setXSpeed(-ball.getXSpeed());
 							block.hit();
 						} else if (ball.collidesWithTop(block)
@@ -110,27 +123,27 @@ public class GameplayState extends BasicGameState {
 			}
 		}
 	}
-	
+
 	private void updateRacket(int xPos) {
 		racket.setXPos(xPos - racket.getWidth() / 2);
 	}
-	
+
 	// TODO: Fixa så att den bollen studsar olika beroende på var på racketet
-	//       den träffar.
+	// den träffar.
 	private void racketCollision(Ball ball) {
-//		float r = ball.getRadius();
-//		float x = ball.getXPos();
-//		float y = ball.getYPos();
-//		float xDif = x - (racket.getXPos() + racket.getWidth() / 2);
-//		float yDif = y - (racket.getYPos() + racket.getHeight() / 2);
-//		
-//		float xSpeed = ball.getXSpeed();
-//		float ySpeed = ball.getYSpeed();
-//		
-//		xSpeed = ??
-//		ySpeed = ??
-		
-		//ball.setXSpeed(xSpeed);
+		// float r = ball.getRadius();
+		// float x = ball.getXPos();
+		// float y = ball.getYPos();
+		// float xDif = x - (racket.getXPos() + racket.getWidth() / 2);
+		// float yDif = y - (racket.getYPos() + racket.getHeight() / 2);
+		//		
+		// float xSpeed = ball.getXSpeed();
+		// float ySpeed = ball.getYSpeed();
+		//		
+		// xSpeed = ??
+		// ySpeed = ??
+
+		// ball.setXSpeed(xSpeed);
 		ball.setYSpeed(-ball.getYSpeed());
 	}
 }
