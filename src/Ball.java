@@ -13,8 +13,8 @@ public class Ball extends GameObject implements Movable {
 			throws SlickException {
 		super(xPos, yPos, new Image("data/ball.png"));
 		this.radius = 8;
-		this.xSpeed = -0.3f;
-		this.ySpeed = -0.3f;
+		this.xSpeed = -1.3f;
+		this.ySpeed = -1.3f;
 	}
 
 	@Override

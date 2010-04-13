@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -21,7 +22,8 @@ public class GameplayState extends BasicGameState {
 	private State currentState;
 	private ArrayList<Ball> balls;
 	private ArrayList<Block> blocks;
-	private TiledMap level;
+	private TiledMap tiledMap;
+	private int level;
 
 	private enum State {
 		START, PLAYING, PAUSED, LEVEL_WON, NEXT_LEVEL, HIGHSCORE, GAME_OVER
@@ -44,22 +46,10 @@ public class GameplayState extends BasicGameState {
 		racket = new Racket(400, 550, 1);
 		balls = new ArrayList<Ball>();
 		balls.add(new Ball(400, 534));
-		level = new TiledMap("data/level1.tmx");
-
 		blocks = new ArrayList<Block>();
-		int tileHeight = level.getTileHeight();
-		int tileWidth = level.getTileWidth();
-		for (int xAxis = 0; xAxis < level.getWidth(); xAxis++) {
-			for (int yAxis = 0; yAxis < level.getHeight(); yAxis++) {
-				int tileID = level.getTileId(xAxis, yAxis, 0);
-				String value = level.getTileProperty(tileID, "health", "0");
-				int health = new Integer(value);
-				if (health > 0) {
-					blocks.add(new Block(tileWidth * xAxis, tileHeight * yAxis,
-							health));
-				}
-			}
-		}
+		level = 1;
+		nextLevel(level);
+
 	}
 
 	@Override
@@ -93,6 +83,7 @@ public class GameplayState extends BasicGameState {
 					currentState = State.PLAYING;
 				}
 				ball.setXPos(racket.getXPos() + racket.getWidth() / 2);
+				ball.setYPos(racket.getYPos() - ball.getRadius());
 			} else if (currentState == State.PLAYING) {
 				ball.move();
 
@@ -107,7 +98,9 @@ public class GameplayState extends BasicGameState {
 					racketCollision(ball);
 
 				// Kollision med block
-				for (Block block : blocks) {
+				Iterator<Block> it = blocks.iterator();
+				while (it.hasNext()) {
+					Block block = it.next();
 					if (block.getHealth() > 0) {
 						if (ball.collidesWithLeft(block)
 								|| ball.collidesWithRight(block)) {
@@ -119,6 +112,13 @@ public class GameplayState extends BasicGameState {
 							block.hit();
 						}
 					}
+					if (block.getHealth() <= 0)
+						it.remove();
+				}
+				// Nästa level?
+				if (blocks.size() == 0) {
+					currentState = State.START;
+					nextLevel(0);
 				}
 			}
 		}
@@ -145,5 +145,30 @@ public class GameplayState extends BasicGameState {
 
 		// ball.setXSpeed(xSpeed);
 		ball.setYSpeed(-ball.getYSpeed());
+	}
+
+	private void nextLevel(int i) throws SlickException {
+		
+		//Någor lurt med init(), körs två grånger. Därav int i...
+		if (i == 0) {
+			level++;
+			tiledMap = new TiledMap("data/level" + level + ".tmx");
+		} else if(tiledMap == null) {
+			tiledMap = new TiledMap("data/level" + i + ".tmx");
+		}
+
+		int tileHeight = tiledMap.getTileHeight();
+		int tileWidth = tiledMap.getTileWidth();
+		for (int xAxis = 0; xAxis < tiledMap.getWidth(); xAxis++) {
+			for (int yAxis = 0; yAxis < tiledMap.getHeight(); yAxis++) {
+				int tileID = tiledMap.getTileId(xAxis, yAxis, 0);
+				String value = tiledMap.getTileProperty(tileID, "health", "0");
+				int health = new Integer(value);
+				if (health > 0) {
+					blocks.add(new Block(tileWidth * xAxis, tileHeight * yAxis,
+							health));				
+				}
+			}
+		}
 	}
 }
