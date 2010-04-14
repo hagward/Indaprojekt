@@ -8,12 +8,11 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
-import org.newdawn.slick.tiled.TiledMap;
 
 /**
  * @author Anders Hagward
  * @author Fredrik Hillnertz
- * @version 2010-04-08
+ * @version 2010-04-14
  */
 public class GameplayState extends BasicGameState {
 	private int id = -1;
@@ -22,8 +21,7 @@ public class GameplayState extends BasicGameState {
 	private State currentState;
 	private ArrayList<Ball> balls;
 	private ArrayList<Block> blocks;
-	private TiledMap tiledMap;
-	private int level;
+	private int currentLevel;
 
 	private enum State {
 		START, PLAYING, PAUSED, LEVEL_WON, NEXT_LEVEL, HIGHSCORE, GAME_OVER
@@ -47,9 +45,8 @@ public class GameplayState extends BasicGameState {
 		balls = new ArrayList<Ball>();
 		balls.add(new Ball(400, 534));
 		blocks = new ArrayList<Block>();
-		level = 1;
-		nextLevel(level);
-
+		currentLevel = 1;
+		nextLevel();
 	}
 
 	@Override
@@ -115,10 +112,9 @@ public class GameplayState extends BasicGameState {
 					if (block.getHealth() <= 0)
 						it.remove();
 				}
-				// Nästa level?
+				// NÃ¤sta level?
 				if (blocks.size() == 0) {
-					currentState = State.START;
-					nextLevel(0);
+					nextLevel();
 				}
 			}
 		}
@@ -131,44 +127,14 @@ public class GameplayState extends BasicGameState {
 	// TODO: Fixa sÃ¥ att den bollen studsar olika beroende pÃ¥ var pÃ¥ racketet
 	// den trÃ¤ffar.
 	private void racketCollision(Ball ball) {
-		// float r = ball.getRadius();
-		// float x = ball.getXPos();
-		// float y = ball.getYPos();
-		// float xDif = x - (racket.getXPos() + racket.getWidth() / 2);
-		// float yDif = y - (racket.getYPos() + racket.getHeight() / 2);
-		//		
-		// float xSpeed = ball.getXSpeed();
-		// float ySpeed = ball.getYSpeed();
-		//		
-		// xSpeed = ??
-		// ySpeed = ??
-
-		// ball.setXSpeed(xSpeed);
 		ball.setYSpeed(-ball.getYSpeed());
 	}
 
-	private void nextLevel(int i) throws SlickException {
-		
-		//Någor lurt med init(), körs två grånger. Därav int i...
-		if (i == 0) {
-			level++;
-			tiledMap = new TiledMap("data/level" + level + ".tmx");
-		} else if(tiledMap == null) {
-			tiledMap = new TiledMap("data/level" + i + ".tmx");
-		}
-
-		int tileHeight = tiledMap.getTileHeight();
-		int tileWidth = tiledMap.getTileWidth();
-		for (int xAxis = 0; xAxis < tiledMap.getWidth(); xAxis++) {
-			for (int yAxis = 0; yAxis < tiledMap.getHeight(); yAxis++) {
-				int tileID = tiledMap.getTileId(xAxis, yAxis, 0);
-				String value = tiledMap.getTileProperty(tileID, "health", "0");
-				int health = new Integer(value);
-				if (health > 0) {
-					blocks.add(new Block(tileWidth * xAxis, tileHeight * yAxis,
-							health));				
-				}
-			}
-		}
+	private void nextLevel() throws SlickException {
+		currentState = State.START;
+		String levelPath = "data/level" + currentLevel + ".tmx";
+		Level level = new Level(levelPath);
+		blocks = level.generateBlockList();
+		currentLevel++;
 	}
 }

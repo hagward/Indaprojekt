@@ -4,7 +4,7 @@ import org.newdawn.slick.SlickException;
 /**
  * @author Anders Hagward
  * @author Fredrik Hillnertz
- * @version 2010-04-08
+ * @version 2010-04-14
  */
 public class Block extends GameObject {
 	private int health;
@@ -19,14 +19,9 @@ public class Block extends GameObject {
 
 	public void hit() {
 		health--;
-//		setImage();
 	}
 	
 	public int getHealth() {
 		return health;
-	}
-
-	private void setImage() throws SlickException {
-		setImage(new Image("data/block" + health + ".jpg"));
 	}
 }
