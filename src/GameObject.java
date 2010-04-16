@@ -27,19 +27,19 @@ public abstract class GameObject {
 		return image.getHeight();
 	}
 	
-	protected float getXPos() {
+	protected float getX() {
 		return xPos;
 	}
 	
-	protected float getYPos() {
+	protected float getY() {
 		return yPos;
 	}
 	
-	protected void setXPos(float xPos) {
+	protected void setX(float xPos) {
 		this.xPos = xPos;
 	}
 	
-	protected void setYPos(float yPos) {
+	protected void setY(float yPos) {
 		this.yPos = yPos;
 	}
 	
@@ -68,10 +68,10 @@ public abstract class GameObject {
 	}
 	
 	private boolean insideXArea(GameObject go) {
-		return (xPos >= go.getXPos() && xPos <= go.getXPos() + go.getWidth());
+		return (xPos >= go.getX() && xPos <= go.getX() + go.getWidth());
 	}
 	
 	private boolean insideYArea(GameObject go) {
-		return (yPos >= go.getYPos() && yPos <= go.getYPos() + go.getHeight());
+		return (yPos >= go.getY() && yPos <= go.getY() + go.getHeight());
 	}
 }
