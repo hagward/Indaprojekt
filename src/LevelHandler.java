@@ -6,30 +6,29 @@ import org.newdawn.slick.tiled.TiledMap;
 
 /**
  * @author Anders Hagward
- * @version 2010-04-14
+ * @author Fredrik Hillnertz
+ * @version 2010-04-16
  */
-public class Level {
+public class LevelHandler {
 	private TiledMap tiledMap;
 	private ArrayList<Ball> balls;
 	private ArrayList<Block> blocks;
 	private Racket racket;
-	private int currentLevel;
+	private int currentLevel = 1;
 
-	public Level() throws SlickException {
-		this.tiledMap = new TiledMap("data/level1.tmx");
-		currentLevel = 1;
+	public LevelHandler() throws SlickException {
 		racket = new Racket(400, 550, 1);
 		balls = new ArrayList<Ball>();
 		balls.add(new Ball(400, 534));
 		blocks = new ArrayList<Block>();
+		nextLevel();
 	}
 
 	public void nextLevel() throws SlickException {
-		currentLevel++;
 		String levelPath = "data/level" + currentLevel + ".tmx";
 		tiledMap = new TiledMap(levelPath);
 		generateBlockList();
-
+		currentLevel++;
 	}
 
 	private void generateBlockList() throws SlickException {
@@ -51,7 +50,7 @@ public class Level {
 		this.blocks = blocks;
 	}
 
-	public void render() {
+	public void renderCurrentLevel() {
 		racket.draw();
 		for (Ball ball : balls) {
 			ball.draw();
@@ -63,7 +62,7 @@ public class Level {
 		}
 	}
 
-	public void update() {
+	public void updateCurrentLevel() {
 		for (Ball ball : balls) {
 			ball.move();
 
@@ -97,24 +96,22 @@ public class Level {
 			}
 		}
 	}
-
-	public boolean checkWin() {
-		if (blocks.size() == 0)
-			return true;
-		return false;
+	
+	public boolean checkLevelBeaten() {
+		return (blocks.size() <= 0);
 	}
-
+	
 	public void idle() {
 		for(Ball ball : balls) {
 			ball.setX(racket.getX() + racket.getWidth() / 2);
 			ball.setY(racket.getY() - ball.getRadius());
 		}
 	}
-
+	
 	public void updateRacket(int xPos) {
 		racket.setX(xPos - racket.getWidth() / 2);
 	}
-
+	
 	// TODO: Fixa så att den bollen studsar olika beroende på var på racketet
 	// den träffar.
 	private void racketCollision(Ball ball) {

@@ -4,8 +4,12 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 /**
+ * A re-implementation of the classical game 'Breakout'.
+ * Uses the <a href="http://slick.cokeandcode.com/">Slick library</a>.
+ * 
  * @author Anders Hagward
- * @version 2010-04-05
+ * @author Fredrik Hillnertz
+ * @version 2010-04-16
  */
 public class BreakoutGame extends StateBasedGame {
 	public static final int MAINMENUSTATE = 0;
