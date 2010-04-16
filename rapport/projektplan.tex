@@ -1,0 +1,105 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[swedish]{babel}
+\usepackage{fancyhdr}
+
+\author{Anders Hagward \and Fredrik Hillnertz}
+\title{Slutprojekt}
+
+\pagestyle{fancy}
+\fancyhead{}
+\fancyfoot{}
+\chead{Projektplan för Breakout}
+\cfoot{\thepage}
+
+\begin{document}
+
+\thispagestyle{empty}
+\begin{center}
+\huge Projektplan för Breakout
+\\
+\Large Introduktion till datalogi
+
+\normalsize Anders Hagward och Fredrik Hillnertz
+\end{center}
+\newpage
+
+\tableofcontents
+\newpage
+
+\section{Projektplan}
+
+\subsection{Programbeskrivning}
+Programmet skall underhålla och stjäla tid från användaren. Detta genom att låta denne styra ett racket för att upprepade gånger studsa en boll mot ett antal förstörbara block. Lär även vara gynnsamt för användarens pricksäkerhet och reflexer.
+
+\subsection{Användarbeskrivning}
+Användaren förutsätts ha ``lagom'' datorvana, det vill säga vetskap om hur man startar en dator, kör ett program och interagerar med mus och tangentbord. En ungefärlig åldersskala är 6-60 år. Användaren bör även ha grundläggande kunskaper i det engelska språket.
+
+\subsection{Användarscenarier}
+Nedan följer två vanliga scenarier.
+
+\subsubsection{Scenario I}
+\begin{enumerate}
+	\item Användaren startar programmet och möts av en huvudmeny med menyvalen \emph{New game}, \emph{Settings}, \emph{Help} och \emph{Quit}.
+	\item Användaren väljer det första alternativet och en ny vy. Denna består av ett racket längst ned som går att styra med musen, en boll fastsittandes mitt på racketet, en hord av förstörbara block längst upp samt solida väggar och tak.
+	\item Användaren trycker på vänster musknapp och får bollen att fara iväg uppåt, studsandes mot blocken, väggarna och taket.
+	\item Blocken försvinner successivt i och med att bollen studsar på dem.
+	\item Alla block har slutligen försvunnit och användaren vinner spelet.
+	\item En ny 'karta' presenteras (det vill säga, blocken är uppställda i en annan formation än tidigare).
+	\item Användaren väljer att avsluta spelet genom att trycka \texttt{Esc} för att få upp spelmenyn och sedan välja \emph{Quit}.
+\end{enumerate}
+
+\subsubsection{Scenario II}
+\begin{enumerate}
+	\item Användaren startar programmet och möts av samma huvudmeny som i föregående scenario.
+	\item Användaren väljer menyvalet \emph{Help} och får reda på information om hur spelet fungerar.
+	\item Användaren backar tillbaka till huvudmenyn genom att trycka \texttt{Esc}.
+	\item Användaren väljer menyvalet \emph{Settings} och väljer att stänga av ljudet.
+	\item Användaren backar återigen till huvudmenyn på samma vis som tidigare men väljer nu \emph{New game}.
+	\item Samma spelvy som i föregående scenario visas och användaren spelar på samma sätt.
+	\item Användaren är inte så pricksäker och lyckas inte få bollen att studsa på racketet. För varje gång han missar förlorar han ett 'liv'.
+	\item Användaren förlorar tre liv och därmed även spelet.
+	\item En meny med valen \emph{Play again}, \emph{Settings}, \emph{Help} och \emph{Quit} visas. Användaren väljer det sistnämnda.
+\end{enumerate}
+
+\subsection{Testplan}
+Förutom de två scenarierna ovan kommer menyerna testas ordentligt, så alla menyval fungerar korrekt. Inställningsmöjligheterna kommer testas, så att ljudeffekterna verkligen försvinner när man gör den inställningen, och verkligen kommer tillbaka om man gör inställningen igen.
+
+Själva spelmekaniken kommer givetvis testas grundligt så att inte bollen verkligen studsar mot väggarna, taken, blocken och racketet, så att blocken försvinner vid kontakt med bollen, så att ett 'liv' försvinner och att bollen återställs på racketet vid varje 'miss'. Vidare skall testas så att rätt meny med fungerande menyval dyker upp vid förlorat spel, så att en ny bana laddas när alla block är borta, så att en poänglista visas när man klarat alla fem banor och att den nya poängen sparas.
+
+Självklart skall spelet testas av en tredjepart.
+
+\subsection{Programdesign}
+Programmet kommer bygga på spelbiblioteket \emph{Slick}. Nedan följer en lista på de grundläggande klasserna och dess viktigaste metoder.
+
+\begin{itemize}
+	\item \texttt{MainMenuState, GameplayState}: Då biblioteket Slick använder sig av så kallade \emph{states}, eller \emph{tillstånd}, kommer minst två 'state'-klasser implementeras. Deras viktigaste metoder är \texttt{init}, där alla bilder och ljud laddas, \texttt{render} där allt ritas upp på skärmen och \texttt{update} där alla beräkningar sker (för kollisioner, positionsuppdateringar med mera).
+	\item \texttt{GameObject}: En abstrakt klass som representerar ett objekt på skärmen. Viktigaste metoder: \texttt{getImage, setImage} som hanterar objektets bild, \texttt{getXPos, getYPos} returnerar objektets position.
+	\item \texttt{Ball, Block, Racket}: Klasser som ärver \texttt{GameObject}.
+	\item \texttt{Movable}: Ett interface med metoden \texttt{move}, där implementerande klasser får beskriva hur objektets position skall uppdateras.
+	\item \texttt{Highscore}: Sköter all skrivning och läsning till och från textfilen där poängen sparas. Viktigaste metoder är \texttt{addScore} som lägger till ett poäng, \texttt{getScores} som returnerar en lista med poängen.
+	\item \texttt{BreakoutGame}: 'Huvudklassen' som innehåller \texttt{main}-metoden.
+\end{itemize}
+
+\subsection{Tekniska frågor}
+Nedan följer en lista med tänkbara tekniska problem och eventuella lösningar.
+\begin{description}
+	\item[Problem:] Vid eventuellt bildbyte på objekt medan spelet körs (till exempel om ett block kräver flera bollstudsar för att försvinna) skulle en viss fördröjning kunna uppstå innan programmet har läst in den nya bilden. \textbf{Lösning:} Ladda in flera bilder för ett objekt vid initiering?
+	\item[Problem:] Hur 'kartorna' skall representeras. \textbf{Lösning:} Läsa in dem från filer?
+	\item[Problem:] Exakt vilka klasser som skall finnas och vad var och en skall sköta i spelet, samt undvika att skapa klasser det redan finns motsvarigheter till i spelbiblioteket. \textbf{Lösning:} Träna objektorientering, tänka efter ordentligt och läsa bibliotekets dokumentation.
+	\item[Problem:] Hur skall programmet bete sig om någon väsentlig fil saknas? \textbf{Lösning:} Ljudfil - meddela användaren, highscorefil - skapa en ny fil utan att meddela användaren, kartfil eller bildfil - meddela användaren och avsluta.
+\end{description}
+
+\subsection{Arbetsplan}
+Arbetet kommer delas upp på det viset att var och en får några bestämda klasser att implementera. De skall implementeras efter en specifikation som bestäms i förväg så att båda har koll på vad de gör och vad de skall användas till. Om eventuella problem skulle uppstå och en fastnar med någon del av implementationen kan givetvis den andre hjälpa till.
+
+Arbetsplanen är upplagd på följande vis:
+
+\begin{description}
+	\item[7 - 14 april:] Nödvändiga klasser skall skapas och grundläggande spelmekanik implementeras. Spelet skall vara 'minimalt' spelbart, det vill säga att racketet skall kunna styras och bollen skall studsa korrekt mot de övriga objekten.
+	\item[15 - 22 april:] I första hand skall spelmekaniken putsas på. I andra hand skall ljud, poängsystem, inställningsmeny och hjälpmeny implementeras (så många som hinns med).
+	\item[23 - 30 april:] Slutrapporten skall skrivas och eventuell putsning av spelet skall göras inför prototypvisning.
+	\item[1 - 7 maj:] Eventuell implementation av detaljer som inte hunnits med samt finputsning.
+\end{description}
+
+\end{document}
