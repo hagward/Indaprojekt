@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Random;
 
 import org.newdawn.slick.Image;
@@ -21,11 +22,13 @@ public abstract class PowerUp extends GameObject {
 	
 	public static PowerUp randomPowerUp(float xPos, float yPos) throws SlickException {
 		Random rand = new Random();	
-		switch(rand.nextInt(2)){
+		switch(rand.nextInt(3)){
 		case 0:
 			return new ExtendRacket(xPos, yPos);
 		case 1:
 			return new RetractRacket(xPos, yPos);		
+		case 2:
+			return new MultiplyBalls(xPos, yPos);
 		}
 		return null;
 	}
@@ -52,5 +55,32 @@ public abstract class PowerUp extends GameObject {
 		public void effect(LevelHandler level) throws SlickException {
 			level.getRacket().increaseSize();		
 		}
-	}	
+	}
+	
+	public static class MultiplyBalls extends PowerUp {
+		
+		public MultiplyBalls(float xPos, float yPos) throws SlickException {
+			super(xPos, yPos, new Image ("data/multiplyballs.png"));			
+		}
+		
+		@Override
+		public void effect(LevelHandler level) throws SlickException {
+			ArrayList<Ball> balls = level.getBalls();
+			int k = balls.size();
+			float inc = 0.3f;
+			for(int i = 0; i < k; i++) {
+				Ball ball = balls.get(i);
+				float xSpeed = ball.getXSpeed();
+				float ySpeed = ball.getYSpeed();
+				ball.incrementXSpeed(inc);
+				ball.incrementYSpeed(-1 * inc);
+				
+				Ball ball2 = new Ball(ball.getX(), ball.getY());
+				ball2.setXSpeed(xSpeed - inc);
+				ball2.setYSpeed(ySpeed + inc);
+				
+				balls.add(ball2);
+			}
+		}
+	}
 }
