@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Random;
 
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.tiled.TiledMap;
@@ -13,6 +14,7 @@ public class LevelHandler {
 	private TiledMap tiledMap;
 	private ArrayList<Ball> balls;
 	private ArrayList<Block> blocks;
+	private ArrayList<PowerUp> powerUps;
 	private Racket racket;
 	private int currentLevel = 1;
 
@@ -21,6 +23,7 @@ public class LevelHandler {
 		balls = new ArrayList<Ball>();
 		balls.add(new Ball(400, 534));
 		blocks = new ArrayList<Block>();
+		powerUps = new ArrayList<PowerUp>();
 		nextLevel();
 	}
 
@@ -60,9 +63,12 @@ public class LevelHandler {
 				block.draw();
 			}
 		}
+		for (PowerUp pu : powerUps) {
+			pu.draw();
+		}
 	}
 
-	public void updateCurrentLevel() {
+	public void updateCurrentLevel() throws SlickException {
 		for (Ball ball : balls) {
 			ball.move();
 
@@ -91,8 +97,20 @@ public class LevelHandler {
 						block.hit();
 					}
 				}
-				if (block.getHealth() <= 0)
+				if (block.getHealth() <= 0) {
+					spawnPowerUp(block);
 					it.remove();
+				}
+			}
+		}
+		
+		Iterator<PowerUp> it = powerUps.iterator();
+		while(it.hasNext()) {
+			PowerUp pu = it.next();
+			pu.move();
+			if(pu.collidesWithTop(racket)) {
+				pu.effect(this);
+				it.remove();
 			}
 		}
 	}
@@ -117,4 +135,21 @@ public class LevelHandler {
 	private void racketCollision(Ball ball) {
 		ball.setYSpeed(-ball.getYSpeed());
 	}
+	
+	public Racket getRacket() {
+		return racket;		
+	}
+	
+	public ArrayList<Ball> getBalls() {
+		return balls;
+	}
+	private void spawnPowerUp(Block block) throws SlickException {
+		Random rand = new Random();
+		if(rand.nextInt(10) == 0) {
+			PowerUp pu = PowerUp.randomPowerUp(block.getX(), block.getY());
+			if(pu != null)
+				powerUps.add(pu);
+		}
+	}
+			
 }
