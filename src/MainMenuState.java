@@ -15,6 +15,7 @@ import org.newdawn.slick.state.StateBasedGame;
  */
 public class MainMenuState extends BasicGameState {
 	private int id = -1;
+	private GameContainer container;
 	private StateBasedGame game;
 	private Image background = null;
 	private MenuListener menuListener;
@@ -37,7 +38,8 @@ public class MainMenuState extends BasicGameState {
 			throws SlickException {
 		game = sbg;
 		background = new Image("data/mainmenu.png");
-		setupMenu(gc);
+		container = gc;
+		setupMenu();
 	}
 
 	@Override
@@ -55,7 +57,7 @@ public class MainMenuState extends BasicGameState {
 			throws SlickException {
 	}
 	
-	private void setupMenu(GameContainer gc)
+	private void setupMenu()
 			throws SlickException{
 		menuListener = new MenuListener();
 		
@@ -63,22 +65,22 @@ public class MainMenuState extends BasicGameState {
 		int y = 400;
 		
 		newGameItem = new MouseOverArea(
-				gc, new Image("data/menuitem-new_game.png"),
+				container, new Image("data/menuitem-new_game.png"),
 				x, y, menuListener);
 		newGameItem.setMouseOverImage(
 				new Image("data/menuitem-hover-new_game.png"));
 		settingsItem = new MouseOverArea(
-				gc, new Image("data/menuitem-settings.png"),
+				container, new Image("data/menuitem-settings.png"),
 				x, y + 35, menuListener);
 		settingsItem.setMouseOverImage(
 				new Image("data/menuitem-hover-settings.png"));
 		helpItem = new MouseOverArea(
-				gc, new Image("data/menuitem-help.png"),
+				container, new Image("data/menuitem-help.png"),
 				x, y + 70, menuListener);
 		helpItem.setMouseOverImage(
 				new Image("data/menuitem-hover-help.png"));
 		quitItem = new MouseOverArea(
-				gc, new Image("data/menuitem-quit.png"),
+				container, new Image("data/menuitem-quit.png"),
 				x, y + 105, menuListener);
 		quitItem.setMouseOverImage(
 				new Image("data/menuitem-hover-quit.png"));
@@ -90,6 +92,8 @@ public class MainMenuState extends BasicGameState {
 			MouseOverArea source = (MouseOverArea) ac;
 			if (source == newGameItem) {
 				game.enterState(BreakoutGame.GAMEPLAYSTATE);
+			} else if (source == quitItem) {
+				container.exit();
 			}
 		}
 	}
