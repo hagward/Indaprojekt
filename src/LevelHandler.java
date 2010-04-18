@@ -19,9 +19,6 @@ public class LevelHandler {
 	private int currentLevel = 1;
 
 	public LevelHandler() throws SlickException {
-		
-		balls = new ArrayList<Ball>();
-		balls.add(new Ball(400, 534));
 		blocks = new ArrayList<Block>();
 		powerUps = new ArrayList<PowerUp>();
 		nextLevel();
@@ -32,6 +29,8 @@ public class LevelHandler {
 		tiledMap = new TiledMap(levelPath);
 		generateBlockList();
 		racket = new Racket(400, 550, 1);
+		balls = new ArrayList<Ball>();
+		balls.add(new Ball(400, 534));
 		currentLevel++;
 	}
 

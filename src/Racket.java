@@ -9,14 +9,12 @@ import org.newdawn.slick.SlickException;
 public class Racket extends GameObject implements Movable {
 	private float xSpeed;
 	private final float ySpeed = 0;
-	private int size;
 	private static final int MAX_SIZE = 600;
 	private static final int MIN_SIZE = 20;
 
 	public Racket(float xPos, float yPos, float xSpeed)
 			throws SlickException {
 		super(xPos, yPos, new Image("data/racket.png"));
-		size = 1;		
 		this.xSpeed = xSpeed;
 	}
 

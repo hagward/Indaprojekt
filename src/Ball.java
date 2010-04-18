@@ -34,13 +34,13 @@ public class Ball extends GameObject implements Movable {
 	}
 
 	@Override
-	public void setXSpeed(float XSpeed) {
-		this.xSpeed = XSpeed;
+	public void setXSpeed(float xSpeed) {
+		this.xSpeed = xSpeed;
 	}
 
 	@Override
-	public void setYSpeed(float YSpeed) {
-		this.ySpeed = YSpeed;
+	public void setYSpeed(float ySpeed) {
+		this.ySpeed = ySpeed;
 	}
 	
 	/**

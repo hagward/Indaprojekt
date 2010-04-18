@@ -20,7 +20,8 @@ public abstract class PowerUp extends GameObject {
 		setY(yPos + 0.3f);
 	}				
 	
-	public static PowerUp randomPowerUp(float xPos, float yPos) throws SlickException {
+	public static PowerUp randomPowerUp(float xPos, float yPos)
+			throws SlickException {
 		Random rand = new Random();	
 		switch(rand.nextInt(3)){
 		case 0:
@@ -65,21 +66,31 @@ public abstract class PowerUp extends GameObject {
 		
 		@Override
 		public void effect(LevelHandler level) throws SlickException {
+//			ArrayList<Ball> balls = level.getBalls();
+//			int k = balls.size();
+//			float inc = 0.3f;
+//			for(int i = 0; i < k; i++) {
+//				Ball ball = balls.get(i);
+//				float xSpeed = ball.getXSpeed();
+//				float ySpeed = ball.getYSpeed();
+//				ball.incrementXSpeed(inc);
+//				ball.incrementYSpeed(-1 * inc);
+//				
+//				Ball ball2 = new Ball(ball.getX(), ball.getY());
+//				ball2.setXSpeed(xSpeed - inc);
+//				ball2.setYSpeed(ySpeed + inc);
+//				
+//				balls.add(ball2);
+//			}
+			
 			ArrayList<Ball> balls = level.getBalls();
-			int k = balls.size();
-			float inc = 0.3f;
-			for(int i = 0; i < k; i++) {
-				Ball ball = balls.get(i);
-				float xSpeed = ball.getXSpeed();
-				float ySpeed = ball.getYSpeed();
-				ball.incrementXSpeed(inc);
-				ball.incrementYSpeed(-1 * inc);
-				
-				Ball ball2 = new Ball(ball.getX(), ball.getY());
-				ball2.setXSpeed(xSpeed - inc);
-				ball2.setYSpeed(ySpeed + inc);
-				
-				balls.add(ball2);
+			int size = balls.size();
+			for (int i = 0; i < size; i++) {
+				Ball currBall = balls.get(i);
+				Ball newBall = new Ball(currBall.getX(), currBall.getY());
+				newBall.setXSpeed(-currBall.getXSpeed());
+				newBall.setYSpeed(currBall.getYSpeed());
+				balls.add(newBall);
 			}
 		}
 	}
