@@ -12,24 +12,30 @@ public abstract class PowerUp extends GameObject {
 
 	protected static final int UNLIMITED = 0;
 	protected int duration;
+	protected float ySpeed = 0.4f;
 
 	public abstract void effect(LevelHandler level) throws SlickException;
 
 	protected void move() {
-		float yPos = getY();
-		setY(yPos + 0.3f);
+		setY(yPos + ySpeed);
 	}				
+	
+	protected void setYSpeed(float ySpeed) {
+		this.ySpeed = ySpeed;
+	}
 	
 	public static PowerUp randomPowerUp(float xPos, float yPos)
 			throws SlickException {
 		Random rand = new Random();	
-		switch(rand.nextInt(3)){
+		switch(rand.nextInt(4)){
 		case 0:
 			return new ExtendRacket(xPos, yPos);
 		case 1:
 			return new RetractRacket(xPos, yPos);		
 		case 2:
 			return new MultiplyBalls(xPos, yPos);
+		case 3:
+			return new Speed(xPos, yPos);
 		}
 		return null;
 	}
@@ -62,7 +68,7 @@ public abstract class PowerUp extends GameObject {
 		
 		public MultiplyBalls(float xPos, float yPos) throws SlickException {
 			super(xPos, yPos, new Image ("data/multiplyballs.png"));			
-		}
+		}		
 		
 		@Override
 		public void effect(LevelHandler level) throws SlickException {
@@ -93,5 +99,28 @@ public abstract class PowerUp extends GameObject {
 				balls.add(newBall);
 			}
 		}
+	}
+	
+	public static class Speed extends PowerUp {
+		
+		public Speed(float xPos, float yPos) throws SlickException {
+			super(xPos, yPos, new Image ("data/speed.png"));			
+		}	
+		
+		public void effect(LevelHandler level) {
+			ArrayList<Ball> balls = level.getBalls();
+			for(Ball ball : balls) {
+				ball.setXSpeed(1.5f * ball.getXSpeed());
+				ball.setYSpeed(1.5f * ball.getYSpeed());
+			}
+			ArrayList<PowerUp> pus = level.getPowerUps();
+			for(PowerUp pu : pus) {
+				pu.setYSpeed(1.5f * pu.getYSpeed());
+			}
+		}
+	}
+
+	public float getYSpeed() {
+		return ySpeed;
 	}
 }

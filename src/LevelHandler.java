@@ -156,5 +156,10 @@ public class LevelHandler {
 				powerUps.add(pu);
 		}
 	}
+
+	public ArrayList<PowerUp> getPowerUps() {
+		// TODO Auto-generated method stub
+		return powerUps;
+	}
 			
 }
