@@ -16,22 +16,25 @@ public class LevelHandler {
 	private ArrayList<Block> blocks;
 	private ArrayList<PowerUp> powerUps;
 	private Racket racket;
-	private int currentLevel = 1;
+	private int currentLevel;
 
 	public LevelHandler() throws SlickException {
-		blocks = new ArrayList<Block>();
-		powerUps = new ArrayList<PowerUp>();
+		currentLevel = 0;
 		nextLevel();
 	}
 
 	public void nextLevel() throws SlickException {
+		currentLevel++;
+		
 		String levelPath = "data/level" + currentLevel + ".tmx";
 		tiledMap = new TiledMap(levelPath);
-		generateBlockList();
+		blocks = new ArrayList<Block>();
+		powerUps = new ArrayList<PowerUp>();
 		racket = new Racket(400, 550, 1);
 		balls = new ArrayList<Ball>();
 		balls.add(new Ball(400, 534));
-		currentLevel++;
+		
+		generateBlockList();
 	}
 
 	private void generateBlockList() throws SlickException {
@@ -68,9 +71,10 @@ public class LevelHandler {
 		}
 	}
 
-	public void updateCurrentLevel() throws SlickException {
+	public void updateCurrentLevel(Score score, int delta)
+			throws SlickException {
 		for (Ball ball : balls) {
-			ball.move();
+			ball.move(delta);
 
 			// Kollision med väggar och tak
 			if (ball.getX() <= 0 || ball.getX() >= 800)
@@ -98,6 +102,7 @@ public class LevelHandler {
 					}
 				}
 				if (block.getHealth() <= 0) {
+					score.addPoints(1);
 					spawnPowerUp(block);
 					it.remove();
 				}

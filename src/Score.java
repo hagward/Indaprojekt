@@ -15,6 +15,10 @@ public class Score implements Comparable<Score> {
 		this.points = points;
 	}
 	
+	public void addPoints(int points) {
+		this.points += points;
+	}
+	
 	public String getAuthor() {
 		return author;
 	}

@@ -3,7 +3,7 @@
  * @version 2010-04-07
  */
 public interface Movable {
-	void move();
+	void move(int delta);
 
 	float getXSpeed();
 

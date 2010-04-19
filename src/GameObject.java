@@ -68,10 +68,10 @@ public abstract class GameObject {
 	}
 	
 	private boolean insideXArea(GameObject go) {
-		return (xPos >= go.getX() && xPos <= go.getX() + go.getWidth());
+		return (xPos >= go.getX() && ((xPos + getWidth()) <= go.getX() + go.getWidth()));
 	}
 	
 	private boolean insideYArea(GameObject go) {
-		return (yPos >= go.getY() && yPos <= go.getY() + go.getHeight());
+		return (yPos >= go.getY() && ((yPos + getHeight()) <= go.getY() + go.getHeight()));
 	}
 }

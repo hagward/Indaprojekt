@@ -49,8 +49,8 @@ public class Racket extends GameObject implements Movable {
 	}
 
 	@Override
-	public void move() {
-		xPos += xSpeed;
+	public void move(int delta) {
+		xPos += xSpeed * delta;
 	}
 	
 	public void increaseSize() throws SlickException {

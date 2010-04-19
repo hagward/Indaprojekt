@@ -1,3 +1,4 @@
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -19,6 +20,7 @@ public class GameplayState extends BasicGameState {
 	private Image hud;
 	private State currentState;	
 	private LevelHandler currentLevel;
+	private Score currentScore;
 	
 	/**
 	 * Contains all the 'inner' states.
@@ -34,7 +36,6 @@ public class GameplayState extends BasicGameState {
 	 */
 	public GameplayState(int stateID) {
 		id = stateID;
-		currentState = State.START;
 	}
 	
 	@Override
@@ -46,7 +47,9 @@ public class GameplayState extends BasicGameState {
 	public void init(GameContainer gc, StateBasedGame sbg)
 			throws SlickException {
 		hud = new Image("data/hud.png");
+		currentState = State.START;
 		currentLevel = new LevelHandler();
+		currentScore = new Score("Anders", 0);
 	}
 	
 	@Override
@@ -54,6 +57,8 @@ public class GameplayState extends BasicGameState {
 			throws SlickException {
 		hud.draw(0, 0);
 		currentLevel.renderCurrentLevel();
+		g.setColor(Color.black);
+		g.drawString("Score: " + currentScore.getPoints(), 20, 300);
 	}
 	
 	@Override
@@ -72,7 +77,7 @@ public class GameplayState extends BasicGameState {
 			currentLevel.idle();
 			break;
 		case PLAYING:
-			currentLevel.updateCurrentLevel();
+			currentLevel.updateCurrentLevel(currentScore, delta);
 			if(currentLevel.checkLevelBeaten()) {
 				currentLevel.nextLevel();
 				currentState = State.START;
