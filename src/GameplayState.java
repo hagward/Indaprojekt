@@ -77,7 +77,7 @@ public class GameplayState extends BasicGameState {
 			currentLevel.idle();
 			break;
 		case PLAYING:
-			currentLevel.updateCurrentLevel(currentScore, delta);
+			currentLevel.updateCurrentLevel(currentScore, delta, gc);
 			if(currentLevel.checkLevelBeaten()) {
 				currentLevel.nextLevel();
 				currentState = State.START;

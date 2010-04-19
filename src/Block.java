@@ -11,17 +11,23 @@ public class Block extends GameObject {
 
 	public Block(float xPos, float yPos, int health)
 			throws SlickException {
-		super(xPos, yPos, new Image("data/block.png"));
+		super(xPos, yPos, new Image("data/block" + health + ".png"));
 		this.xPos = xPos;
 		this.yPos = yPos;
 		this.health = health;
 	}
 
-	public void hit() {
+	public void hit() throws SlickException {
 		health--;
+		if(health > 0)
+			setImage();
 	}
 	
 	public int getHealth() {
 		return health;
 	}
+	
+	public void setImage() throws SlickException {
+		setImage(new Image("data/block" + health + ".png"));
+	}	
 }

@@ -1,6 +1,7 @@
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
+
 /**
  * @author Anders Hagward
  * @author Fredrik Hillnertz
@@ -11,6 +12,7 @@ public class Racket extends GameObject implements Movable {
 	private final float ySpeed = 0;
 	private static final int MAX_SIZE = 600;
 	private static final int MIN_SIZE = 20;
+	private PowerUp.pewPewLasers lasers;
 
 	public Racket(float xPos, float yPos, float xSpeed)
 			throws SlickException {
@@ -65,6 +67,20 @@ public class Racket extends GameObject implements Movable {
 		if(width < MIN_SIZE)
 			width = MIN_SIZE;
 		setImage(image.getScaledCopy(width, image.getHeight()));
+	}
+
+	public void addLasers(PowerUp.pewPewLasers lasers) throws SlickException {		
+		this.lasers = lasers;
+		setImage(new Image("data/laserracket.png"));
+	}
+
+	public void removeLasers() throws SlickException {
+		lasers = null;		
+		setImage(new Image("data/racket.png"));
+	}
+
+	public PowerUp.pewPewLasers getLaser() {
+		return lasers;
 	}
 	
 }

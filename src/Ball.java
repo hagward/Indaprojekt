@@ -7,12 +7,12 @@ import org.newdawn.slick.SlickException;
  * @version 2010-04-08
  */
 public class Ball extends GameObject implements Movable {
-	private float xSpeed, ySpeed, radius;
+	protected float xSpeed, ySpeed, radius;
 
 	public Ball(float xPos, float yPos)
 			throws SlickException {
 		super(xPos, yPos, new Image("data/ball.png"));
-		this.radius = 8; // wtf används radius till?
+		this.radius = 8; // wtf används radius till? ingenting :D
 		this.xSpeed = -0.2f;
 		this.ySpeed = -0.2f;
 	}

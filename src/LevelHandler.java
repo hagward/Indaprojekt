@@ -2,6 +2,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
 
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.tiled.TiledMap;
 
@@ -71,9 +73,11 @@ public class LevelHandler {
 		}
 	}
 
-	public void updateCurrentLevel(Score score, int delta)
+	public void updateCurrentLevel(Score score, int delta, GameContainer gc)
 			throws SlickException {
-		for (Ball ball : balls) {
+		Iterator<Ball> it1 = balls.iterator();
+		while (it1.hasNext()) {
+			Ball ball = it1.next();
 			ball.move(delta);
 
 			// Kollision med väggar och tak
@@ -112,12 +116,20 @@ public class LevelHandler {
 		Iterator<PowerUp> it = powerUps.iterator();
 		while(it.hasNext()) {
 			PowerUp pu = it.next();
-			pu.move();
+			pu.move(delta);
 			if(pu.collidesWithTop(racket)) {
 				pu.effect(this);
 				it.remove();
 			}
 		}
+		
+		//Skjut?
+		if(gc.getInput().isMousePressed(Input.MOUSE_LEFT_BUTTON)
+				&& racket.getLaser() != null) {
+			racket.getLaser().shot();
+			System.out.print("a");
+		}
+			
 	}
 	
 	public boolean checkLevelBeaten() {
@@ -150,7 +162,7 @@ public class LevelHandler {
 	}
 	private void spawnPowerUp(Block block) throws SlickException {
 		Random rand = new Random();
-		if(rand.nextInt(10) == 0) {
+		if(rand.nextInt(2) == 0) {
 			PowerUp pu = PowerUp.randomPowerUp(block.getX(), block.getY());
 			if(pu != null)
 				powerUps.add(pu);
