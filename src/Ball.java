@@ -11,9 +11,9 @@ public class Ball extends Circle implements Movable {
 	private static final String DEFAULT_IMG_PATH = "data/ball.png";
 	private static final float DEFAULT_SPEED = -0.2f;
 
-	private float xSpeed;
-	private float ySpeed;
-	private Image image;
+	protected float xSpeed;
+	protected float ySpeed;
+	protected Image image;
 
 	public Ball(float centerPointX, float centerPointY) {
 		super(centerPointX, centerPointY, 8);

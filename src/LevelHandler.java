@@ -146,6 +146,9 @@ public class LevelHandler {
 					collided = true;
 				}
 			}
+			//tar bort stillaståend bollar, och laserskott som träffat ngt
+			if(ball.getXSpeed() == 0 && ball.getYSpeed() == 0)
+				ballIterator.remove();
 
 			// Kollision med block
 //			Iterator<Block> it = blocks.iterator();
@@ -182,11 +185,8 @@ public class LevelHandler {
 
 		//Skjut?
 		if(gc.getInput().isMousePressed(Input.MOUSE_LEFT_BUTTON)
-				&& racket.getLaser() != null) {
-			racket.getLaser().shot();
-			System.out.print("a");
-		}
-			
+				&& racket.getLaser() != null) 
+			racket.getLaser().shot();			
 	}
 	
 	public boolean checkLevelBeaten() {

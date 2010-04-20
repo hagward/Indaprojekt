@@ -193,10 +193,16 @@ public abstract class PowerUp extends Rectangle implements Movable {
 		class LaserShot extends Ball {
 			public LaserShot() throws SlickException {
 				super(racket.getX()-20, racket.getY()-20);
-				image = new Image("data/lasershot.png");
+				this.image = new Image("data/lasershot.png");
 				setXSpeed(0f);
 				setYSpeed(-.2f);
 				balls.add(this);
+			}
+			public void setYSpeed(float ySpeed) {
+				if(ySpeed == -this.getYSpeed())
+					this.ySpeed = 0;
+				else
+					this.ySpeed = ySpeed;
 			}
 		}
 	}
