@@ -24,20 +24,29 @@ public class LevelHandler {
 		currentLevel = 0;
 		nextLevel();
 	}
-
+	
 	public void nextLevel() throws SlickException {
 		currentLevel++;
+		nextLevel(currentLevel);
+	}
+	
+	public void restartLevel() throws SlickException {
+		nextLevel(currentLevel);
+	}
+	
+	private void nextLevel(int level) throws SlickException {
 		
-		String levelPath = "data/level" + currentLevel + ".tmx";
+		
+		String levelPath = "data/level" + level + ".tmx";
 		tiledMap = new TiledMap(levelPath);
 		blocks = new ArrayList<Block>();
 		powerUps = new ArrayList<PowerUp>();
 		racket = new Racket(400, 550);
 		balls = new ArrayList<Ball>();
-		balls.add(new Ball(300, 400));
+		balls.add(new Ball(350, 400));
 		
 		generateBlockList();
-	}
+	}	
 
 	private void generateBlockList() throws SlickException {
 		ArrayList<Block> blocks = new ArrayList<Block>();
@@ -195,8 +204,8 @@ public class LevelHandler {
 	
 	public void idle() {
 		for(Ball ball : balls) {
-			ball.setX(100);
-			ball.setY(400);
+			ball.setX(racket.getX() + racket.getWidth() / 2 - 8);
+			ball.setY(racket.getY() - racket.getHeight());
 		}
 	}
 	

@@ -78,8 +78,12 @@ public class GameplayState extends BasicGameState {
 			break;
 		case PLAYING:
 			currentLevel.updateCurrentLevel(currentScore, delta, gc);
-			if(currentLevel.checkLevelBeaten()) {
+			if(currentLevel.checkLevelBeaten() || input.isKeyPressed(Input.KEY_N)) {
 				currentLevel.nextLevel();
+				currentState = State.START;
+			}
+			else if(input.isKeyPressed(Input.KEY_R)) {
+				currentLevel.restartLevel();
 				currentState = State.START;
 			}
 			break;

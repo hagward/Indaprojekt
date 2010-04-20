@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="13" height="32" tilewidth="60" tileheight="14">
+ <tileset firstgid="1" name="block1" tilewidth="60" tileheight="14">
+  <image source="block1.png"/>
+  <tile id="0">
+   <properties>
+    <property name="health" value="1"/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="2" name="block2" tilewidth="60" tileheight="14">
+  <image source="block2.png"/>
+  <tile id="0">
+   <properties>
+    <property name="health" value="2"/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="3" name="block3" tilewidth="60" tileheight="14">
+  <image source="block3.png"/>
+  <tile id="0">
+   <properties>
+    <property name="health" value="3"/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="4" name="block4" tilewidth="60" tileheight="14">
+  <image source="block4.png"/>
+  <tile id="0">
+   <properties>
+    <property name="health" value="4"/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="5" name="block5" tilewidth="60" tileheight="14">
+  <image source="block5.png"/>
+  <tile id="0">
+   <properties>
+    <property name="health" value="5"/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="6" name="block6" tilewidth="60" tileheight="14">
+  <image source="block6.png"/>
+  <tile id="0">
+   <properties>
+    <property name="health" value="6"/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="7" name="block7" tilewidth="60" tileheight="14">
+  <image source="block7.png"/>
+  <tile id="0">
+   <properties>
+    <property name="health" value="7"/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="8" name="block8" tilewidth="60" tileheight="14">
+  <image source="block8.png"/>
+  <tile id="0">
+   <properties>
+    <property name="health" value="8"/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer name="Layer 1" width="13" height="32" opacity="0.9">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC2NgGAWjYBSMglEwFAAHGXgwuw0AE/m+5IAGAAA=
+  </data>
+ </layer>
+</map>
