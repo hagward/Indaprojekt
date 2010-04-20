@@ -1,32 +1,50 @@
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
-
+import org.newdawn.slick.geom.Rectangle;
 
 /**
  * @author Anders Hagward
  * @author Fredrik Hillnertz
- * @version 2010-04-08
+ * @version 2010-04-20
  */
-public class Racket extends GameObject implements Movable {
-	private float xSpeed;
-	private final float ySpeed = 0;
+public class Racket extends Rectangle implements Movable {
+	private static final String DEFAULT_IMG_PATH = "data/racket.png";
 	private static final int MAX_SIZE = 600;
 	private static final int MIN_SIZE = 20;
-	private PowerUp.pewPewLasers lasers;
 
-	public Racket(float xPos, float yPos, float xSpeed)
-			throws SlickException {
-		super(xPos, yPos, new Image("data/racket.png"));
+	private float xSpeed;
+	private final float ySpeed;
+	private Image image;
+	private PowerUp.PewPewLasers lasers;
+
+	public Racket(float x, float y) {
+		super(x, y, 80, 16);
+		xSpeed = 0;
+		ySpeed = 0;
+		
+		try {
+			image = new Image(DEFAULT_IMG_PATH);
+		} catch (SlickException e) {
+			System.err.println("Error: couldn't load image '"
+					+ DEFAULT_IMG_PATH + "'");
+		}
+	}
+	
+	public float getRightX() {
+		return x + width;
+	}
+	
+	public float getBottomY() {
+		return y + height;
+	}
+
+	@Override
+	public void setXSpeed(float xSpeed) {
 		this.xSpeed = xSpeed;
 	}
 
 	@Override
-	public void setXSpeed(float XSpeed) {
-		this.xSpeed = XSpeed;
-	}
-
-	@Override
-	public void setYSpeed(float YSpeed) {
+	public void setYSpeed(float ySpeed) {
 		return;
 	}
 
@@ -52,35 +70,38 @@ public class Racket extends GameObject implements Movable {
 
 	@Override
 	public void move(int delta) {
-		xPos += xSpeed * delta;
-	}
-	
-	public void increaseSize() throws SlickException {
-		int width = image.getWidth() + 40;
-		if(width > MAX_SIZE)
-			width = MAX_SIZE;
-		setImage(image.getScaledCopy(width, image.getHeight()));
-	}
-	
-	public void decreaseSize() throws SlickException {
-		int width = image.getWidth() - 40;
-		if(width < MIN_SIZE)
-			width = MIN_SIZE;
-		setImage(image.getScaledCopy(width, image.getHeight()));
+		x += xSpeed * delta;
 	}
 
-	public void addLasers(PowerUp.pewPewLasers lasers) throws SlickException {		
+	public void increaseSize() throws SlickException {
+		width = image.getWidth() + 40;
+		if(width > MAX_SIZE)
+			width = MAX_SIZE;
+		image = image.getScaledCopy((int) width, image.getHeight());
+	}
+
+	public void decreaseSize() throws SlickException {
+		width = image.getWidth() - 40;
+		if(width < MIN_SIZE)
+			width = MIN_SIZE;
+		image = image.getScaledCopy((int) width, image.getHeight());
+	}
+
+	public void addLasers(PowerUp.PewPewLasers lasers) throws SlickException {
 		this.lasers = lasers;
-		setImage(new Image("data/laserracket.png"));
+		image = new Image("data/laserracket.png");
 	}
 
 	public void removeLasers() throws SlickException {
-		lasers = null;		
-		setImage(new Image("data/racket.png"));
+		lasers = null;
+		image = new Image("data/racket.png");
 	}
 
-	public PowerUp.pewPewLasers getLaser() {
+	public PowerUp.PewPewLasers getLaser() {
 		return lasers;
 	}
 	
+	public void draw() {
+		image.draw(x, y);
+	}
 }

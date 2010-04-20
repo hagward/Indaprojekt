@@ -32,9 +32,9 @@ public class LevelHandler {
 		tiledMap = new TiledMap(levelPath);
 		blocks = new ArrayList<Block>();
 		powerUps = new ArrayList<PowerUp>();
-		racket = new Racket(400, 550, 1);
+		racket = new Racket(400, 550);
 		balls = new ArrayList<Ball>();
-		balls.add(new Ball(400, 534));
+		balls.add(new Ball(300, 400));
 		
 		generateBlockList();
 	}
@@ -75,54 +75,111 @@ public class LevelHandler {
 
 	public void updateCurrentLevel(Score score, int delta, GameContainer gc)
 			throws SlickException {
-		Iterator<Ball> it1 = balls.iterator();
-		while (it1.hasNext()) {
-			Ball ball = it1.next();
+		Iterator<Ball> ballIterator = balls.iterator();
+		while (ballIterator.hasNext()) {
+			Ball ball = ballIterator.next();
 			ball.move(delta);
 
-			// Kollision med väggar och tak
-			if (ball.getX() <= 0 || ball.getX() >= 800)
+			// wall collision
+			if (ball.getX() < 0) {
+				ball.setX(0);
 				ball.setXSpeed(-ball.getXSpeed());
-			if (ball.getY() <= 0 || ball.getY() >= 600)
+			} else if (ball.getRightX() > 800) {
+				ball.setX(800 - ball.getRadius());
+				ball.setXSpeed(-ball.getXSpeed());
+			}
+			if (ball.getY() < 0) {
+				ball.setY(0);
 				ball.setYSpeed(-ball.getYSpeed());
+			} else if (ball.getBottomY() > 600) {
+				ball.setY(600 - ball.getRadius());
+				ball.setYSpeed(-ball.getYSpeed());
+			}
 
-			// Kollision med racket
-			if (ball.collidesWithTop(racket))
-				racketCollision(ball);
-
-			// Kollision med block
-			Iterator<Block> it = blocks.iterator();
-			while (it.hasNext()) {
-				Block block = it.next();
-				if (block.getHealth() > 0) {
-					if (ball.collidesWithLeft(block)
-							|| ball.collidesWithRight(block)) {
-						ball.setXSpeed(-ball.getXSpeed());
-						block.hit();
-					} else if (ball.collidesWithTop(block)
-							|| ball.collidesWithBottom(block)) {
-						ball.setYSpeed(-ball.getYSpeed());
-						block.hit();
-					}
-				}
-				if (block.getHealth() <= 0) {
-					score.addPoints(1);
-					spawnPowerUp(block);
-					it.remove();
+			// racket collision
+			if (ball.intersects(racket)) {
+				if (ball.getMaxY() > racket.getY()) {
+					//ball.setY(racket.getY() - ball.getRadius());
+					ball.setYSpeed(-ball.getYSpeed());
+				} else if (ball.getY() < racket.getMaxY()) {
+					//ball.setY(racket.getBottomY());
+					ball.setYSpeed(-ball.getYSpeed());
+				} else if (ball.getX() < racket.getMaxX()) {
+					//ball.setX(racket.getRightX());
+					ball.setXSpeed(-ball.getXSpeed());
+				} else if (ball.getMaxX() > racket.getX()) {
+					ball.setX(racket.getX() - ball.getRadius());
+					//ball.setXSpeed(-ball.getXSpeed());
 				}
 			}
+
+			// block collision
+			Iterator<Block> blockIterator = blocks.iterator();
+			boolean collided = false;
+			while (blockIterator.hasNext() && !collided) {
+				Block currBlock = blockIterator.next();
+				if ((currBlock.getHealth() > 0)
+						&& ball.intersects(currBlock)) {
+					if (ball.getX() < currBlock.getMaxX()) {
+						//ball.setX(currBlock.getRightX());
+						ball.setXSpeed(-ball.getXSpeed());
+					} else if (ball.getMaxX() > currBlock.getX()) {
+						//ball.setX(currBlock.getX() - ball.getRadius());
+						ball.setXSpeed(-ball.getXSpeed());
+					}
+					if (ball.getY() < currBlock.getMaxY()) {
+						//ball.setY(currBlock.getMaxY());
+						ball.setYSpeed(-ball.getYSpeed());
+					} else if (ball.getMaxY() > currBlock.getY()) {
+						//ball.setY(currBlock.getY() - ball.getRadius());
+						ball.setYSpeed(-ball.getYSpeed());
+					}
+					
+					currBlock.hit();
+
+					if (currBlock.getHealth() <= 0) {
+						spawnPowerUp(currBlock);
+						score.addPoints(1);
+						blockIterator.remove();
+					}
+					
+					collided = true;
+				}
+			}
+
+			// Kollision med block
+//			Iterator<Block> it = blocks.iterator();
+//			while (it.hasNext()) {
+//				Block block = it.next();
+//				if (block.getHealth() > 0) {
+//					if (ball.collidesWithLeft(block)
+//							|| ball.collidesWithRight(block)) {
+//						ball.setXSpeed(-ball.getXSpeed());
+//						block.hit();
+//					} else if (ball.collidesWithTop(block)
+//							|| ball.collidesWithBottom(block)) {
+//						ball.setYSpeed(-ball.getYSpeed());
+//						block.hit();
+//					}
+//				}
+//				if (block.getHealth() <= 0) {
+//					score.addPoints(1);
+//					spawnPowerUp(block);
+//					it.remove();
+//				}
+//			}
 		}
-		
+
 		Iterator<PowerUp> it = powerUps.iterator();
 		while(it.hasNext()) {
 			PowerUp pu = it.next();
 			pu.move(delta);
-			if(pu.collidesWithTop(racket)) {
+			if(pu.intersects(racket)) {
 				pu.effect(this);
 				it.remove();
 			}
 		}
-		
+
 		//Skjut?
 		if(gc.getInput().isMousePressed(Input.MOUSE_LEFT_BUTTON)
 				&& racket.getLaser() != null) {
@@ -138,19 +195,13 @@ public class LevelHandler {
 	
 	public void idle() {
 		for(Ball ball : balls) {
-			ball.setX(racket.getX() + racket.getWidth() / 2);
-			ball.setY(racket.getY() - ball.getRadius());
+			ball.setX(100);
+			ball.setY(400);
 		}
 	}
 	
 	public void updateRacket(int xPos) {
 		racket.setX(xPos - racket.getWidth() / 2);
-	}
-	
-	// TODO: Fixa så att den bollen studsar olika beroende på var på racketet
-	// den träffar.
-	private void racketCollision(Ball ball) {
-		ball.setYSpeed(-ball.getYSpeed());
 	}
 	
 	public Racket getRacket() {
@@ -173,5 +224,4 @@ public class LevelHandler {
 		// TODO Auto-generated method stub
 		return powerUps;
 	}
-			
 }

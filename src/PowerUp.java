@@ -3,31 +3,64 @@ import java.util.Random;
 
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Rectangle;
 
-public abstract class PowerUp extends GameObject {
-	
-	protected PowerUp(float xPos, float yPos, Image image) {
-		super(xPos, yPos, image);
-	}
-
+public abstract class PowerUp extends Rectangle implements Movable {
 	protected static final int UNLIMITED = 0;
+
 	protected int duration;
-	protected float ySpeed = 0.2f;
+	protected final float xSpeed;
+	protected float ySpeed;
+	protected Image image;
+
+	protected PowerUp(float x, float y, Image image) {
+		super(x, y, image.getWidth(), image.getHeight());
+		xSpeed = 0;
+		ySpeed = 0.2f;
+		this.image = image;
+	}
 
 	public abstract void effect(LevelHandler level) throws SlickException;
 
-	protected void move(int delta) {
-		setY(yPos + ySpeed * delta);
-	}				
-	
-	protected void setYSpeed(float ySpeed) {
+	@Override
+	public void move(int delta) {
+		y += ySpeed * delta;
+	}
+
+	@Override
+	public void setXSpeed(float xSpeed) {
+		return;
+	}
+
+	@Override
+	public void setYSpeed(float ySpeed) {
 		this.ySpeed = ySpeed;
 	}
-	
+
+	@Override
+	public float getXSpeed() {
+		return xSpeed;
+	}
+
+	@Override
 	public float getYSpeed() {
 		return ySpeed;
 	}
+
+	@Override
+	public void incrementXSpeed(float increment) {
+		return;
+	}
+
+	@Override
+	public void incrementYSpeed(float increment) {
+		ySpeed += increment;
+	}
 	
+	public void draw() {
+		image.draw(x, y);
+	}
+
 	public static PowerUp randomPowerUp(float xPos, float yPos)
 			throws SlickException {
 		Random rand = new Random();	
@@ -43,7 +76,7 @@ public abstract class PowerUp extends GameObject {
 		case 4:
 			return new Speed(xPos, yPos, -1);
 		case 5:
-			return new pewPewLasers(xPos, yPos);
+			return new PewPewLasers(xPos, yPos);
 		}
 		return null;		
 	}
@@ -118,7 +151,7 @@ public abstract class PowerUp extends GameObject {
 				multiplier = 1.5f;
 			else {
 				multiplier = 0.5f;
-				setImage(new Image("data/speed-.png"));
+				image = new Image("data/speed-.png");
 			}
 		}	
 		
@@ -135,12 +168,12 @@ public abstract class PowerUp extends GameObject {
 		}
 	}
 	
-	public static class pewPewLasers extends PowerUp {
+	public static class PewPewLasers extends PowerUp {
 		private float shots = 20;
 		private Racket racket;
 		private ArrayList<Ball> balls;
 		
-		public pewPewLasers(float xPos, float yPos) throws SlickException {
+		public PewPewLasers(float xPos, float yPos) throws SlickException {
 			super(xPos, yPos, new Image ("data/lasers.png"));
 		}
 		
@@ -154,18 +187,17 @@ public abstract class PowerUp extends GameObject {
 			shots--;
 			if(shots == 0)
 				racket.removeLasers();				
-			balls.add(new laserShot());
+			balls.add(new LaserShot());
 		}
 		
-		class laserShot extends Ball {
-			public laserShot() throws SlickException {
-				super(racket.xPos-20, racket.yPos-20);
-				setImage(new Image("data/lasershot.png"));
+		class LaserShot extends Ball {
+			public LaserShot() throws SlickException {
+				super(racket.getX()-20, racket.getY()-20);
+				image = new Image("data/lasershot.png");
 				setXSpeed(0f);
 				setYSpeed(-.2f);
 				balls.add(this);
 			}
 		}
 	}
-	
 }
