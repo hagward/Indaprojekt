@@ -25,7 +25,7 @@ public class GameplayState extends BasicGameState {
 	/**
 	 * Contains all the 'inner' states.
 	 */
-	private enum State {
+	private static enum State {
 		START, PLAYING, PAUSED, LEVEL_WON, NEXT_LEVEL, HIGHSCORE, GAME_OVER
 	}
 	
@@ -71,7 +71,7 @@ public class GameplayState extends BasicGameState {
 		
 		switch(currentState) {
 		case START:
-			if (input.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
+			if (input.isMousePressed(Input.MOUSE_RIGHT_BUTTON)) {
 				currentState = State.PLAYING;
 			}
 			currentLevel.idle();

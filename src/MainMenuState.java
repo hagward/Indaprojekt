@@ -23,9 +23,26 @@ public class MainMenuState extends BasicGameState {
 	private MouseOverArea settingsItem;
 	private MouseOverArea helpItem;
 	private MouseOverArea quitItem;
+	
+	protected static enum SubMenu { DEFAULT, HELP };
 
 	public MainMenuState(int stateID) {
 		id = stateID;
+	}
+	
+	protected void setSubMenu(SubMenu menu) {
+		try {
+			switch (menu) {
+			case DEFAULT:
+				background = new Image("data/mainmenu.png");
+				break;
+			case HELP:
+				background = new Image("data/mainmenu_help.png");
+				break;
+			};
+		} catch (SlickException e) {
+			System.err.println("Failed to load image: " + e.getMessage());
+		}
 	}
 
 	@Override
@@ -92,6 +109,8 @@ public class MainMenuState extends BasicGameState {
 			MouseOverArea source = (MouseOverArea) ac;
 			if (source == newGameItem) {
 				game.enterState(BreakoutGame.GAMEPLAYSTATE);
+			} else if (source == helpItem) {
+				setSubMenu(SubMenu.HELP);
 			} else if (source == quitItem) {
 				container.exit();
 			}

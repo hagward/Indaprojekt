@@ -29,6 +29,11 @@ public class Racket extends Rectangle implements Movable {
 					+ DEFAULT_IMG_PATH + "'");
 		}
 	}
+	
+	@Override
+	public float getCenterX() {
+		return x + (width / 2);
+	}
 
 	@Override
 	public float getMaxX() {
@@ -76,27 +81,29 @@ public class Racket extends Rectangle implements Movable {
 	}
 
 	public void increaseSize() throws SlickException {
-		width = image.getWidth() + 40;
-		if(width > MAX_SIZE) 
-			width = MAX_SIZE;		
-		image = image.getScaledCopy((int) width, image.getHeight());
+		width += 40;
+		if(width > MAX_SIZE)
+			width = MAX_SIZE;
+		image = image.getScaledCopy((int) width, (int) height);
 	}
 
 	public void decreaseSize() throws SlickException {
-		width = image.getWidth() - 40;
+		width -= 40;
 		if(width < MIN_SIZE)
 			width = MIN_SIZE;
-		image = image.getScaledCopy((int) width, image.getHeight());
+		image = image.getScaledCopy((int) width, (int) height);
 	}
 
 	public void addLasers(PowerUp.PewPewLasers lasers) throws SlickException {
 		this.lasers = lasers;
-		image = new Image("data/laserracket.png").getScaledCopy((int) width, (int) height);
+		image = new Image("data/laserracket.png").getScaledCopy(
+				(int) width, (int) height);
 	}
 
 	public void removeLasers() throws SlickException {
-		lasers = null;		
-		image = new Image("data/racket.png").getScaledCopy((int) width, (int) height);
+		lasers = null;
+		image = new Image("data/racket.png").getScaledCopy(
+				(int) width, (int) height);
 	}
 
 	public PowerUp.PewPewLasers getLaser() {

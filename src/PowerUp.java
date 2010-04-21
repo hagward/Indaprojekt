@@ -70,7 +70,7 @@ public abstract class PowerUp extends Rectangle implements Movable {
 		case 1:
 			return new RetractRacket(xPos, yPos);		
 		case 2:
-			return new MultiplyBalls(xPos, yPos);
+			return new AddBall(xPos, yPos);
 		case 3:
 			return new Speed(xPos, yPos, 1);		
 		case 4:
@@ -105,43 +105,25 @@ public abstract class PowerUp extends Rectangle implements Movable {
 		}
 	}
 	
-	public static class MultiplyBalls extends PowerUp {
+	public static class AddBall extends PowerUp {
 		
-		public MultiplyBalls(float xPos, float yPos) throws SlickException {
-			super(xPos, yPos, new Image ("data/multiplyballs.png"));			
+		public AddBall(float xPos, float yPos) throws SlickException {
+			super(xPos, yPos, new Image ("data/multiplyballs.png"));
 		}		
 		
 		@Override
 		public void effect(LevelHandler level) throws SlickException {
-//			ArrayList<Ball> balls = level.getBalls();
-//			int k = balls.size();
-//			float inc = 0.3f;
-//			for(int i = 0; i < k; i++) {
-//				Ball ball = balls.get(i);
-//				float xSpeed = ball.getXSpeed();
-//				float ySpeed = ball.getYSpeed();
-//				ball.incrementXSpeed(inc);
-//				ball.incrementYSpeed(-1 * inc);
-//				
-//				Ball ball2 = new Ball(ball.getX(), ball.getY());
-//				ball2.setXSpeed(xSpeed - inc);
-//				ball2.setYSpeed(ySpeed + inc);
-//				
-//				balls.add(ball2);
-//			}
-			
 			ArrayList<Ball> balls = level.getBalls();
-			int size = balls.size();
-			for (int i = 0; i < size; i++) {
-				Ball currBall = balls.get(i);
-				Ball newBall = new Ball(currBall.getX(), currBall.getY());
-				newBall.setXSpeed(-currBall.getXSpeed());
-				newBall.setYSpeed(currBall.getYSpeed());
+			if (balls.size() > 0) {
+				Ball origBall = balls.get(0);
+				Ball newBall = new Ball(origBall.getX(), origBall.getY());
+				newBall.setXSpeed(-origBall.getXSpeed());
+				newBall.setYSpeed(origBall.getYSpeed());
 				balls.add(newBall);
 			}
 		}
 	}
-	
+
 	public static class Speed extends PowerUp {
 		private float multiplier;
 		
@@ -192,7 +174,7 @@ public abstract class PowerUp extends Rectangle implements Movable {
 		
 		class LaserShot extends Ball {
 			public LaserShot() throws SlickException {
-				super(racket.getX()-20, racket.getY()-20);
+				super(racket.getCenterX(), racket.getY()-20);
 				this.image = new Image("data/lasershot.png");
 				setXSpeed(0f);
 				setYSpeed(-.2f);

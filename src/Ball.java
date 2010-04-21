@@ -27,6 +27,16 @@ public class Ball extends Circle implements Movable {
 					+ DEFAULT_IMG_PATH + "'");
 		}
 	}
+	
+	@Override
+	public float getCenterX() {
+		return x + radius;
+	}
+	
+	@Override
+	public void setCenterX(float x) {
+		this.x = x - radius;
+	}
 
 	@Override
 	public float getMaxX() {

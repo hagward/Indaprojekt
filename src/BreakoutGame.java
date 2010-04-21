@@ -26,8 +26,8 @@ public class BreakoutGame extends StateBasedGame {
 		try {
 			AppGameContainer app = new AppGameContainer(new BreakoutGame());
 			app.setDisplayMode(800, 600, false);
-//			app.setMinimumLogicUpdateInterval(10);
-//			app.setMaximumLogicUpdateInterval(10);
+			app.setMinimumLogicUpdateInterval(10);
+			app.setMaximumLogicUpdateInterval(10);
 			app.start();
 		} catch (SlickException e) {
 			e.printStackTrace();
