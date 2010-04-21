@@ -5,7 +5,7 @@ import org.newdawn.slick.geom.Circle;
 /**
  * @author Anders Hagward
  * @author Fredrik Hillnertz
- * @version 2010-04-20
+ * @version 2010-04-21
  */
 public class Ball extends Circle implements Movable {
 	private static final String DEFAULT_IMG_PATH = "data/ball.png";
@@ -27,13 +27,15 @@ public class Ball extends Circle implements Movable {
 					+ DEFAULT_IMG_PATH + "'");
 		}
 	}
-	
-	public float getRightX() {
-		return x + radius;
+
+	@Override
+	public float getMaxX() {
+		return x + (2 * radius);
 	}
-	
-	public float getBottomY() {
-		return y + radius;
+
+	@Override
+	public float getMaxY() {
+		return y + (2 * radius);
 	}
 
 	@Override

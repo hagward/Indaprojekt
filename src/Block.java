@@ -5,7 +5,7 @@ import org.newdawn.slick.geom.Rectangle;
 /**
  * @author Anders Hagward
  * @author Fredrik Hillnertz
- * @version 2010-04-14
+ * @version 2010-04-21
  */
 public class Block extends Rectangle {
 	private int health;
@@ -16,12 +16,14 @@ public class Block extends Rectangle {
 		this.health = health;
 		resetImage();
 	}
-	
-	public float getRightX() {
+
+	@Override
+	public float getMaxX() {
 		return x + width;
 	}
-	
-	public float getBottomY() {
+
+	@Override
+	public float getMaxY() {
 		return y + height;
 	}
 

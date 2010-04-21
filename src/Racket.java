@@ -5,7 +5,7 @@ import org.newdawn.slick.geom.Rectangle;
 /**
  * @author Anders Hagward
  * @author Fredrik Hillnertz
- * @version 2010-04-20
+ * @version 2010-04-21
  */
 public class Racket extends Rectangle implements Movable {
 	private static final String DEFAULT_IMG_PATH = "data/racket.png";
@@ -29,12 +29,14 @@ public class Racket extends Rectangle implements Movable {
 					+ DEFAULT_IMG_PATH + "'");
 		}
 	}
-	
-	public float getRightX() {
+
+	@Override
+	public float getMaxX() {
 		return x + width;
 	}
-	
-	public float getBottomY() {
+
+	@Override
+	public float getMaxY() {
 		return y + height;
 	}
 
