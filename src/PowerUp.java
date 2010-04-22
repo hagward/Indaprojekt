@@ -64,7 +64,7 @@ public abstract class PowerUp extends Rectangle implements Movable {
 	public static PowerUp randomPowerUp(float xPos, float yPos)
 			throws SlickException {
 		Random rand = new Random();	
-		switch(rand.nextInt(6)){
+		switch(rand.nextInt(9)){
 		case 0:
 			return new ExtendRacket(xPos, yPos);
 		case 1:
@@ -77,6 +77,12 @@ public abstract class PowerUp extends Rectangle implements Movable {
 			return new Speed(xPos, yPos, -1);
 		case 5:
 			return new PewPewLasers(xPos, yPos);
+		case 6:
+			return new Life(xPos, yPos, 1);
+		case 7:
+			return new Life(xPos,yPos, -1);
+		case 8:
+			return new Fireballs(xPos, yPos);
 		}
 		return null;		
 	}
@@ -185,6 +191,60 @@ public abstract class PowerUp extends Rectangle implements Movable {
 					this.ySpeed = 0;
 				else
 					this.ySpeed = ySpeed;
+			}
+		}
+	}
+	
+	public static class Life extends PowerUp {
+		private int plusMinus;
+		
+		public Life(float xPos, float yPos, int plusMinus) throws SlickException {
+			super(xPos, yPos, new Image ("data/life+.png"));
+			this.plusMinus = plusMinus;
+			if(plusMinus < 0)
+				image = new Image("data/life-.png");
+		}
+		
+		public void effect(LevelHandler level) throws SlickException {
+			if(plusMinus < 0)
+				level.decreaseLife();
+			else
+				level.increaseLife();
+		}
+	}
+	
+	public static class Fireballs extends PowerUp {
+		private ArrayList< Ball> balls;
+		
+		public Fireballs(float xPos, float yPos) throws SlickException {
+			super(xPos, yPos, new Image ("data/fireballs.png"));
+		}
+		
+		public void effect(LevelHandler level) throws SlickException {
+			this.balls = level.getBalls();
+			Ball ball = balls.get(0);
+			
+			float xSpeed = ball.getXSpeed();
+			float ySpeed = ball.getYSpeed();			
+			float xPos = ball.getCenterX();
+			float yPos = ball.getCenterY();
+			
+			ball.setXSpeed(0);
+			ball.setYSpeed(0);
+			
+			Fireball fireball = new Fireball(xPos, yPos);
+			fireball.setXSpeed(xSpeed);
+			fireball.setYSpeed(ySpeed);
+			
+			balls.add(0, fireball);
+		}
+		
+		class Fireball extends Ball {
+			private int hits = 5;
+
+			public Fireball(float centerPointX, float centerPointY) throws SlickException {
+				super(centerPointX, centerPointY);
+				this.image = new Image("data/fireball.png");
 			}
 		}
 	}

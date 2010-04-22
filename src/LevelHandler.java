@@ -19,9 +19,11 @@ public class LevelHandler {
 	private ArrayList<PowerUp> powerUps;
 	private Racket racket;
 	private int currentLevel;
+	private int life;
 
 	public LevelHandler() throws SlickException {
 		currentLevel = 0;
+		life = 3;
 		nextLevel();
 	}
 	
@@ -211,5 +213,13 @@ public class LevelHandler {
 
 	public ArrayList<PowerUp> getPowerUps() {
 		return powerUps;
+	}
+
+	public void increaseLife() {
+		life++;		
+	}
+
+	public void decreaseLife() {
+		life--;		
 	}
 }
