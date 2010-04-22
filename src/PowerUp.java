@@ -264,11 +264,11 @@ public abstract class PowerUp extends Rectangle implements Movable {
 						createEffect();
 					} catch (SlickException e) {
 					}
-					extraBalls.addAll(newBalls);					
+					extraBalls.addAll(newBalls);
 				}
 				this.xSpeed = xSpeed;
-				if (hits <= 0) 
-					removeFireball();				
+				if (hits <= 0)
+					removeFireball();
 			}
 
 			public void setYSpeed(float ySpeed) {
@@ -280,11 +280,11 @@ public abstract class PowerUp extends Rectangle implements Movable {
 						createEffect();
 					} catch (SlickException e) {
 					}
-					extraBalls.addAll(newBalls);					
+					extraBalls.addAll(newBalls);
 				}
 				this.ySpeed = ySpeed;
-				if (hits <= 0) 
-					removeFireball();				
+				if (hits <= 0)
+					removeFireball();
 			}
 
 			private void removeFireball() {
@@ -300,14 +300,24 @@ public abstract class PowerUp extends Rectangle implements Movable {
 				float x = this.getCenterX();
 				float y = this.getCenterY();
 				ArrayList<Ball> balls = new ArrayList<Ball>();
-				Ball ball1 = new Ball(x - 30, y - 14);
-				Ball ball2 = new Ball(x - 30, y);
-				Ball ball3 = new Ball(x - 30, y + 14);
-				Ball ball4 = new Ball(x, y - 14);
-				Ball ball5 = new Ball(x, y + 14);
-				Ball ball6 = new Ball(x + 30, y - 14);
-				Ball ball7 = new Ball(x + 30, y);
-				Ball ball8 = new Ball(x + 30, y + 14);
+
+				class InvisibleBall extends Ball{
+					public InvisibleBall(float x, float y) throws SlickException {
+						super(x, y);
+						this.image = new Image("data/invisibleball.png");
+					}
+
+					public void setXSpeed(float x) {}
+					public void setYSpeed(float y) {}
+				}
+				InvisibleBall ball1 = new InvisibleBall(x - 30, y - 14);
+				InvisibleBall ball2 = new InvisibleBall(x - 30, y);
+				InvisibleBall ball3 = new InvisibleBall(x - 30, y + 14);
+				InvisibleBall ball4 = new InvisibleBall(x, y - 14);
+				InvisibleBall ball5 = new InvisibleBall(x, y + 14);
+				InvisibleBall ball6 = new InvisibleBall(x + 30, y - 14);
+				InvisibleBall ball7 = new InvisibleBall(x + 30, y);
+				InvisibleBall ball8 = new InvisibleBall(x + 30, y + 14);
 
 				balls.add(ball1);
 				balls.add(ball2);
@@ -317,11 +327,6 @@ public abstract class PowerUp extends Rectangle implements Movable {
 				balls.add(ball6);
 				balls.add(ball7);
 				balls.add(ball8);
-				for (Ball ball : balls) {
-					ball.setXSpeed(0);
-					ball.setYSpeed(0);
-					ball.image = new Image("data/invisibleball.png");
-				}
 				return balls;
 			}
 
