@@ -17,7 +17,7 @@ public class Ball extends Circle implements Movable {
 
 	public Ball(float centerPointX, float centerPointY) {
 		super(centerPointX, centerPointY, 8);
-		xSpeed = DEFAULT_SPEED;
+		xSpeed = 0;
 		ySpeed = DEFAULT_SPEED;
 		
 		try {

@@ -106,7 +106,7 @@ public class LevelHandler {
 					ball.setX(0);
 				} else if (ball.getMaxX() > 800) {
 					ball.setXSpeed(-ball.getXSpeed());
-					ball.setX(799 - (2 * ball.getRadius()));
+					ball.setX(800 - (2 * ball.getRadius()));
 				}
 				if (ball.getY() < 0) {
 					ball.setY(0);
@@ -116,12 +116,12 @@ public class LevelHandler {
 					ball.setYSpeed(-ball.getYSpeed());
 				}
 			} else if (ball.intersects(racket)) { // racket collision
-				 if (ball.getY() < racket.getY()) {
-						float newXSpeed = ball.getCenterX() - racket.getCenterX();
-						newXSpeed /= racket.getWidth();
-						ball.setXSpeed(newXSpeed);
-						ball.setYSpeed(-ball.getYSpeed());
-						ball.setY(racket.getY() - (2 * ball.getRadius()));
+				if (ball.getY() < racket.getY()) {
+					float newXSpeed = ball.getCenterX() - racket.getCenterX();
+					newXSpeed /= 2.0f * racket.getWidth();
+					ball.setXSpeed(newXSpeed);
+					ball.setYSpeed(-ball.getYSpeed());
+					ball.setY(racket.getY() - (2 * ball.getRadius()));
 				} else if (ball.getMaxY() > racket.getMaxY()) {
 					ball.setYSpeed(-ball.getYSpeed());
 					ball.setY(racket.getMaxY());
@@ -145,7 +145,8 @@ public class LevelHandler {
 						} else if (ball.getMaxY() > currBlock.getMaxY()) {
 							ball.setYSpeed(-ball.getYSpeed());
 							ball.setY(currBlock.getMaxY());
-						} else if (ball.getX() < currBlock.getX()) {
+						}
+						if (ball.getX() < currBlock.getX()) {
 							ball.setXSpeed(-ball.getXSpeed());
 							ball.setX(currBlock.getX() - (2 * ball.getRadius()));
 						} else if (ball.getMaxX() > currBlock.getMaxX()) {
