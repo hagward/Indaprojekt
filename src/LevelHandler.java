@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
 
+import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
@@ -17,6 +18,8 @@ public class LevelHandler {
 	private ArrayList<Ball> balls;
 	private ArrayList<Block> blocks;
 	private ArrayList<PowerUp> powerUps;
+	private ArrayList<Ball> extraBalls;
+	private ArrayList<Effect> animations;
 	private Racket racket;
 	private int currentLevel;
 	private int life;
@@ -43,6 +46,8 @@ public class LevelHandler {
 		powerUps = new ArrayList<PowerUp>();
 		racket = new Racket(400, 550);
 		balls = new ArrayList<Ball>();
+		extraBalls = new ArrayList<Ball>();
+		animations = new ArrayList<Effect>();
 		balls.add(new Ball(350, 400));
 		
 		generateBlockList();
@@ -80,6 +85,10 @@ public class LevelHandler {
 		for (PowerUp pu : powerUps) {
 			pu.draw();
 		}
+		for (Animation animation : animations) {
+			animation.draw();
+		}
+		
 	}
 
 	public void updateCurrentLevel(Score score, int delta, GameContainer gc)
@@ -161,6 +170,8 @@ public class LevelHandler {
 			if(ball.getXSpeed() == 0 && ball.getYSpeed() == 0)
 				ballIterator.remove();
 		}
+		balls.addAll(extraBalls);
+		extraBalls.clear();
 		
 		Iterator<PowerUp> it = powerUps.iterator();
 		while(it.hasNext()) {
@@ -172,6 +183,13 @@ public class LevelHandler {
 			} else if (pu.getY() > 600) {
 				it.remove();
 			}
+		}
+		
+		Iterator<Effect> it2 = animations.iterator();
+		while(it2.hasNext()) {
+			Effect ef = it2.next();
+			if(ef.getFrame() == 5)
+				it2.remove();
 		}
 
 		//Skjut?
@@ -204,7 +222,7 @@ public class LevelHandler {
 	}
 	private void spawnPowerUp(Block block) throws SlickException {
 		Random rand = new Random();
-		if(rand.nextInt(2) == 0) {
+		if(rand.nextInt(1) == 0) {
 			PowerUp pu = PowerUp.randomPowerUp(block.getX(), block.getY());
 			if(pu != null)
 				powerUps.add(pu);
@@ -221,5 +239,13 @@ public class LevelHandler {
 
 	public void decreaseLife() {
 		life--;		
+	}
+	
+	public ArrayList<Ball> getExtraBalls() {
+		return extraBalls;
+	}
+
+	public ArrayList<Effect> getAnimations() {
+		return animations;
 	}
 }
