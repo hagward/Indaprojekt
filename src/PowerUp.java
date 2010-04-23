@@ -304,11 +304,16 @@ public abstract class PowerUp extends Rectangle implements Movable {
 				class InvisibleBall extends Ball{
 					public InvisibleBall(float x, float y) throws SlickException {
 						super(x, y);
-						this.image = new Image("data/invisibleball.png");
+						this.image = new Image("data/ball.png");
 					}
 
 					public void setXSpeed(float x) {}
-					public void setYSpeed(float y) {}
+					public void setYSpeed(float y) {
+						this.ySpeed = 0;
+					}					
+					public void setX(float x) {}
+					public void setY(float y) {}
+					
 				}
 				InvisibleBall ball1 = new InvisibleBall(x - 30, y - 14);
 				InvisibleBall ball2 = new InvisibleBall(x - 30, y);
@@ -327,6 +332,8 @@ public abstract class PowerUp extends Rectangle implements Movable {
 				balls.add(ball6);
 				balls.add(ball7);
 				balls.add(ball8);
+				for(Ball ball: balls)
+					ball.setYSpeed(0);
 				return balls;
 			}
 
