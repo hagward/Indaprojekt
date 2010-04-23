@@ -49,7 +49,7 @@ public class GameplayState extends BasicGameState {
 		hud = new Image("data/hud.png");
 		player = new Player(3);
 		currentLevel = new LevelHandler(player);
-		currentState = State.START;
+		currentState = State.START;		
 	}
 	
 	@Override
@@ -74,7 +74,7 @@ public class GameplayState extends BasicGameState {
 		
 		switch(currentState) {
 		case START:
-			if (input.isMousePressed(Input.MOUSE_RIGHT_BUTTON)) {
+			if (input.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
 				currentState = State.PLAYING;
 			}
 			currentLevel.idle();

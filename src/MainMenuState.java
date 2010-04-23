@@ -108,7 +108,9 @@ public class MainMenuState extends BasicGameState {
 		public void componentActivated(AbstractComponent ac) {
 			MouseOverArea source = (MouseOverArea) ac;
 			if (source == newGameItem) {
+				container.getInput().clearMousePressedRecord();
 				game.enterState(BreakoutGame.GAMEPLAYSTATE);
+				
 			} else if (source == helpItem) {
 				setSubMenu(SubMenu.HELP);
 			} else if (source == quitItem) {
