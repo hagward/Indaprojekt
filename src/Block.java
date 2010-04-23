@@ -10,10 +10,20 @@ import org.newdawn.slick.geom.Rectangle;
 public class Block extends Rectangle {
 	private int health;
 	private Image image;
+	private Image powerUpImage;
+	private int powerUp;
 
-	public Block(float x, float y, int health) {
+	public Block(float x, float y, int health, int powerUp) {
 		super(x, y, 60, 14);
 		this.health = health;
+		this.powerUp = powerUp;
+		if(powerUp >= 0) {
+			try {
+				System.out.print("a");
+				powerUpImage = new Image(PowerUp.powerUpPath(powerUp));
+			} catch (SlickException e) {
+			}
+		}
 		resetImage();
 	}
 
@@ -29,25 +39,34 @@ public class Block extends Rectangle {
 
 	public void hit() throws SlickException {
 		health--;
-		if(health > 0)
+		if (health > 0)
 			resetImage();
 	}
-	
+
 	public int getHealth() {
 		return health;
 	}
-	
+
 	public void resetImage() {
 		String imgPath = "data/block" + health + ".png";
 		try {
 			image = new Image(imgPath);
 		} catch (SlickException e) {
-			System.err.println("Error: couldn't load image '"
-					+ imgPath + "'");
+			System.err.println("Error: couldn't load image '" + imgPath + "'");
 		}
 	}
-	
+
 	public void draw() {
 		image.draw(x, y);
+		if(powerUpImage != null)
+			powerUpImage.draw(x, y);
+	}
+
+	public int getPowerUp() {
+		return powerUp;
+	}
+
+	public void setPowerUp(int val) {
+		powerUp = val;
 	}
 }
