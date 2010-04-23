@@ -7,7 +7,8 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 
 public abstract class PowerUp extends Rectangle implements Movable {
-	protected static final int UNLIMITED = 0;
+	public static int EXTEND = 0, RETRACT = 1, ADD_BALL = 2, PSPEED = 3,
+			MSPEED = 4, LASER = 5, PLIFE = 6, MLIFE = 7, FIREBALL = 8;
 
 	protected int duration;
 	protected final float xSpeed;
@@ -61,11 +62,43 @@ public abstract class PowerUp extends Rectangle implements Movable {
 	public void draw() {
 		image.draw(x, y);
 	}
+	
+	public static String powerUpPath(int i) {
+		switch(i) {
+		case 0:
+			return "data/ExtendRacket.png";
+		case 1:
+			return "data/RetractRacket.png";
+		case 2:
+			return "data/multiplyballs.png";
+		case 3:
+			return "data/speed+.png";
+		case 4:
+			return "data/speed-.png";
+		case 5:
+			return "data/lasers.png";
+		case 6:
+			return "data/life+.png";
+		case 7:
+			return "data/life-.png";
+		case 8:
+			return "data/fireballs.png";
+		}
+		return null;
+	}
 
-	public static PowerUp randomPowerUp(float xPos, float yPos)
+	public static PowerUp randomPowerUp(Block block)
 			throws SlickException {
-		Random rand = new Random();
-		switch (rand.nextInt(9)) {
+		float xPos = block.getX();
+		float yPos = block.getY();
+		int r = block.getPowerUp();
+		if(r < 0) {
+			Random rand = new Random();
+			if(rand.nextInt(10) == 0)
+				return null;
+			r = rand.nextInt(9);
+		}			
+		switch (r) {
 		case 0:
 			return new ExtendRacket(xPos, yPos);
 		case 1:
@@ -301,8 +334,9 @@ public abstract class PowerUp extends Rectangle implements Movable {
 				float y = this.getCenterY();
 				ArrayList<Ball> balls = new ArrayList<Ball>();
 
-				class InvisibleBall extends Ball{
-					public InvisibleBall(float x, float y) throws SlickException {
+				class InvisibleBall extends Ball {
+					public InvisibleBall(float x, float y)
+							throws SlickException {
 						super(x, y);
 						this.image = new Image("data/ball.png");
 					}
@@ -310,12 +344,17 @@ public abstract class PowerUp extends Rectangle implements Movable {
 					public void setXSpeed(float x) {
 						this.xSpeed = 0;
 					}
+
 					public void setYSpeed(float y) {
 						this.ySpeed = 0;
-					}					
-					public void setX(float x) {}
-					public void setY(float y) {}
-					
+					}
+
+					public void setX(float x) {
+					}
+
+					public void setY(float y) {
+					}
+
 				}
 				InvisibleBall ball1 = new InvisibleBall(x - 30, y - 14);
 				InvisibleBall ball2 = new InvisibleBall(x - 30, y);
@@ -334,7 +373,7 @@ public abstract class PowerUp extends Rectangle implements Movable {
 				balls.add(ball6);
 				balls.add(ball7);
 				balls.add(ball8);
-				for(Ball ball: balls)
+				for (Ball ball : balls)
 					ball.setYSpeed(0);
 				return balls;
 			}
