@@ -83,6 +83,14 @@ public class Ball extends Circle implements Movable {
 	public void incrementYSpeed(float increment) {
 		ySpeed += increment;
 	}
+	
+	public boolean insideXArea(float x1, float x2) {
+		return (x > x1 && x < x2);
+	}
+	
+	public boolean insideYArea(float y1, float y2) {
+		return (y > y1 && y < y2);
+	}
 
 	public void draw() {
 		image.draw(x, y);

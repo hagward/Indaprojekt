@@ -6,6 +6,7 @@ import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.tiled.TiledMap;
 
 /**
@@ -145,21 +146,41 @@ public class LevelHandler {
 					Block currBlock = blockIterator.next();
 					if ((currBlock.getHealth() > 0)
 							&& ball.intersects(currBlock)) {
-						if (ball.getY() < currBlock.getY()) {
+//						if (ball.getY() < currBlock.getY()) {
+//							ball.setYSpeed(-ball.getYSpeed());
+//							ball.setY(currBlock.getY() - (2 * ball.getRadius()));
+//						} else if (ball.getMaxY() > currBlock.getMaxY()) {
+//							ball.setYSpeed(-ball.getYSpeed());
+//							ball.setY(currBlock.getMaxY());
+//						}
+//						if (ball.getX() < currBlock.getX()) {
+//							ball.setXSpeed(-ball.getXSpeed());
+//							ball.setX(currBlock.getX() - (2 * ball.getRadius()));
+//						} else if (ball.getMaxX() > currBlock.getMaxX()) {
+//							ball.setXSpeed(-ball.getXSpeed());
+//							ball.setX(currBlock.getMaxX());
+//						}
+						
+						float cX = ball.getCenterX();
+						float cY = ball.getCenterY();
+						if (cX < currBlock.getX()
+								&& ball.insideYArea(currBlock.getY(), currBlock.getMaxY())) {
+							ball.setXSpeed(-ball.getXSpeed());
+							ball.setX(currBlock.getX() - (2 * ball.getRadius()));
+						} else if (cX > currBlock.getMaxX()
+								&& ball.insideYArea(currBlock.getY(), currBlock.getMaxY())) {
+							ball.setXSpeed(-ball.getXSpeed());
+							ball.setX(currBlock.getMaxX());
+						} else if (cY < currBlock.getY()
+								&& ball.insideXArea(currBlock.getX(), currBlock.getMaxX())) {
 							ball.setYSpeed(-ball.getYSpeed());
 							ball.setY(currBlock.getY() - (2 * ball.getRadius()));
-						} else if (ball.getMaxY() > currBlock.getMaxY()) {
+						} else if (cY > currBlock.getMaxY()
+								&& ball.insideXArea(currBlock.getX(), currBlock.getMaxX())) {
 							ball.setYSpeed(-ball.getYSpeed());
 							ball.setY(currBlock.getMaxY());
 						}
-						if (ball.getX() < currBlock.getX()) {
-							ball.setXSpeed(-ball.getXSpeed());
-							ball.setX(currBlock.getX() - (2 * ball.getRadius()));
-						} else if (ball.getMaxX() > currBlock.getMaxX()) {
-							ball.setXSpeed(-ball.getXSpeed());
-							ball.setX(currBlock.getMaxX());
-						}
-						
+							
 						currBlock.hit();
 
 						if (currBlock.getHealth() <= 0) {
