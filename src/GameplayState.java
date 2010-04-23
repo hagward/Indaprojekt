@@ -20,12 +20,12 @@ public class GameplayState extends BasicGameState {
 	private Image hud;
 	private State currentState;	
 	private LevelHandler currentLevel;
-	private Score currentScore;
+	private Player player;
 	
 	/**
 	 * Contains all the 'inner' states.
 	 */
-	private static enum State {
+	public static enum State {
 		START, PLAYING, PAUSED, LEVEL_WON, NEXT_LEVEL, HIGHSCORE, GAME_OVER
 	}
 	
@@ -47,9 +47,9 @@ public class GameplayState extends BasicGameState {
 	public void init(GameContainer gc, StateBasedGame sbg)
 			throws SlickException {
 		hud = new Image("data/hud.png");
+		player = new Player(3);
+		currentLevel = new LevelHandler(player);
 		currentState = State.START;
-		currentLevel = new LevelHandler();
-		currentScore = new Score("Anders", 0);
 	}
 	
 	@Override
@@ -58,7 +58,10 @@ public class GameplayState extends BasicGameState {
 		hud.draw(0, 0);
 		currentLevel.renderCurrentLevel();
 		g.setColor(Color.black);
-		g.drawString("Score: " + currentScore.getPoints(), 20, 300);
+		g.drawString("Lives: " + currentLevel.getPlayer().getLives(),
+				20, 300);
+		g.drawString("Score: " + currentLevel.getPlayer().getScorePoints(),
+				20, 320);
 	}
 	
 	@Override
@@ -77,7 +80,7 @@ public class GameplayState extends BasicGameState {
 			currentLevel.idle();
 			break;
 		case PLAYING:
-			currentLevel.updateCurrentLevel(currentScore, delta, gc);
+			currentLevel.updateCurrentLevel(this, delta, gc);
 			if(currentLevel.checkLevelBeaten() || input.isKeyPressed(Input.KEY_N)) {
 				currentLevel.nextLevel();
 				currentState = State.START;
@@ -88,5 +91,9 @@ public class GameplayState extends BasicGameState {
 			}
 			break;
 		}
+	}
+	
+	public void setState(State newState) {
+		currentState = newState;
 	}
 }

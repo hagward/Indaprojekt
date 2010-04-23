@@ -210,9 +210,9 @@ public abstract class PowerUp extends Rectangle implements Movable {
 
 		public void effect(LevelHandler level) throws SlickException {
 			if (plusMinus < 0)
-				level.decreaseLife();
+				level.getPlayer().decreaseLives();
 			else
-				level.increaseLife();
+				level.getPlayer().increaseLives();
 		}
 	}
 

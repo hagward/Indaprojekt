@@ -21,12 +21,12 @@ public class LevelHandler {
 	private ArrayList<Ball> extraBalls;
 	private ArrayList<Effect> animations;
 	private Racket racket;
+	private Player player;
 	private int currentLevel;
-	private int life;
 
-	public LevelHandler() throws SlickException {
+	public LevelHandler(Player player) throws SlickException {
 		currentLevel = 0;
-		life = 3;
+		this.player = player;
 		nextLevel();
 	}
 	
@@ -91,7 +91,7 @@ public class LevelHandler {
 		
 	}
 
-	public void updateCurrentLevel(Score score, int delta, GameContainer gc)
+	public void updateCurrentLevel(GameplayState gs, int delta, GameContainer gc)
 			throws SlickException {
 		Iterator<Ball> ballIterator = balls.iterator();
 		while (ballIterator.hasNext()) {
@@ -111,9 +111,15 @@ public class LevelHandler {
 				if (ball.getY() < 0) {
 					ball.setY(0);
 					ball.setYSpeed(-ball.getYSpeed());
-				} else if (ball.getMaxY() > 600) {
-					ball.setY(600 - (2 * ball.getRadius()));
-					ball.setYSpeed(-ball.getYSpeed());
+				} else if (ball.getY() > 600) {
+					if (balls.size() <= 1) {
+						player.decreaseLives();
+						restartLevel();
+						gs.setState(GameplayState.State.START);
+					} else {
+						ball.setXSpeed(0);
+						ball.setYSpeed(0);
+					}
 				}
 			} else if (ball.intersects(racket)) { // racket collision
 				if (ball.getY() < racket.getY()) {
@@ -158,7 +164,7 @@ public class LevelHandler {
 
 						if (currBlock.getHealth() <= 0) {
 							spawnPowerUp(currBlock);
-							score.addPoints(1);
+							player.addScorePoints(1);
 							blockIterator.remove();
 						}
 						
@@ -167,7 +173,7 @@ public class LevelHandler {
 				}
 			}
 			
-			// removes stationary balls (laser shots after hits)
+			// removes stationary balls (and laser shots after hits)
 			if(ball.getXSpeed() == 0 && ball.getYSpeed() == 0)
 				ballIterator.remove();
 		}
@@ -233,14 +239,6 @@ public class LevelHandler {
 	public ArrayList<PowerUp> getPowerUps() {
 		return powerUps;
 	}
-
-	public void increaseLife() {
-		life++;		
-	}
-
-	public void decreaseLife() {
-		life--;		
-	}
 	
 	public ArrayList<Ball> getExtraBalls() {
 		return extraBalls;
@@ -248,5 +246,9 @@ public class LevelHandler {
 
 	public ArrayList<Effect> getAnimations() {
 		return animations;
+	}
+	
+	public Player getPlayer() {
+		return player;
 	}
 }
