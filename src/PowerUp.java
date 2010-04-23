@@ -307,7 +307,9 @@ public abstract class PowerUp extends Rectangle implements Movable {
 						this.image = new Image("data/ball.png");
 					}
 
-					public void setXSpeed(float x) {}
+					public void setXSpeed(float x) {
+						this.xSpeed = 0;
+					}
 					public void setYSpeed(float y) {
 						this.ySpeed = 0;
 					}					
