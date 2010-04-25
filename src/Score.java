@@ -15,6 +15,10 @@ public class Score implements Comparable<Score> {
 		this.points = points;
 	}
 	
+	public Score(int points) {
+		this(null, points);
+	}
+	
 	public void addPoints(int points) {
 		this.points += points;
 	}
@@ -25,6 +29,10 @@ public class Score implements Comparable<Score> {
 	
 	public int getPoints() {
 		return points;
+	}
+	
+	public void setAuthor(String author) {
+		this.author = author;
 	}
 	
 	@Override
@@ -40,5 +48,10 @@ public class Score implements Comparable<Score> {
 		Score anotherScore = (Score) obj;
 		return (anotherScore.getAuthor() == author
 				&& anotherScore.getPoints() == points);
+	}
+	
+	@Override
+	public String toString() {
+		return author + "|" + points;
 	}
 }

@@ -178,7 +178,7 @@ public class LevelHandler {
 
 						if (currBlock.getHealth() <= 0) {
 							spawnPowerUp(currBlock);
-							player.addScorePoints(1);
+							player.getScore().addPoints(1);
 							blockIterator.remove();
 						}
 

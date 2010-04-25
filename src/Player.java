@@ -1,19 +1,14 @@
 public class Player {
-	private String name;
 	private int lives;
 	private Score score;
 	
 	public Player(int lives) {
 		this.lives = lives;
-		score = new Score("Anders", 0);
-	}
-	
-	public void addScorePoints(int points) {
-		score.addPoints(points);
+		this.score = new Score(0);
 	}
 	
 	public void setName(String name) {
-		this.name = name;
+		score.setAuthor(name);
 	}
 	
 	public void setLives(int lives) {
@@ -29,14 +24,14 @@ public class Player {
 	}
 	
 	public String getName() {
-		return name;
+		return score.getAuthor();
 	}
 	
 	public int getLives() {
 		return lives;
 	}
 	
-	public int getScorePoints() {
-		return score.getPoints();
+	public Score getScore() {
+		return score;
 	}
 }

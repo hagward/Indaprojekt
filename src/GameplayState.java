@@ -1,3 +1,5 @@
+import javax.swing.JOptionPane;
+
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -18,8 +20,9 @@ import org.newdawn.slick.state.StateBasedGame;
 public class GameplayState extends BasicGameState {
 	private int id = -1;	
 	private Image hud;
-	private State currentState;	
+	private State currentState;
 	private LevelHandler currentLevel;
+	private HighScoreHandler highScores;
 	private Player player;
 	
 	/**
@@ -34,8 +37,9 @@ public class GameplayState extends BasicGameState {
 	 * state to <code>State.START</code>.
 	 * @param stateID an arbitrary integer id
 	 */
-	public GameplayState(int stateID) {
+	public GameplayState(int stateID, HighScoreHandler highScoreHandler) {
 		id = stateID;
+		highScores = highScoreHandler;
 	}
 	
 	@Override
@@ -49,7 +53,7 @@ public class GameplayState extends BasicGameState {
 		hud = new Image("data/hud.png");
 		player = new Player(3);
 		currentLevel = new LevelHandler(player);
-		currentState = State.START;		
+		currentState = State.START;
 	}
 	
 	@Override
@@ -60,7 +64,7 @@ public class GameplayState extends BasicGameState {
 		g.setColor(Color.black);
 		g.drawString("Lives: " + currentLevel.getPlayer().getLives(),
 				20, 300);
-		g.drawString("Score: " + currentLevel.getPlayer().getScorePoints(),
+		g.drawString("Score: " + currentLevel.getPlayer().getScore().getPoints(),
 				20, 320);
 	}
 	
@@ -81,9 +85,22 @@ public class GameplayState extends BasicGameState {
 			break;
 		case PLAYING:
 			currentLevel.updateCurrentLevel(this, delta, gc);
-			if(currentLevel.checkLevelBeaten() || input.isKeyPressed(Input.KEY_N)) {
-				currentLevel.nextLevel();
-				currentState = State.START;
+			if(currentLevel.checkLevelBeaten()
+					|| input.isKeyPressed(Input.KEY_N)) {
+				try {
+					currentLevel.nextLevel();
+					currentState = State.START;
+				} catch (Exception e) {
+					String name = JOptionPane.showInputDialog(
+							"Please enter your name:");
+					if (name != null) {
+						player.setName(name);
+						highScores.addScore(player.getScore());
+						sbg.enterState(BreakoutGame.HIGHSCORESTATE);
+					} else {
+						sbg.enterState(BreakoutGame.MAINMENUSTATE);
+					}
+				}
 			}
 			else if(input.isKeyPressed(Input.KEY_R)) {
 				currentLevel.restartLevel();

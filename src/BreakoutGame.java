@@ -14,11 +14,17 @@ import org.newdawn.slick.state.StateBasedGame;
 public class BreakoutGame extends StateBasedGame {
 	public static final int MAINMENUSTATE = 0;
 	public static final int GAMEPLAYSTATE = 1;
+	public static final int HIGHSCORESTATE = 2;
 	
 	public BreakoutGame() {
 		super("Breakout");
+		
+		HighScoreHandler highScores = new HighScoreHandler("highscore.txt");
+		highScores.parse();
+		
 		addState(new MainMenuState(MAINMENUSTATE));
-		addState(new GameplayState(GAMEPLAYSTATE));
+		addState(new GameplayState(GAMEPLAYSTATE, highScores));
+		addState(new HighScoreState(HIGHSCORESTATE, highScores));
 		enterState(MAINMENUSTATE);
 	}
 	
@@ -39,5 +45,6 @@ public class BreakoutGame extends StateBasedGame {
 	public void initStatesList(GameContainer c) throws SlickException {
 		getState(MAINMENUSTATE).init(c, this);
 		getState(GAMEPLAYSTATE).init(c, this);
+		getState(HIGHSCORESTATE).init(c, this);
 	}
 }
