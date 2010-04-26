@@ -96,6 +96,7 @@ public class GameplayState extends BasicGameState {
 					if (name != null) {
 						player.setName(name);
 						highScores.addScore(player.getScore());
+						highScores.save();
 						sbg.enterState(BreakoutGame.HIGHSCORESTATE);
 					} else {
 						sbg.enterState(BreakoutGame.MAINMENUSTATE);
