@@ -35,9 +35,15 @@ public class Score implements Comparable<Score> {
 		this.author = author;
 	}
 	
+	public void reset() {
+		author = null;
+		points = 0;
+	}
+	
 	@Override
 	public int compareTo(Score anotherScore) {
-		return points - anotherScore.getPoints();
+		int result = points - anotherScore.getPoints();
+		return (result != 0) ? result : -1;
 	}
 	
 	@Override

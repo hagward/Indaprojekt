@@ -20,14 +20,17 @@ public class MainMenuState extends BasicGameState {
 	private Image background = null;
 	private MenuListener menuListener;
 	private MouseOverArea newGameItem;
+	private MouseOverArea highScoreItem;
 	private MouseOverArea settingsItem;
 	private MouseOverArea helpItem;
 	private MouseOverArea quitItem;
+	private LevelHandler levels;
 	
 	protected static enum SubMenu { DEFAULT, HELP };
 
-	public MainMenuState(int stateID) {
+	public MainMenuState(int stateID, LevelHandler levelHandler) {
 		id = stateID;
+		levels = levelHandler;
 	}
 	
 	protected void setSubMenu(SubMenu menu) {
@@ -64,6 +67,7 @@ public class MainMenuState extends BasicGameState {
 			throws SlickException {
 		background.draw();
 		newGameItem.render(gc, g);
+		highScoreItem.render(gc, g);
 		settingsItem.render(gc, g);
 		helpItem.render(gc, g);
 		quitItem.render(gc, g);
@@ -86,19 +90,24 @@ public class MainMenuState extends BasicGameState {
 				x, y, menuListener);
 		newGameItem.setMouseOverImage(
 				new Image("data/menuitem-hover-new_game.png"));
+		highScoreItem = new MouseOverArea(
+				container, new Image("data/menuitem-highscore.png"),
+				x, y + 35, menuListener);
+		highScoreItem.setMouseOverImage(
+				new Image("data/menuitem-hover-highscore.png"));
 		settingsItem = new MouseOverArea(
 				container, new Image("data/menuitem-settings.png"),
-				x, y + 35, menuListener);
+				x, y + 70, menuListener);
 		settingsItem.setMouseOverImage(
 				new Image("data/menuitem-hover-settings.png"));
 		helpItem = new MouseOverArea(
 				container, new Image("data/menuitem-help.png"),
-				x, y + 70, menuListener);
+				x, y + 105, menuListener);
 		helpItem.setMouseOverImage(
 				new Image("data/menuitem-hover-help.png"));
 		quitItem = new MouseOverArea(
 				container, new Image("data/menuitem-quit.png"),
-				x, y + 105, menuListener);
+				x, y + 140, menuListener);
 		quitItem.setMouseOverImage(
 				new Image("data/menuitem-hover-quit.png"));
 	}
@@ -109,8 +118,10 @@ public class MainMenuState extends BasicGameState {
 			MouseOverArea source = (MouseOverArea) ac;
 			if (source == newGameItem) {
 				container.getInput().clearMousePressedRecord();
+				levels.reset();
 				game.enterState(BreakoutGame.GAMEPLAYSTATE);
-				
+			} else if (source == highScoreItem) {
+				game.enterState(BreakoutGame.HIGHSCORESTATE);
 			} else if (source == helpItem) {
 				setSubMenu(SubMenu.HELP);
 			} else if (source == quitItem) {

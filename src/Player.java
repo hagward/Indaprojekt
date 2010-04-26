@@ -1,8 +1,10 @@
 public class Player {
+	private int startLives;
 	private int lives;
 	private Score score;
 	
 	public Player(int lives) {
+		this.startLives = lives;
 		this.lives = lives;
 		this.score = new Score(0);
 	}
@@ -33,5 +35,10 @@ public class Player {
 	
 	public Score getScore() {
 		return score;
+	}
+	
+	public void reset() {
+		lives = startLives;
+		score.reset();
 	}
 }

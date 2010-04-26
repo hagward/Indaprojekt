@@ -21,9 +21,8 @@ public class GameplayState extends BasicGameState {
 	private int id = -1;
 	private Image hud;
 	private State currentState;
-	private LevelHandler currentLevel;
+	private LevelHandler levels;
 	private HighScoreHandler highScores;
-	private Player player;
 	private Sounds sounds;
 
 	/**
@@ -40,8 +39,10 @@ public class GameplayState extends BasicGameState {
 	 * @param stateID
 	 *            an arbitrary integer id
 	 */
-	public GameplayState(int stateID, HighScoreHandler highScoreHandler) {
+	public GameplayState(int stateID, LevelHandler levelHandler,
+			HighScoreHandler highScoreHandler) {
 		id = stateID;
+		levels = levelHandler;
 		highScores = highScoreHandler;
 	}
 
@@ -54,9 +55,7 @@ public class GameplayState extends BasicGameState {
 	public void init(GameContainer gc, StateBasedGame sbg)
 			throws SlickException {
 		hud = new Image("data/hud.png");
-		player = new Player(3);
 		sounds = new Sounds();
-		currentLevel = new LevelHandler(player);
 		currentState = State.START;
 	}
 
@@ -64,11 +63,11 @@ public class GameplayState extends BasicGameState {
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
 			throws SlickException {
 		hud.draw(0, 0);
-		currentLevel.renderCurrentLevel();
+		levels.renderCurrentLevel();
 		g.setColor(Color.black);
-		g.drawString("Lives: " + currentLevel.getPlayer().getLives(), 20, 300);
+		g.drawString("Lives: " + levels.getPlayer().getLives(), 20, 300);
 		g.drawString("Score: "
-				+ currentLevel.getPlayer().getScore().getPoints(), 20, 320);
+				+ levels.getPlayer().getScore().getPoints(), 20, 320);
 	}
 
 	@Override
@@ -77,41 +76,44 @@ public class GameplayState extends BasicGameState {
 		Input input = gc.getInput();
 		int mouseX = input.getMouseX();
 
-		currentLevel.updateRacket(mouseX);
+		levels.updateRacket(mouseX);
 
 		switch (currentState) {
 		case START:
 			if (input.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
 				currentState = State.PLAYING;
 			}
-			currentLevel.idle();
+			levels.idle();
 			break;
 		case PLAYING:
 			boolean gameOver = false;
-			currentLevel.updateCurrentLevel(this, delta, gc);
-			if (currentLevel.getPlayer().getLives() <= 0) 
+			levels.updateCurrentLevel(this, delta, gc);
+			if (levels.getPlayer().getLives() <= 0) 
 				gameOver = true;			
-			if (currentLevel.checkLevelBeaten()
+			if (levels.checkLevelBeaten()
 					|| input.isKeyPressed(Input.KEY_N)) {
 				try {
-					currentLevel.nextLevel();
+					levels.nextLevel();
 					currentState = State.START;
 				} catch (Exception e) {
 					gameOver = true;
 				}
 			}
 			if (gameOver) {
-				String name = JOptionPane.showInputDialog("Please enter your name:");
+				currentState = State.START;
+				String name = JOptionPane.showInputDialog(
+						"Please enter your name:");
 				if (name != null) {
 					sounds.victory();
-					player.setName(name);
-					highScores.addScore(player.getScore());
+					levels.getPlayer().setName(name);
+					highScores.addScore(levels.getPlayer().getScore());
+					highScores.save();
 					sbg.enterState(BreakoutGame.HIGHSCORESTATE);
 				} else {
 					sbg.enterState(BreakoutGame.MAINMENUSTATE);
-				}				
+				}
 			} else if (input.isKeyPressed(Input.KEY_R)) {
-				currentLevel.restartLevel();
+				levels.restartLevel();
 				currentState = State.START;
 			}
 			break;

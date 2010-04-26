@@ -28,7 +28,6 @@ public class LevelHandler {
 	public LevelHandler(Player player) throws SlickException {
 		currentLevel = 0;
 		this.player = player;
-		nextLevel();
 	}
 
 	public void nextLevel() throws SlickException {
@@ -40,8 +39,9 @@ public class LevelHandler {
 		nextLevel(currentLevel);
 	}
 
-	private void nextLevel(int level) throws SlickException {
+	public void nextLevel(int level) throws SlickException {
 		String levelPath = "data/level" + level + ".tmx";
+		currentLevel = level;
 		tiledMap = new TiledMap(levelPath);
 		blocks = new ArrayList<Block>();
 		resetLevel();
@@ -55,6 +55,16 @@ public class LevelHandler {
 		racket = new Racket(400, 550);
 		balls = new ArrayList<Ball>();
 		balls.add(new Ball(350, 400));		
+	}
+	
+	public void reset() {
+		try {
+			player.reset();
+			nextLevel(1);
+		} catch (SlickException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	private void generateBlockList() throws SlickException {

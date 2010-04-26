@@ -16,14 +16,17 @@ public class BreakoutGame extends StateBasedGame {
 	public static final int GAMEPLAYSTATE = 1;
 	public static final int HIGHSCORESTATE = 2;
 	
-	public BreakoutGame() {
+	public BreakoutGame() throws SlickException {
 		super("Breakout");
+		
+		Player player = new Player(3);
+		LevelHandler levels = new LevelHandler(player);
 		
 		HighScoreHandler highScores = new HighScoreHandler("highscore.txt");
 		highScores.parse();
 		
-		addState(new MainMenuState(MAINMENUSTATE));
-		addState(new GameplayState(GAMEPLAYSTATE, highScores));
+		addState(new MainMenuState(MAINMENUSTATE, levels));
+		addState(new GameplayState(GAMEPLAYSTATE, levels, highScores));
 		addState(new HighScoreState(HIGHSCORESTATE, highScores));
 		enterState(MAINMENUSTATE);
 	}
