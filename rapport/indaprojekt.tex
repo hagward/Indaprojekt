@@ -31,14 +31,17 @@
 Programmet skall underhålla och stjäla tid från användaren. Detta genom att låta denne styra ett racket för att upprepade gånger studsa en boll mot ett antal förstörbara block. Lär även vara gynnsamt för användarens pricksäkerhet och reflexer.
 
 \subsection{B}
-Programmet har lyckats uppfylla A, men erbjuder också så kallade "power ups" som ändrar spelupplevelsen under spelets gång. Det kan till exempel röra sig om att bollen åker fortare eller långsammare, dödliga dödskallar som faller från skyn eller liknande.
+Programmet har lyckats uppfylla A, men erbjuder också så kallade ``power ups" som ändrar spelupplevelsen under spelets gång och således kan verka ännu bättre för att skärpa användarens sinnen. Det kan till exempel röra sig om att bollen åker fortare eller långsammare, dödliga dödskallar som faller från skyn, extrabollar som gör entré eller liknande.
+
+\subsection{C}
+Egentligen är det inga direkta skillnader mellan programbeskrivningarna. ``Power ups":en gör bara att användaren får koncentrera sig ännu mer än beräknat för att inte gå hädan samt att spelet (förmodligen) kommer underhålla och själa ännu mer tid.
 
 \section{Användarbeskrivning}
 
 \subsection{A}
-Användaren förutsätts ha ``lagom'' datorvana, det vill säga vetskap om hur man startar en dator, kör ett program och interagerar med mus och tangentbord. En ungefärlig åldersskala är 6-60 år. Användaren bör även ha grundläggande kunskaper i det engelska språket.
+Användaren förutsätts ha ``lagom'' datorvana, det vill säga vetskap om hur man startar en dator, kör ett program och interagerar med mus och tangentbord. En ungefärlig åldersskala är 6-60 år. Användaren bör även ha grundläggande kunskaper i det engelska språket då menyerna och hjälpavsnittet är på engelska.
 
-\subsection{B}
+\subsection{B, C}
 Användarbeskrivningen har ej ändrats.
 
 \section{Användarscenarier}
@@ -75,27 +78,30 @@ Nedan följer de två scenarierna från A, fast som de slutligen blev.
 
 \subsubsection{Scenario I}
 \begin{enumerate}
-	\item Användaren startar programmet och möts av en huvudmeny med menyvalen \emph{New game}, \emph{Settings}, \emph{Help} och \emph{Quit}.
+	\item Användaren startar programmet och möts av en huvudmeny med menyvalen \emph{New game}, \emph{High Score}, \emph{Settings}, \emph{Help} och \emph{Quit}.
 	\item Användaren väljer det första alternativet och en ny vy framställs på skärmen. Denna består av ett racket längst ned som går att styra med musen, en boll fastsittandes mitt på racketet samt en hord av förstörbara block längst upp.
 	\item Användaren trycker på vänster musknapp och får bollen att fara iväg uppåt, studsandes mot blocken, väggarna och taket.
 	\item Blocken försvinner successivt i och med att bollen studsar på dem.
 	\item Alla block har slutligen försvunnit och användaren har därmed besegrat den nuvarande 'kartan'.
 	\item En ny karta presenteras (det vill säga, blocken är uppställda i en annan formation än tidigare).
-	\item Användaren väljer att avsluta spelet genom att trycka \texttt{Esc} för att få upp spelmenyn och sedan välja \emph{Quit}.
+	\item Användaren väljer att avsluta spelet genom att trycka \texttt{Esc} för att få upp spelmenyn, välja \emph{Quit} för att komma till huvudmenyn och där välja \emph{Quit} igen för att avsluta spelet.
 \end{enumerate}
 
 \subsubsection{Scenario II}
 \begin{enumerate}
 	\item Användaren startar programmet och möts av samma huvudmeny som i föregående scenario.
 	\item Användaren väljer menyvalet \emph{Help} och får reda på information om hur spelet fungerar.
-	\item Användaren backar tillbaka till huvudmenyn genom att trycka \texttt{Esc}.
+	\item Användaren backar tillbaka till huvudmenyn genom att trycka med musen på knappen \texttt{Back}.
 	\item Användaren väljer menyvalet \emph{Settings} och väljer att stänga av ljudet.
 	\item Användaren backar återigen till huvudmenyn på samma vis som tidigare men väljer nu \emph{New game}.
 	\item Samma spelvy som i föregående scenario visas och användaren spelar på samma sätt.
 	\item Användaren är inte så pricksäker och lyckas inte få bollen att studsa på racketet. För varje gång han missar förlorar han ett 'liv'.
 	\item Användaren förlorar tre liv och därmed även spelet.
-	\item En meny med valen \emph{Play again}, \emph{Settings}, \emph{Help} och \emph{Quit} visas. Användaren väljer det sistnämnda.
+	\item En meny med valen \emph{Play Again} och \emph{Quit} visas. Användaren väljer det sistnämnda för att komma tillbaka till huvudmenyn, och väljer där återigen \emph{Quit} för att avsluta spelet.
 \end{enumerate}
+
+\subsection{C}
+För det första så är huvudmenyn utökad med ännu ett alternativ, nämligen \emph{High Score} som föga förvånande tar spelaren till listan över de högsta uppnådda poängen (detta gäller båda scenarierna). Den andra märkbara skillnaden är att \emph{Quit}-alternativet i den så kallade ``in game"-menyn nu tar spelaren tillbaka till huvudmenyn istället för att avsluta hela programmet (gäller också båda scenarierna). De två sista delarna som skiljer sig återfinns i Scenario II och är att man inte 'backar' i menyerna med \texttt{Esc}-knappen samt att alternativen som visas när man förlorat är färre.
 
 \section{Testplan}
 
@@ -124,16 +130,28 @@ Programmet kommer bygga på spelbiblioteket \emph{Slick}. Nedan följer en lista
 \end{itemize}
 
 \subsection{B}
-Vi höll oss till biblioteket Slick, men klasstrukturen ändrades en del i förhållande till den i A:
+Vi höll oss till biblioteket Slick, men klasstrukturen skiljer sig en del från den ursprungligen planerade:
 
 \begin{itemize}
-	\item \texttt{MainMenuState, GameplayState}: Se A.
+	\item \texttt{MainMenuState, GameplayState, HighScoreState}: Se motsvarande förklaring i A-delen.
 	\item \texttt{LevelHandler}: Har hand om allt som rör kartorna; ladda in en karta från en fil och hålla koll på alla objekt på den (som bollar, block och så vidare).
 	\item \texttt{Ball, Block, Racket, PowerUp}: Klasser som representerar synliga spelobjekt. Alla dessa ärver Slick-klassen \texttt{Shape} på ett eller annat sätt, samt implementerar gränssnittet \texttt{Movable} för att kunna röra på sig. Förutom de positionsrelaterade metoderna ärvda från \texttt{Shape} har de den viktiga metoden \texttt{draw}, som ritar ut objektet på rätt plats på skärmen.
 	\item \texttt{Movable}: Ett interface med metoden \texttt{move}, där implementerande klasser får beskriva hur objektets position skall uppdateras.
 	\item \texttt{HighscoreHandler, Score}: Den förstnämnda har hand om själva highscorelistan, och att läsa och skriva den till en fil. Varje poäng representeras av ett \texttt{Score}-objekt, som innehåller poängen samt namnet på spelaren som uppnått dem.
 	\item \texttt{Player}: Representerar spelaren med ett namn, hur många liv spelaren har kvar samt dennes poäng.
 	\item \texttt{BreakoutGame}: 'Huvudklassen' som innehåller \texttt{main}-metoden.
+\end{itemize}
+
+\subsection{C}
+De huvudsakliga skillnaderna i punktform:
+
+\begin{itemize}
+	\item Ett så kallat 'state' lades till, nämligen \texttt{HighScoreState} som presenterar poänglistan.
+	\item Klassen \texttt{LevelHandler} skapades för att ha hand om allt som rör kartorna.
+	\item Så kallade ``power ups" lades till i spelet, där varje sådan representeras av ett \texttt{PowerUp}-objekt.
+	\item Den abstrakta klassen \texttt{GameObject} togs helt bort och ersattes med Slick-bibliotekets \texttt{Shape}-underklasser, detta för att göra kollisionsdetekteringen mer solid.
+	\item Den tänkta klassen \texttt{Highscore} förkastades och istället skapades \texttt{HighScoreHandler} samt \texttt{Score}.
+	\item Klassen \texttt{Player} skapades för att representera spelaren.
 \end{itemize}
 
 \section{Tekniska frågor}
@@ -156,6 +174,9 @@ Nedan följer en lista med tänkbara tekniska problem och eventuella lösningar.
 	\item[Problem:] Hur skall vi få spelet att köras lika snabbt på olika kraftfulla datorer? \textbf{Löstes så här:} Använde metoderna \texttt{setMinimumLogicUpdateInterval} och \texttt{setMaximumLogicUpdateInterval} från Slick-klassen \texttt{GameContainer} för att precisera uppdateringsintervallet.
 \end{description}
 
+\subsection{C}
+Det 'enda' större fundamentala problemet som stöttes på som inte tagits med i projektplanen var det sista i listan i B-sektionen; nämligen hur man skulle få spelet att köras lika snabbt vare sig datorn i fråga är av modellen snabbare eller långsammare.
+
 \section{Arbetsplan}
 
 \subsection{A}
@@ -171,9 +192,14 @@ Arbetsplanen är upplagd på följande vis:
 \end{description}
 
 \subsection{B}
-Vi låg i fas med den förbestämda arbetsplanen i princip genom hela arbetet. Uppdelningen skedde spontant allt eftersom vad vi kände för att göra och vad som behövde göras. I stora drag hade Anders hand om menyerna, kollisionshanteringen och poängsystemet, medan Fredrik fixade 'powerups':en och kartorna.
+Vi låg i fas med den förbestämda arbetsplanen i princip genom hela arbetet. Uppdelningen skedde spontant allt eftersom vad vi kände för att göra och vad som behövde göras. I stora drag hade Anders hand om menyerna, kollisionshanteringen och poängsystemet, medan Fredrik fixade ``power ups":en och kartorna.
 
 \section{Sammanfattning}
-VAD HAR VI LÄRT OSS AV PROJEKTET?
+Vi har lärt oss mycket av projektet;
+
+\begin{description}
+	\item[Versionshantering] Då vi använde programmet \emph{Git} för att hålla ordning på alla uppdateringar som gjordes har vi fått lära oss (grundläggande) om hur den typen av mjukvara fungerar och hur det är att arbeta tillsammans på ett projekt.
+	\item[Tredjepartsbibliotek] Som nämnt tidigare i texten användes spelbiblioteket \emph{Slick} vilket har gjort oss tvungna att ta reda på hur man importerar ett tredjepartsbibliotek i Java (eller kanske främst hur det går till med utvecklingsverktyget \emph{Eclipse}) samt gräva i dokumentationen för att få ett hum om hur det är uppbyggt.
+\end{description}
 
 \end{document}
