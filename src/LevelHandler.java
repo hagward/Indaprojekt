@@ -6,7 +6,7 @@ import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.geom.Rectangle;
+import org.newdawn.slick.Sound;
 import org.newdawn.slick.tiled.TiledMap;
 
 /**
@@ -54,7 +54,7 @@ public class LevelHandler {
 		animations = new ArrayList<Effect>();
 		racket = new Racket(400, 550);
 		balls = new ArrayList<Ball>();
-		balls.add(new Ball(350, 400));
+		balls.add(new Ball(350, 400));		
 	}
 
 	private void generateBlockList() throws SlickException {
@@ -121,9 +121,9 @@ public class LevelHandler {
 					ball.setYSpeed(-ball.getYSpeed());
 				} else if (ball.getY() > 600) {
 					if (balls.size() <= 1) {
+						gs.getSounds().death();
 						player.decreaseLives();
 						resetLevel();
-						// restartLevel();
 						gs.setState(GameplayState.State.START);
 					} else {
 						ball.setXSpeed(0);
@@ -131,6 +131,8 @@ public class LevelHandler {
 					}
 				}
 			} else if (ball.intersects(racket)) { // racket collision
+				
+				gs.getSounds().bounce();
 				if (ball.getY() < racket.getY()) {
 					float newXSpeed = ball.getCenterX() - racket.getCenterX();
 					newXSpeed /= 2.0f * racket.getWidth();
@@ -190,10 +192,18 @@ public class LevelHandler {
 			// removes stationary balls (and laser shots after hits)
 			if (ball.getXSpeed() == 0 && ball.getYSpeed() == 0)
 				ballIterator.remove();
-		}
+		}		
+		
 		balls.addAll(extraBalls);
-		extraBalls.clear();
-
+		extraBalls.clear();	
+		
+		if (balls.size() <= 0) {		
+			gs.getSounds().death();
+			player.decreaseLives();			
+			resetLevel();			
+			gs.setState(GameplayState.State.START);
+		}		
+		
 		Iterator<PowerUp> it = powerUps.iterator();
 		while (it.hasNext()) {
 			PowerUp pu = it.next();
@@ -215,8 +225,10 @@ public class LevelHandler {
 
 		// Skjut?
 		if (gc.getInput().isMousePressed(Input.MOUSE_LEFT_BUTTON)
-				&& racket.getLaser() != null)
+				&& racket.getLaser() != null) {
 			racket.getLaser().shot();
+			gs.getSounds().laser();
+		}
 	}
 
 	public boolean checkLevelBeaten() {

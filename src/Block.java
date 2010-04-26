@@ -19,7 +19,6 @@ public class Block extends Rectangle {
 		this.powerUp = powerUp;
 		if(powerUp >= 0) {
 			try {
-				System.out.print("a");
 				powerUpImage = new Image(PowerUp.powerUpPath(powerUp));
 			} catch (SlickException e) {
 			}

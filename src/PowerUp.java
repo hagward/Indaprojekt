@@ -338,7 +338,7 @@ public abstract class PowerUp extends Rectangle implements Movable {
 					public InvisibleBall(float x, float y)
 							throws SlickException {
 						super(x, y);
-						this.image = new Image("data/ball.png");
+						this.image = new Image("data/invisibleball.png");
 					}
 
 					public void setXSpeed(float x) {
