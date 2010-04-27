@@ -1,3 +1,8 @@
+/**
+ * @author Anders Hagward
+ * @author Fredrik Hillnertz
+ * @version 2010-04-27
+ */
 public class Player {
 	private int startLives;
 	private int lives;

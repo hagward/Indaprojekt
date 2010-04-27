@@ -11,7 +11,7 @@ import org.newdawn.slick.state.StateBasedGame;
 /**
  * @author Anders Hagward
  * @author Fredrik Hillnertz
- * @version 2010-04-16
+ * @version 2010-04-27
  */
 public class MainMenuState extends BasicGameState {
 	private int id = -1;
@@ -42,11 +42,11 @@ public class MainMenuState extends BasicGameState {
 	protected void setSubMenu(SubMenu menu) {
 		try {
 			switch (menu) {
-			case DEFAULT:
-				background = new Image("data/mainmenu.png");
-				break;
 			case HELP:
-				background = new Image("data/mainmenu_help.png");
+				background = new Image("data/images/mainmenu_help.png");
+				break;
+			default:
+				background = new Image("data/images/mainmenu.png");
 				break;
 			}
 			currentMenu = menu;
@@ -101,55 +101,55 @@ public class MainMenuState extends BasicGameState {
 		int y = 400;
 		
 		newGameItem = new MouseOverArea(
-				container, new Image("data/menuitem-new_game.png"),
+				container, new Image("data/images/menuitem-new_game.png"),
 				x, y, menuListener);
 		newGameItem.setMouseOverImage(
-				new Image("data/menuitem-hover-new_game.png"));
+				new Image("data/images/menuitem-hover-new_game.png"));
 		highScoreItem = new MouseOverArea(
-				container, new Image("data/menuitem-highscore.png"),
+				container, new Image("data/images/menuitem-highscore.png"),
 				x, y + 35, menuListener);
 		highScoreItem.setMouseOverImage(
-				new Image("data/menuitem-hover-highscore.png"));
+				new Image("data/images/menuitem-hover-highscore.png"));
 		settingsItem = new MouseOverArea(
-				container, new Image("data/menuitem-settings.png"),
+				container, new Image("data/images/menuitem-settings.png"),
 				x, y + 70, menuListener);
 		settingsItem.setMouseOverImage(
-				new Image("data/menuitem-hover-settings.png"));
+				new Image("data/images/menuitem-hover-settings.png"));
 		helpItem = new MouseOverArea(
-				container, new Image("data/menuitem-help.png"),
+				container, new Image("data/images/menuitem-help.png"),
 				x, y + 105, menuListener);
 		helpItem.setMouseOverImage(
-				new Image("data/menuitem-hover-help.png"));
+				new Image("data/images/menuitem-hover-help.png"));
 		quitItem = new MouseOverArea(
-				container, new Image("data/menuitem-quit.png"),
+				container, new Image("data/images/menuitem-quit.png"),
 				x, y + 140, menuListener);
 		quitItem.setMouseOverImage(
-				new Image("data/menuitem-hover-quit.png"));
+				new Image("data/images/menuitem-hover-quit.png"));
 		soundsOnOffItem = new MouseOverArea(
-				container, new Image("data/menuitem-sounds_on.png"),
+				container, new Image("data/images/menuitem-sounds_on.png"),
 				x, y, menuListener);
 		soundsOnOffItem.setMouseOverImage(
-				new Image("data/menuitem-hover-sounds_on.png"));
+				new Image("data/images/menuitem-hover-sounds_on.png"));
 		backItem = new MouseOverArea(
-				container, new Image("data/menuitem-back.png"),
+				container, new Image("data/images/menuitem-back.png"),
 				x, y + 35, menuListener);
 		backItem.setMouseOverImage(
-				new Image("data/menuitem-hover-back.png"));
+				new Image("data/images/menuitem-hover-back.png"));
 	}
 	
 	protected void toggleSounds() throws SlickException {
 		if (sounds.isEnabled()) {
 			sounds.setEnabled(false);
 			soundsOnOffItem.setNormalImage(
-					new Image("data/menuitem-sounds_off.png"));
+					new Image("data/images/menuitem-sounds_off.png"));
 			soundsOnOffItem.setMouseOverImage(
-					new Image("data/menuitem-hover-sounds_off.png"));
+					new Image("data/images/menuitem-hover-sounds_off.png"));
 		} else {
 			sounds.setEnabled(true);
 			soundsOnOffItem.setNormalImage(
-					new Image("data/menuitem-sounds_on.png"));
+					new Image("data/images/menuitem-sounds_on.png"));
 			soundsOnOffItem.setMouseOverImage(
-					new Image("data/menuitem-hover-sounds_on.png"));
+					new Image("data/images/menuitem-hover-sounds_on.png"));
 		}
 	}
 	

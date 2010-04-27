@@ -9,7 +9,7 @@ import org.newdawn.slick.state.StateBasedGame;
  * 
  * @author Anders Hagward
  * @author Fredrik Hillnertz
- * @version 2010-04-16
+ * @version 2010-04-27
  */
 public class BreakoutGame extends StateBasedGame {
 	public static final int MAINMENUSTATE = 0;
@@ -22,7 +22,7 @@ public class BreakoutGame extends StateBasedGame {
 		LevelHandler levels = new LevelHandler();
 		SoundPlayer sounds = new SoundPlayer();
 		HighScoreHandler highScores =
-				new HighScoreHandler("highscore.txt", 10);
+				new HighScoreHandler("data/data.bin", 10);
 		highScores.parse();
 		
 		addState(new MainMenuState(MAINMENUSTATE, levels, sounds));

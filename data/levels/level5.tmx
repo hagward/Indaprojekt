@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" width="13" height="32" tilewidth="60" tileheight="14">
  <tileset firstgid="1" name="block1" tilewidth="60" tileheight="14">
-  <image source="block1.png"/>
+  <image source="../images/block1.png"/>
   <tile id="0">
    <properties>
     <property name="health" value="1"/>
@@ -14,7 +14,7 @@
   </tile>
  </tileset>
  <tileset firstgid="2" name="speed" tilewidth="60" tileheight="14">
-  <image source="block2.png"/>
+  <image source="../images/block2.png"/>
   <tile id="0">
    <properties>
     <property name="health" value="2"/>
@@ -23,7 +23,7 @@
   </tile>
  </tileset>
  <tileset firstgid="3" name="block3" tilewidth="60" tileheight="14">
-  <image source="block3.png"/>
+  <image source="../images/block3.png"/>
   <tile id="0">
    <properties>
     <property name="health" value="3"/>
@@ -31,7 +31,7 @@
   </tile>
  </tileset>
  <tileset firstgid="4" name="block4" tilewidth="60" tileheight="14">
-  <image source="block4.png"/>
+  <image source="../images/block4.png"/>
   <tile id="0">
    <properties>
     <property name="health" value="4"/>
@@ -39,7 +39,7 @@
   </tile>
  </tileset>
  <tileset firstgid="5" name="exract" tilewidth="60" tileheight="14">
-  <image source="block5.png"/>
+  <image source="../images/block5.png"/>
   <tile id="0">
    <properties>
     <property name="health" value="2"/>
@@ -48,7 +48,7 @@
   </tile>
  </tileset>
  <tileset firstgid="6" name="multi" tilewidth="60" tileheight="14">
-  <image source="block6.png"/>
+  <image source="../images/block6.png"/>
   <tile id="0">
    <properties>
     <property name="health" value="1"/>
@@ -57,7 +57,7 @@
   </tile>
  </tileset>
  <tileset firstgid="7" name="block7" tilewidth="60" tileheight="14">
-  <image source="block7.png"/>
+  <image source="../images/block7.png"/>
   <tile id="0">
    <properties>
     <property name="health" value="4"/>
@@ -65,7 +65,7 @@
   </tile>
  </tileset>
  <tileset firstgid="8" name="block8" tilewidth="60" tileheight="14">
-  <image source="block8.png"/>
+  <image source="../images/block8.png"/>
   <tile id="0">
    <properties>
     <property name="health" value="8"/>
@@ -73,7 +73,7 @@
   </tile>
  </tileset>
  <tileset firstgid="9" name="block" tilewidth="60" tileheight="14">
-  <image source="block.png"/>
+  <image source="../images/block.png"/>
   <tile id="0">
    <properties>
     <property name="healh" value="1"/>
@@ -82,7 +82,7 @@
   </tile>
  </tileset>
  <tileset firstgid="10" name="block1" tilewidth="60" tileheight="14">
-  <image source="block1.png"/>
+  <image source="../images/block1.png"/>
   <tile id="0">
    <properties>
     <property name="health" value="1"/>
@@ -91,10 +91,10 @@
   </tile>
  </tileset>
  <tileset firstgid="11" name="death" tilewidth="60" tileheight="14">
-  <image source="block3.png"/>
+  <image source="../images/block3.png"/>
  </tileset>
  <tileset firstgid="12" name="fire" tilewidth="60" tileheight="14">
-  <image source="block7.png"/>
+  <image source="../images/block7.png"/>
   <tile id="0">
    <properties>
     <property name="health" value="2"/>
@@ -103,7 +103,7 @@
   </tile>
  </tileset>
  <tileset firstgid="13" name="laser" tilewidth="60" tileheight="14">
-  <image source="block6.png"/>
+  <image source="../images/block6.png"/>
   <tile id="0">
    <properties>
     <property name="health" value="1"/>
@@ -112,7 +112,7 @@
   </tile>
  </tileset>
  <tileset firstgid="14" name="health" tilewidth="60" tileheight="14">
-  <image source="block5.png"/>
+  <image source="../images/block5.png"/>
   <tile id="0">
    <properties>
     <property name="health" value="7"/>

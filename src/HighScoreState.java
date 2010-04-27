@@ -9,6 +9,11 @@ import org.newdawn.slick.gui.MouseOverArea;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+/**
+ * @author Anders Hagward
+ * @author Fredrik Hillnertz
+ * @version 2010-04-27
+ */
 public class HighScoreState extends BasicGameState {
 	private int id = -1;
 	private Image background;
@@ -32,14 +37,14 @@ public class HighScoreState extends BasicGameState {
 			throws SlickException {
 		container = gc;
 		game = sbg;
-		background = new Image("data/highscore_bg.png");
+		background = new Image("data/images/highscore_bg.png");
 		
 		MenuListener menuListener = new MenuListener();
 		backItem = new MouseOverArea(
-				gc, new Image("data/menuitem-back.png"),
+				gc, new Image("data/images/menuitem-back.png"),
 				600, 400, menuListener);
 		backItem.setMouseOverImage(
-				new Image("data/menuitem-hover-back.png"));
+				new Image("data/images/menuitem-hover-back.png"));
 	}
 
 	@Override

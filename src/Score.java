@@ -1,3 +1,8 @@
+/**
+ * @author Anders Hagward
+ * @author Fredrik Hillnertz
+ * @version 2010-04-27
+ */
 public class Score implements Comparable<Score> {
 	private String author;
 	private int points;

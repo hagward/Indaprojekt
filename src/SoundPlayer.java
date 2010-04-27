@@ -1,6 +1,11 @@
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
 
+/**
+ * @author Anders Hagward
+ * @author Fredrik Hillnertz
+ * @version 2010-04-27
+ */
 public class SoundPlayer {
 	private Sound bounce, explosion, death, victory,
 			blockDestroyed, laser, gameOver;

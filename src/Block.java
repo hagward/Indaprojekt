@@ -5,9 +5,10 @@ import org.newdawn.slick.geom.Rectangle;
 /**
  * @author Anders Hagward
  * @author Fredrik Hillnertz
- * @version 2010-04-21
+ * @version 2010-04-27
  */
 public class Block extends Rectangle {
+	private static final long serialVersionUID = 7260235503507495737L;
 	private int health;
 	private Image image;
 	private Image powerUpImage;
@@ -47,7 +48,7 @@ public class Block extends Rectangle {
 	}
 
 	public void resetImage() {
-		String imgPath = "data/block" + health + ".png";
+		String imgPath = "data/images/block" + health + ".png";
 		try {
 			image = new Image(imgPath);
 		} catch (SlickException e) {

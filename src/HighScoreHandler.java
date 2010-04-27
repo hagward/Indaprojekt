@@ -1,11 +1,17 @@
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Iterator;
 import java.util.TreeSet;
 
+/**
+ * @author Anders Hagward
+ * @author Fredrik Hillnertz
+ * @version 2010-04-27
+ */
 public class HighScoreHandler {
 	private File file;
 	private TreeSet<Score> scores;
@@ -44,6 +50,12 @@ public class HighScoreHandler {
 			
 			while (scores.size() > maxSize) {
 				scores.pollFirst();
+			}
+		} catch (FileNotFoundException e) {
+			try {
+				file.createNewFile();
+			} catch (IOException e1) {
+				System.err.println("Unable to create file " + file.getName());
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

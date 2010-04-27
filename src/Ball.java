@@ -5,10 +5,11 @@ import org.newdawn.slick.geom.Circle;
 /**
  * @author Anders Hagward
  * @author Fredrik Hillnertz
- * @version 2010-04-21
+ * @version 2010-04-27
  */
 public class Ball extends Circle implements Movable {
-	private static final String DEFAULT_IMG_PATH = "data/ball.png";
+	private static final long serialVersionUID = 7889780389881617843L;
+	private static final String DEFAULT_IMG_PATH = "data/images/ball.png";
 	private static final float DEFAULT_SPEED = -0.2f;
 	private static final float MAX_SPEED = 1f;
 

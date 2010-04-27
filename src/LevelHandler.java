@@ -1,18 +1,16 @@
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Random;
 
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.Sound;
 import org.newdawn.slick.tiled.TiledMap;
 
 /**
  * @author Anders Hagward
  * @author Fredrik Hillnertz
- * @version 2010-04-21
+ * @version 2010-04-27
  */
 public class LevelHandler {
 	private TiledMap tiledMap;
@@ -40,7 +38,7 @@ public class LevelHandler {
 	}
 
 	public void nextLevel(int level) throws SlickException {
-		String levelPath = "data/level" + level + ".tmx";
+		String levelPath = "data/levels/level" + level + ".tmx";
 		currentLevel = level;
 		tiledMap = new TiledMap(levelPath);
 		blocks = new ArrayList<Block>();
@@ -267,7 +265,6 @@ public class LevelHandler {
 	}
 
 	private void spawnPowerUp(Block block) throws SlickException {
-		Random rand = new Random();
 		PowerUp pu = PowerUp.randomPowerUp(block);
 		if (pu != null)
 			powerUps.add(pu);

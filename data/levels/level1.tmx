@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" width="13" height="32" tilewidth="60" tileheight="14">
  <tileset firstgid="1" name="block" tilewidth="60" tileheight="14">
-  <image source="block.png"/>
+  <image source="../images/block.png"/>
   <tile id="0">
    <properties>
     <property name="health" value="1"/>
@@ -9,7 +9,7 @@
   </tile>
  </tileset>
  <tileset firstgid="2" name="block" tilewidth="60" tileheight="14">
-  <image source="block.png"/>
+  <image source="../images/block.png"/>
   <tile id="0">
    <properties>
     <property name="health" value="1"/>
@@ -18,7 +18,7 @@
   </tile>
  </tileset>
  <tileset firstgid="3" name="blockpu1" tilewidth="60" tileheight="14">
-  <image source="block.png"/>
+  <image source="../images/block.png"/>
   <tile id="0">
    <properties>
     <property name="health" value="1"/>
@@ -27,7 +27,7 @@
   </tile>
  </tileset>
  <tileset firstgid="4" name="blockpu4" tilewidth="60" tileheight="14">
-  <image source="block.png"/>
+  <image source="../images/block.png"/>
   <tile id="0">
    <properties>
     <property name="health" value="1"/>
@@ -36,7 +36,7 @@
   </tile>
  </tileset>
  <tileset firstgid="5" name="block3" tilewidth="60" tileheight="14">
-  <image source="block3.png"/>
+  <image source="../images/block3.png"/>
   <tile id="0">
    <properties>
     <property name="health" value="3"/>

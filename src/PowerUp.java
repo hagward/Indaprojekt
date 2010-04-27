@@ -1,12 +1,17 @@
 import java.util.ArrayList;
 import java.util.Random;
 
-import org.newdawn.slick.Animation;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 
+/**
+ * @author Anders Hagward
+ * @author Fredrik Hillnertz
+ * @version 2010-04-27
+ */
 public abstract class PowerUp extends Rectangle implements Movable {
+	private static final long serialVersionUID = 3337170896734989953L;
 	public static int EXTEND = 0, RETRACT = 1, ADD_BALL = 2, PSPEED = 3,
 			MSPEED = 4, LASER = 5, PLIFE = 6, MLIFE = 7, FIREBALL = 8;
 
@@ -66,23 +71,23 @@ public abstract class PowerUp extends Rectangle implements Movable {
 	public static String powerUpPath(int i) {
 		switch(i) {
 		case 0:
-			return "data/ExtendRacket.png";
+			return "data/images/ExtendRacket.png";
 		case 1:
-			return "data/RetractRacket.png";
+			return "data/images/RetractRacket.png";
 		case 2:
-			return "data/multiplyballs.png";
+			return "data/images/multiplyballs.png";
 		case 3:
-			return "data/speed+.png";
+			return "data/images/speed+.png";
 		case 4:
-			return "data/speed-.png";
+			return "data/images/speed-.png";
 		case 5:
-			return "data/lasers.png";
+			return "data/images/lasers.png";
 		case 6:
-			return "data/life+.png";
+			return "data/images/life+.png";
 		case 7:
-			return "data/life-.png";
+			return "data/images/life-.png";
 		case 8:
-			return "data/fireballs.png";
+			return "data/images/fireballs.png";
 		}
 		return null;
 	}
@@ -124,7 +129,7 @@ public abstract class PowerUp extends Rectangle implements Movable {
 	public static class RetractRacket extends PowerUp {
 
 		public RetractRacket(float xPos, float yPos) throws SlickException {
-			super(xPos, yPos, new Image("data/RetractRacket.png"));
+			super(xPos, yPos, new Image("data/images/RetractRacket.png"));
 		}
 
 		@Override
@@ -136,7 +141,7 @@ public abstract class PowerUp extends Rectangle implements Movable {
 	public static class ExtendRacket extends PowerUp {
 
 		public ExtendRacket(float xPos, float yPos) throws SlickException {
-			super(xPos, yPos, new Image("data/ExtendRacket.png"));
+			super(xPos, yPos, new Image("data/images/ExtendRacket.png"));
 		}
 
 		@Override
@@ -148,7 +153,7 @@ public abstract class PowerUp extends Rectangle implements Movable {
 	public static class AddBall extends PowerUp {
 
 		public AddBall(float xPos, float yPos) throws SlickException {
-			super(xPos, yPos, new Image("data/multiplyballs.png"));
+			super(xPos, yPos, new Image("data/images/multiplyballs.png"));
 		}
 
 		@Override
@@ -173,12 +178,12 @@ public abstract class PowerUp extends Rectangle implements Movable {
 		private float multiplier;
 
 		public Speed(float xPos, float yPos, int dir) throws SlickException {
-			super(xPos, yPos, new Image("data/speed+.png"));
+			super(xPos, yPos, new Image("data/images/speed+.png"));
 			if (dir > 0)
 				multiplier = 1.5f;
 			else {
 				multiplier = 0.5f;
-				image = new Image("data/speed-.png");
+				image = new Image("data/images/speed-.png");
 			}
 		}
 
@@ -201,7 +206,7 @@ public abstract class PowerUp extends Rectangle implements Movable {
 		private ArrayList<Ball> balls;
 
 		public PewPewLasers(float xPos, float yPos) throws SlickException {
-			super(xPos, yPos, new Image("data/lasers.png"));
+			super(xPos, yPos, new Image("data/images/lasers.png"));
 		}
 
 		public void effect(LevelHandler level) throws SlickException {
@@ -220,7 +225,7 @@ public abstract class PowerUp extends Rectangle implements Movable {
 		class LaserShot extends Ball {
 			public LaserShot() throws SlickException {
 				super(racket.getCenterX(), racket.getY() - 20);
-				this.image = new Image("data/lasershot.png");
+				this.image = new Image("data/images/lasershot.png");
 				setXSpeed(0f);
 				setYSpeed(-.2f);
 				balls.add(this);
@@ -240,10 +245,10 @@ public abstract class PowerUp extends Rectangle implements Movable {
 
 		public Life(float xPos, float yPos, int plusMinus)
 				throws SlickException {
-			super(xPos, yPos, new Image("data/life+.png"));
+			super(xPos, yPos, new Image("data/images/life+.png"));
 			this.plusMinus = plusMinus;
 			if (plusMinus < 0)
-				image = new Image("data/life-.png");
+				image = new Image("data/images/life-.png");
 		}
 
 		public void effect(LevelHandler level) throws SlickException {
@@ -260,7 +265,7 @@ public abstract class PowerUp extends Rectangle implements Movable {
 		private ArrayList<Effect> animations;
 
 		public Fireballs(float xPos, float yPos) throws SlickException {
-			super(xPos, yPos, new Image("data/fireballs.png"));
+			super(xPos, yPos, new Image("data/images/fireballs.png"));
 		}
 
 		public void effect(LevelHandler level) throws SlickException {
@@ -290,7 +295,7 @@ public abstract class PowerUp extends Rectangle implements Movable {
 			public Fireball(float centerPointX, float centerPointY)
 					throws SlickException {
 				super(centerPointX, centerPointY);
-				this.image = new Image("data/fireball.png");
+				this.image = new Image("data/images/fireball.png");
 			}
 
 			public void setXSpeed(float xSpeed) {
@@ -343,7 +348,7 @@ public abstract class PowerUp extends Rectangle implements Movable {
 					public InvisibleBall(float x, float y)
 							throws SlickException {
 						super(x, y);
-						this.image = new Image("data/invisibleball.png");
+						this.image = new Image("data/images/invisibleball.png");
 					}
 
 					public void setXSpeed(float x) {

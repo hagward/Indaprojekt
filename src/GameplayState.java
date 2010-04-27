@@ -15,7 +15,7 @@ import org.newdawn.slick.state.StateBasedGame;
  * 
  * @author Anders Hagward
  * @author Fredrik Hillnertz
- * @version 2010-04-16
+ * @version 2010-04-27
  */
 public class GameplayState extends BasicGameState {
 	private int id = -1;
@@ -55,7 +55,7 @@ public class GameplayState extends BasicGameState {
 	@Override
 	public void init(GameContainer gc, StateBasedGame sbg)
 			throws SlickException {
-		hud = new Image("data/hud.png");
+		hud = new Image("data/images/hud.png");
 		currentState = State.START;
 	}
 
@@ -112,9 +112,6 @@ public class GameplayState extends BasicGameState {
 				} else {
 					sbg.enterState(BreakoutGame.MAINMENUSTATE);
 				}
-			} else if (input.isKeyPressed(Input.KEY_R)) {
-				levels.restartLevel();
-				currentState = State.START;
 			}
 			break;
 		}
