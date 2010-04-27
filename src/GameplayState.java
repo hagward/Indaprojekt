@@ -65,9 +65,8 @@ public class GameplayState extends BasicGameState {
 		hud.draw(0, 0);
 		levels.renderCurrentLevel();
 		g.setColor(Color.black);
-		g.drawString("Lives: " + levels.getPlayer().getLives(), 20, 300);
-		g.drawString("Score: "
-				+ levels.getPlayer().getScore().getPoints(), 20, 320);
+		g.drawString("Lives: " + levels.getPlayer().getLives() + "\nScore: "
+				+ levels.getPlayer().getScore().getPoints(), 20, 300);
 	}
 
 	@Override
@@ -88,10 +87,9 @@ public class GameplayState extends BasicGameState {
 		case PLAYING:
 			boolean gameOver = false;
 			levels.updateCurrentLevel(this, delta, gc);
-			if (levels.getPlayer().getLives() <= 0) 
-				gameOver = true;			
-			if (levels.checkLevelBeaten()
-					|| input.isKeyPressed(Input.KEY_N)) {
+			if (levels.getPlayer().getLives() <= 0)
+				gameOver = true;
+			if (levels.checkLevelBeaten() || input.isKeyPressed(Input.KEY_N)) {
 				try {
 					levels.nextLevel();
 					currentState = State.START;
@@ -101,11 +99,12 @@ public class GameplayState extends BasicGameState {
 			}
 			if (gameOver) {
 				currentState = State.START;
-				String name = JOptionPane.showInputDialog(
-						"Please enter your name:");
+				String name = JOptionPane
+						.showInputDialog("Please enter your name:");
 				if (name != null) {
 					soundPlayer.victory();
 					levels.getPlayer().setName(name);
+					levels.getPlayer().getScore().addPoints(levels.getPlayer().getLives() * 10000);
 					highScores.addScore(levels.getPlayer().getScore());
 					highScores.save();
 					sbg.enterState(BreakoutGame.HIGHSCORESTATE);
@@ -127,11 +126,11 @@ public class GameplayState extends BasicGameState {
 	public SoundPlayer getSounds() {
 		return soundPlayer;
 	}
-	
+
 	public void soundsOff() {
 		soundPlayer.setEnabled(false);
 	}
-	
+
 	public void soundsOn() {
 		soundPlayer.setEnabled(true);
 	}

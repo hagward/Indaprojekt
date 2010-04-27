@@ -1,10 +1,1 @@
-Micke|-71
-Muffe|-65
-Leif|-63
-Miff|-59
-Nygäddan|-58
-Miffe|5
-Leifzor|129
-Muffeln|348
-Bäst|599
-Bästast|99999
+Anders|32028
