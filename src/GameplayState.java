@@ -40,10 +40,11 @@ public class GameplayState extends BasicGameState {
 	 *            an arbitrary integer id
 	 */
 	public GameplayState(int stateID, LevelHandler levelHandler,
-			HighScoreHandler highScoreHandler) {
+			HighScoreHandler highScoreHandler, SoundPlayer soundPlayer) {
 		id = stateID;
 		levels = levelHandler;
 		highScores = highScoreHandler;
+		this.soundPlayer = soundPlayer;
 	}
 
 	@Override
@@ -55,7 +56,6 @@ public class GameplayState extends BasicGameState {
 	public void init(GameContainer gc, StateBasedGame sbg)
 			throws SlickException {
 		hud = new Image("data/hud.png");
-		soundPlayer = new SoundPlayer();
 		currentState = State.START;
 	}
 
@@ -104,7 +104,8 @@ public class GameplayState extends BasicGameState {
 				if (name != null) {
 					soundPlayer.victory();
 					levels.getPlayer().setName(name);
-					levels.getPlayer().getScore().addPoints(levels.getPlayer().getLives() * 10000);
+					levels.getPlayer().getScore().addPoints(
+							levels.getPlayer().getLives() * 10000);
 					highScores.addScore(levels.getPlayer().getScore());
 					highScores.save();
 					sbg.enterState(BreakoutGame.HIGHSCORESTATE);

@@ -20,13 +20,13 @@ public class BreakoutGame extends StateBasedGame {
 		super("Breakout");
 		
 		LevelHandler levels = new LevelHandler();
-		
+		SoundPlayer sounds = new SoundPlayer();
 		HighScoreHandler highScores =
 				new HighScoreHandler("highscore.txt", 10);
 		highScores.parse();
 		
-		addState(new MainMenuState(MAINMENUSTATE, levels));
-		addState(new GameplayState(GAMEPLAYSTATE, levels, highScores));
+		addState(new MainMenuState(MAINMENUSTATE, levels, sounds));
+		addState(new GameplayState(GAMEPLAYSTATE, levels, highScores, sounds));
 		addState(new HighScoreState(HIGHSCORESTATE, highScores));
 		enterState(MAINMENUSTATE);
 	}

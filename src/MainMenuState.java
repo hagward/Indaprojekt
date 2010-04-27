@@ -17,20 +17,26 @@ public class MainMenuState extends BasicGameState {
 	private int id = -1;
 	private GameContainer container;
 	private StateBasedGame game;
-	private Image background = null;
+	private Image background;
 	private MenuListener menuListener;
 	private MouseOverArea newGameItem;
 	private MouseOverArea highScoreItem;
 	private MouseOverArea settingsItem;
 	private MouseOverArea helpItem;
 	private MouseOverArea quitItem;
+	private MouseOverArea backItem;
+	private MouseOverArea soundsOnOffItem;
 	private LevelHandler levels;
+	private SoundPlayer sounds;
+	private SubMenu currentMenu;
 	
-	protected static enum SubMenu { DEFAULT, HELP };
+	protected static enum SubMenu { DEFAULT, SETTINGS, HELP };
 
-	public MainMenuState(int stateID, LevelHandler levelHandler) {
+	public MainMenuState(int stateID,
+			LevelHandler levelHandler, SoundPlayer soundPlayer) {
 		id = stateID;
 		levels = levelHandler;
+		sounds = soundPlayer;
 	}
 	
 	protected void setSubMenu(SubMenu menu) {
@@ -42,7 +48,8 @@ public class MainMenuState extends BasicGameState {
 			case HELP:
 				background = new Image("data/mainmenu_help.png");
 				break;
-			};
+			}
+			currentMenu = menu;
 		} catch (SlickException e) {
 			System.err.println("Failed to load image: " + e.getMessage());
 		}
@@ -57,8 +64,8 @@ public class MainMenuState extends BasicGameState {
 	public void init(GameContainer gc, StateBasedGame sbg)
 			throws SlickException {
 		game = sbg;
-		background = new Image("data/mainmenu.png");
 		container = gc;
+		setSubMenu(SubMenu.DEFAULT);
 		setupMenu();
 	}
 
@@ -66,11 +73,19 @@ public class MainMenuState extends BasicGameState {
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
 			throws SlickException {
 		background.draw();
-		newGameItem.render(gc, g);
-		highScoreItem.render(gc, g);
-		settingsItem.render(gc, g);
-		helpItem.render(gc, g);
-		quitItem.render(gc, g);
+		switch (currentMenu) {
+		case SETTINGS:
+			soundsOnOffItem.render(gc, g);
+			backItem.render(gc, g);
+			break;
+		default:
+			newGameItem.render(gc, g);
+			highScoreItem.render(gc, g);
+			settingsItem.render(gc, g);
+			helpItem.render(gc, g);
+			quitItem.render(gc, g);
+			break;
+		}
 	}
 
 	@Override
@@ -110,6 +125,32 @@ public class MainMenuState extends BasicGameState {
 				x, y + 140, menuListener);
 		quitItem.setMouseOverImage(
 				new Image("data/menuitem-hover-quit.png"));
+		soundsOnOffItem = new MouseOverArea(
+				container, new Image("data/menuitem-sounds_on.png"),
+				x, y, menuListener);
+		soundsOnOffItem.setMouseOverImage(
+				new Image("data/menuitem-hover-sounds_on.png"));
+		backItem = new MouseOverArea(
+				container, new Image("data/menuitem-back.png"),
+				x, y + 35, menuListener);
+		backItem.setMouseOverImage(
+				new Image("data/menuitem-hover-back.png"));
+	}
+	
+	protected void toggleSounds() throws SlickException {
+		if (sounds.isEnabled()) {
+			sounds.setEnabled(false);
+			soundsOnOffItem.setNormalImage(
+					new Image("data/menuitem-sounds_off.png"));
+			soundsOnOffItem.setMouseOverImage(
+					new Image("data/menuitem-hover-sounds_off.png"));
+		} else {
+			sounds.setEnabled(true);
+			soundsOnOffItem.setNormalImage(
+					new Image("data/menuitem-sounds_on.png"));
+			soundsOnOffItem.setMouseOverImage(
+					new Image("data/menuitem-hover-sounds_on.png"));
+		}
 	}
 	
 	private class MenuListener implements ComponentListener {
@@ -121,6 +162,8 @@ public class MainMenuState extends BasicGameState {
 				container.getInput().clearMousePressedRecord();
 				levels.reset();
 				game.enterState(BreakoutGame.GAMEPLAYSTATE);
+			} else if (source == settingsItem) {
+				setSubMenu(SubMenu.SETTINGS);
 			} else if (source == highScoreItem) {
 				setSubMenu(SubMenu.DEFAULT);
 				game.enterState(BreakoutGame.HIGHSCORESTATE);
@@ -128,6 +171,14 @@ public class MainMenuState extends BasicGameState {
 				setSubMenu(SubMenu.HELP);
 			} else if (source == quitItem) {
 				container.exit();
+			} else if (source == backItem) {
+				setSubMenu(SubMenu.DEFAULT);
+			} else if (source == soundsOnOffItem) {
+				try {
+					toggleSounds();
+				} catch (SlickException e) {
+					System.err.println("Unable to toggle sounds!");
+				}
 			}
 		}
 	}
