@@ -19,10 +19,10 @@ public class BreakoutGame extends StateBasedGame {
 	public BreakoutGame() throws SlickException {
 		super("Breakout");
 		
-		Player player = new Player(3);
-		LevelHandler levels = new LevelHandler(player);
+		LevelHandler levels = new LevelHandler();
 		
-		HighScoreHandler highScores = new HighScoreHandler("highscore.txt");
+		HighScoreHandler highScores =
+				new HighScoreHandler("highscore.txt", 10);
 		highScores.parse();
 		
 		addState(new MainMenuState(MAINMENUSTATE, levels));

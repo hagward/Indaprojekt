@@ -9,14 +9,19 @@ import java.util.TreeSet;
 public class HighScoreHandler {
 	private File file;
 	private TreeSet<Score> scores;
+	private int maxSize;
 	
-	public HighScoreHandler(String fileName) {
+	public HighScoreHandler(String fileName, int maxNumberOfScores) {
 		file = new File(fileName);
 		scores = new TreeSet<Score>();
+		maxSize = maxNumberOfScores;
 	}
 	
 	public void addScore(Score score) {
 		scores.add(score);
+		if (scores.size() > maxSize) {
+			scores.pollFirst();
+		}
 	}
 	
 	public void removeScore(Score score) {
@@ -36,6 +41,10 @@ public class HighScoreHandler {
 				}
 			}
 			in.close();
+			
+			while (scores.size() > maxSize) {
+				scores.pollFirst();
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -61,12 +70,16 @@ public class HighScoreHandler {
 	public String toString() {
 		Iterator<Score> it = getScoreIterator();
 		StringBuilder sb = new StringBuilder();
+		int n = 1;
 		while (it.hasNext()) {
 			Score score = it.next();
+			sb.append(n);
+			sb.append(": ");
 			sb.append(score.getAuthor());
 			sb.append(": ");
 			sb.append(score.getPoints());
 			sb.append("\n");
+			n++;
 		}
 		return sb.toString();
 	}

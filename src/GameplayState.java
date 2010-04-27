@@ -23,7 +23,7 @@ public class GameplayState extends BasicGameState {
 	private State currentState;
 	private LevelHandler levels;
 	private HighScoreHandler highScores;
-	private Sounds sounds;
+	private SoundPlayer soundPlayer;
 
 	/**
 	 * Contains all the 'inner' states.
@@ -55,7 +55,7 @@ public class GameplayState extends BasicGameState {
 	public void init(GameContainer gc, StateBasedGame sbg)
 			throws SlickException {
 		hud = new Image("data/hud.png");
-		sounds = new Sounds();
+		soundPlayer = new SoundPlayer();
 		currentState = State.START;
 	}
 
@@ -104,7 +104,7 @@ public class GameplayState extends BasicGameState {
 				String name = JOptionPane.showInputDialog(
 						"Please enter your name:");
 				if (name != null) {
-					sounds.victory();
+					soundPlayer.victory();
 					levels.getPlayer().setName(name);
 					highScores.addScore(levels.getPlayer().getScore());
 					highScores.save();
@@ -124,15 +124,15 @@ public class GameplayState extends BasicGameState {
 		currentState = newState;
 	}
 
-	public Sounds getSounds() {
-		return sounds;
+	public SoundPlayer getSounds() {
+		return soundPlayer;
 	}
 	
 	public void soundsOff() {
-		sounds.setSound(false);
+		soundPlayer.setEnabled(false);
 	}
 	
 	public void soundsOn() {
-		sounds.setSound(true);
+		soundPlayer.setEnabled(true);
 	}
 }

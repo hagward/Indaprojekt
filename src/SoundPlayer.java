@@ -1,11 +1,12 @@
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
 
-public class Sounds {
-	private Sound bounce, explosion, death, victory, blockDestroyed, laser, gameOver;
-	private boolean sounds = true;
+public class SoundPlayer {
+	private Sound bounce, explosion, death, victory,
+			blockDestroyed, laser, gameOver;
+	private boolean enabled = true;
 
-	public Sounds() throws SlickException {
+	public SoundPlayer() throws SlickException {
 		bounce = new Sound("data/sounds/bounce.wav");
 	//	explosion = new Sound("data/sounds/explosion");
 		death = new Sound("data/sounds/death.wav");
@@ -15,37 +16,36 @@ public class Sounds {
 	}
 
 	public void bounce() {
-		if(sounds)
+		if(enabled)
 			bounce.play();
 	}
 
 	public void explosion() {
-		if(sounds)
+		if(enabled)
 			explosion.play();
 	}
 
 	public void death() {
-		if(sounds)
+		if(enabled)
 			death.play();
 	}
 
 	public void victory() {
-		if(sounds)
+		if(enabled)
 			victory.play();
 	}
 
 	public void blockDestroyed() {
-		if(sounds)
+		if(enabled)
 			blockDestroyed.play();
 	}
 
 	public void laser() {
-		if(sounds)
+		if(enabled)
 			laser.play();
 	}
 
-	public void setSound(boolean offon) {
-		sounds = offon;
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
 	}
-	
 }

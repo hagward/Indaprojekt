@@ -26,9 +26,8 @@ public class LevelHandler {
 	private int currentLevel;
 	private int time;
 
-	public LevelHandler(Player player) throws SlickException {
+	public LevelHandler() throws SlickException {
 		currentLevel = 0;
-		this.player = player;
 	}
 
 	public void nextLevel() throws SlickException {
@@ -60,7 +59,7 @@ public class LevelHandler {
 	
 	public void reset() {
 		try {
-			player.reset();
+			player = new Player(3);
 			nextLevel(1);
 		} catch (SlickException e) {
 			// TODO Auto-generated catch block
