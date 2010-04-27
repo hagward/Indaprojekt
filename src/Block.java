@@ -17,7 +17,7 @@ public class Block extends Rectangle {
 		super(x, y, 60, 14);
 		this.health = health;
 		this.powerUp = powerUp;
-		if(powerUp >= 0) {
+		if (powerUp >= 0) {
 			try {
 				powerUpImage = new Image(PowerUp.powerUpPath(powerUp));
 			} catch (SlickException e) {
@@ -57,8 +57,8 @@ public class Block extends Rectangle {
 
 	public void draw() {
 		image.draw(x, y);
-		if(powerUpImage != null)
-			powerUpImage.draw(x, y);
+		if (powerUpImage != null)
+			powerUpImage.draw(x, y, powerUpImage.getWidth(), 14);
 	}
 
 	public int getPowerUp() {

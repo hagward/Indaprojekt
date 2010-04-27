@@ -10,6 +10,7 @@ import org.newdawn.slick.geom.Circle;
 public class Ball extends Circle implements Movable {
 	private static final String DEFAULT_IMG_PATH = "data/ball.png";
 	private static final float DEFAULT_SPEED = -0.2f;
+	private static final float MAX_SPEED = 1f;
 
 	protected float xSpeed;
 	protected float ySpeed;
@@ -67,11 +68,23 @@ public class Ball extends Circle implements Movable {
 	@Override
 	public void setXSpeed(float xSpeed) {
 		this.xSpeed = xSpeed;
+		if(Math.abs(xSpeed) > MAX_SPEED) {
+			if(xSpeed >= 0)
+				this.xSpeed = MAX_SPEED;
+			else
+				this.xSpeed = -MAX_SPEED;
+		}
 	}
 
 	@Override
 	public void setYSpeed(float ySpeed) {
 		this.ySpeed = ySpeed;
+		if(Math.abs(ySpeed) > MAX_SPEED) {
+			if(ySpeed >= 0)
+				this.ySpeed = MAX_SPEED;
+			else
+				this.ySpeed = -MAX_SPEED;
+		}			
 	}
 
 	@Override

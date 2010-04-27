@@ -37,6 +37,7 @@
   <tile id="0">
    <properties>
     <property name="health" value="5"/>
+    <property name="health" value="5"/>
    </properties>
   </tile>
  </tileset>
@@ -64,9 +65,36 @@
    </properties>
   </tile>
  </tileset>
+ <tileset firstgid="9" name="laser" tilewidth="60" tileheight="14">
+  <image source="block1.png"/>
+  <tile id="0">
+   <properties>
+    <property name="health" value="1"/>
+    <property name="powerUp" value="5"/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="10" name="fireball" tilewidth="60" tileheight="14">
+  <image source="block1.png"/>
+  <tile id="0">
+   <properties>
+    <property name="health" value="1"/>
+    <property name="powerUp" value="8"/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="11" name="fireball2" tilewidth="60" tileheight="14">
+  <image source="block1.png"/>
+  <tile id="0">
+   <properties>
+    <property name="health" value="2"/>
+    <property name="powerUp" value="8"/>
+   </properties>
+  </tile>
+ </tileset>
  <layer name="Layer 1" width="13" height="32" opacity="0.9">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+3DuQ0AIADEMH7Yf2KatBSpOUsuJSJeDo1NY9GYNAaNTqPRqIx/XK88fTuABgAA
+   H4sIAAAAAAAAC2NgGH6AAwkTKw9icxLQgy5Pjj2jgHTARYZ6WLhzE1DLzYA9LSCz0eOPUHyyQzEpgA2KSQGsUEwKYIFiUgAzFJMCmKCYFMAIxaNg5AAAlRaXq4AGAAA=
   </data>
  </layer>
 </map>

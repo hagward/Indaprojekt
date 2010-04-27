@@ -1,10 +1,12 @@
 Andra|0
 Myran|0
 Anders|0
+Andra|0
 Max|1
 Mumrik|1
-Andra|0
 Mister|2
 Armstrong|6
 Mespropp|7
+|9
 Basilisk|69
+|60000

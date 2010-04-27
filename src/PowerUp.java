@@ -11,14 +11,14 @@ public abstract class PowerUp extends Rectangle implements Movable {
 			MSPEED = 4, LASER = 5, PLIFE = 6, MLIFE = 7, FIREBALL = 8;
 
 	protected int duration;
-	protected final float xSpeed;
+	protected float xSpeed;
 	protected float ySpeed;
 	protected Image image;
 
 	protected PowerUp(float x, float y, Image image) {
 		super(x, y, image.getWidth(), image.getHeight());
 		xSpeed = 0;
-		ySpeed = 0.2f;
+		ySpeed = 0.15f;
 		this.image = image;
 	}
 
@@ -94,7 +94,7 @@ public abstract class PowerUp extends Rectangle implements Movable {
 		int r = block.getPowerUp();
 		if(r < 0) {
 			Random rand = new Random();
-			if(rand.nextInt(10) == 0)
+			if(rand.nextInt(4) != 0)
 				return null;
 			r = rand.nextInt(9);
 		}			
@@ -155,11 +155,16 @@ public abstract class PowerUp extends Rectangle implements Movable {
 		public void effect(LevelHandler level) throws SlickException {
 			ArrayList<Ball> balls = level.getBalls();
 			if (balls.size() > 0) {
+				float inc = 0.1f;
 				Ball origBall = balls.get(0);
-				Ball newBall = new Ball(origBall.getX(), origBall.getY());
-				newBall.setXSpeed(-origBall.getXSpeed());
+				Ball newBall = new Ball(origBall.getX(), origBall.getY());				
+				newBall.setXSpeed(-origBall.getXSpeed());				
 				newBall.setYSpeed(origBall.getYSpeed());
+				Ball newBall2 = new Ball(origBall.getX(), origBall.getY());
+				newBall2.setXSpeed(origBall.getXSpeed());				
+				newBall2.setYSpeed(-origBall.getYSpeed());
 				balls.add(newBall);
+				balls.add(newBall2);
 			}
 		}
 	}
@@ -280,7 +285,7 @@ public abstract class PowerUp extends Rectangle implements Movable {
 		}
 
 		class Fireball extends Ball {
-			private int hits = 5;
+			private int hits = 6;
 
 			public Fireball(float centerPointX, float centerPointY)
 					throws SlickException {

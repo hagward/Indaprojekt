@@ -24,6 +24,7 @@ public class LevelHandler {
 	private Racket racket;
 	private Player player;
 	private int currentLevel;
+	private int time;
 
 	public LevelHandler(Player player) throws SlickException {
 		currentLevel = 0;
@@ -111,6 +112,7 @@ public class LevelHandler {
 
 	public void updateCurrentLevel(GameplayState gs, int delta, GameContainer gc)
 			throws SlickException {
+		player.getScore().addPoints(-1);
 		Iterator<Ball> ballIterator = balls.iterator();
 		while (ballIterator.hasNext()) {
 			Ball ball = ballIterator.next();
@@ -139,7 +141,7 @@ public class LevelHandler {
 						ball.setXSpeed(0);
 						ball.setYSpeed(0);
 					}
-				}
+				}				
 			} else if (ball.intersects(racket)) { // racket collision
 				
 				gs.getSounds().bounce();
@@ -187,10 +189,11 @@ public class LevelHandler {
 						}
 						
 						currBlock.hit();
+						gs.getSounds().bounce();
 
 						if (currBlock.getHealth() <= 0) {
 							spawnPowerUp(currBlock);
-							player.getScore().addPoints(1);
+							player.getScore().addPoints(1000);
 							blockIterator.remove();
 						}
 
@@ -229,7 +232,7 @@ public class LevelHandler {
 		Iterator<Effect> it2 = animations.iterator();
 		while (it2.hasNext()) {
 			Effect ef = it2.next();
-			if (ef.getFrame() == 5)
+			if (ef.getFrame() == ef.getNFrames())
 				it2.remove();
 		}
 
@@ -238,7 +241,7 @@ public class LevelHandler {
 				&& racket.getLaser() != null) {
 			racket.getLaser().shot();
 			gs.getSounds().laser();
-		}
+		}		
 	}
 
 	public boolean checkLevelBeaten() {
