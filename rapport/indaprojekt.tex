@@ -31,10 +31,10 @@
 Programmet skall underhålla och stjäla tid från användaren. Detta genom att låta denne styra ett racket för att upprepade gånger studsa en boll mot ett antal förstörbara block. Lär även vara gynnsamt för användarens pricksäkerhet och reflexer.
 
 \subsection{B}
-Programmet har lyckats uppfylla A, men erbjuder också så kallade ``power ups" som ändrar spelupplevelsen under spelets gång och således kan verka ännu bättre för att skärpa användarens sinnen. Det kan till exempel röra sig om att bollen åker fortare eller långsammare, dödliga dödskallar som faller från skyn, extrabollar som gör entré eller liknande.
+Programmet har lyckats uppfylla A, men erbjuder också så kallade ``power ups'' som ändrar spelupplevelsen under spelets gång och således kan verka ännu bättre för att skärpa användarens sinnen. Det kan till exempel röra sig om att bollen åker fortare eller långsammare, dödliga dödskallar som faller från skyn, extrabollar som gör entré eller liknande.
 
 \subsection{C}
-Egentligen är det inga direkta skillnader mellan programbeskrivningarna. ``Power ups":en gör bara att användaren får koncentrera sig ännu mer än beräknat för att inte gå hädan samt att spelet (förmodligen) kommer underhålla och själa ännu mer tid.
+Egentligen är det inga direkta skillnader mellan programbeskrivningarna. ``Power ups'':en gör bara att användaren får koncentrera sig ännu mer än beräknat för att inte gå hädan samt att spelet (förmodligen) kommer underhålla och själa ännu mer tid.
 
 \section{Användarbeskrivning}
 
@@ -101,7 +101,7 @@ Nedan följer de två scenarierna från A, fast som de slutligen blev.
 \end{enumerate}
 
 \subsection{C}
-För det första så är huvudmenyn utökad med ännu ett alternativ, nämligen \emph{High Score} som föga förvånande tar spelaren till listan över de högsta uppnådda poängen (detta gäller båda scenarierna). Den andra märkbara skillnaden är att \emph{Quit}-alternativet i den så kallade ``in game"-menyn nu tar spelaren tillbaka till huvudmenyn istället för att avsluta hela programmet (gäller också båda scenarierna). De två sista delarna som skiljer sig återfinns i Scenario II och är att man inte 'backar' i menyerna med \texttt{Esc}-knappen samt att alternativen som visas när man förlorat är färre.
+För det första så är huvudmenyn utökad med ännu ett alternativ, nämligen \emph{High Score} som föga förvånande tar spelaren till listan över de högsta uppnådda poängen (detta gäller båda scenarierna). Den andra märkbara skillnaden är att \emph{Quit}-alternativet i den så kallade ``in game''-menyn nu tar spelaren tillbaka till huvudmenyn istället för att avsluta hela programmet (gäller också båda scenarierna). De två sista delarna som skiljer sig återfinns i Scenario II och är att man inte 'backar' i menyerna med \texttt{Esc}-knappen samt att alternativen som visas när man förlorat är färre.
 
 \section{Testplan}
 
@@ -113,7 +113,16 @@ Själva spelmekaniken kommer givetvis testas grundligt så att inte bollen verkl
 Självklart skall spelet testas av en tredjepart.
 
 \subsection{B}
-HÄR SKALL TESTRESULTAT HAMNA SAMT EN ANALYS AV DESSA!!!!!
+Vid det första användartestet läts en kille i 20-årsåldern med god datorvana testa spelet. Han provade samtliga olika menyalternativ, och kollade även snabbt igenom hjälptexten med kontrollerna, innan han startade ett nytt spel. Väl igång fick han i uppdrag att få ett poäng högre än 100,000 och komma med på highscorelistan, någonting han inte hade några problem att klara av.
+Vi noterade dock följande saker under spelets gång:
+
+\begin{itemize}
+	\item Han kunde inte lista ut vad ``fireball''-powerup:en gjorde enbart baserat på dess ikon.
+	\item Poängen skall långsamt räkna ned hela tiden för att motivera spelaren att klara av kartorna så fort som möjligt, men ibland slutade den helt plötsligt med detta vilket förvirrade testpersonen. En bugg funnen med andra ord.
+	\item Han försökte mitt i spelet pausa spelet genom att öppna ``in game''-menyn, vilket han misslyckades med då en sådan inte var implementerad vid testtillfället. Vi noterade dock att han försökte få fram den genom att trycka på \texttt{Esc}-tangenten.
+	\item När han klarat alla banor och skulle ange sitt namn poppade inmatningsdialogen upp i \emph{bakgrunden} istället för längst fram vilket gjorde att spelet först såg ut att ha kraschat. Testpersonen insåg dock snabbt vad som hade hänt -- datorvan som han är -- och letade upp inmatningsrutan.
+	\item Medan dialogen för inmatning av namn var uppe fick han syn på att det i spelet stod att han fortfarande hade ett liv kvar vilket han snabbt påpekade. Det visade sig att texten inte uppdaterar sig sista gången vilket kan skapa förvirring.
+\end{itemize}
 
 \section{Programdesign}
 
@@ -148,7 +157,7 @@ De huvudsakliga skillnaderna i punktform:
 \begin{itemize}
 	\item Ett så kallat 'state' lades till, nämligen \texttt{HighScoreState} som presenterar poänglistan.
 	\item Klassen \texttt{LevelHandler} skapades för att ha hand om allt som rör kartorna.
-	\item Så kallade ``power ups" lades till i spelet, där varje sådan representeras av ett \texttt{PowerUp}-objekt.
+	\item Så kallade ``power ups'' lades till i spelet, där varje sådan representeras av ett \texttt{PowerUp}-objekt.
 	\item Den abstrakta klassen \texttt{GameObject} togs helt bort och ersattes med Slick-bibliotekets \texttt{Shape}-underklasser, detta för att göra kollisionsdetekteringen mer solid.
 	\item Den tänkta klassen \texttt{Highscore} förkastades och istället skapades \texttt{HighScoreHandler} samt \texttt{Score}.
 	\item Klassen \texttt{Player} skapades för att representera spelaren.
@@ -192,7 +201,7 @@ Arbetsplanen är upplagd på följande vis:
 \end{description}
 
 \subsection{B}
-Vi låg i fas med den förbestämda arbetsplanen i princip genom hela arbetet. Uppdelningen skedde spontant allt eftersom vad vi kände för att göra och vad som behövde göras. I stora drag hade Anders hand om menyerna, kollisionshanteringen och poängsystemet, medan Fredrik fixade ``power ups":en och kartorna.
+Vi låg i fas med den förbestämda arbetsplanen i princip genom hela arbetet. Uppdelningen skedde spontant allt eftersom vad vi kände för att göra och vad som behövde göras. I stora drag hade Anders hand om menyerna, kollisionshanteringen och poängsystemet, medan Fredrik fixade ``power ups'':en och kartorna.
 
 \section{Sammanfattning}
 Vi har lärt oss mycket av projektet;
