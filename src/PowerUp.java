@@ -8,7 +8,7 @@ import org.newdawn.slick.geom.Rectangle;
 /**
  * @author Anders Hagward
  * @author Fredrik Hillnertz
- * @version 2010-04-27
+ * @version 2010-05-03
  */
 public abstract class PowerUp extends Rectangle implements Movable {
 	private static final long serialVersionUID = 3337170896734989953L;
@@ -67,9 +67,9 @@ public abstract class PowerUp extends Rectangle implements Movable {
 	public void draw() {
 		image.draw(x, y);
 	}
-	
+
 	public static String powerUpPath(int i) {
-		switch(i) {
+		switch (i) {
 		case 0:
 			return "data/images/ExtendRacket.png";
 		case 1:
@@ -92,17 +92,16 @@ public abstract class PowerUp extends Rectangle implements Movable {
 		return null;
 	}
 
-	public static PowerUp randomPowerUp(Block block)
-			throws SlickException {
+	public static PowerUp randomPowerUp(Block block) throws SlickException {
 		float xPos = block.getX();
 		float yPos = block.getY();
 		int r = block.getPowerUp();
-		if(r < 0) {
+		if (r < 0) {
 			Random rand = new Random();
-			if(rand.nextInt(4) != 0)
+			if (rand.nextInt(4) != 0)
 				return null;
 			r = rand.nextInt(9);
-		}			
+		}
 		switch (r) {
 		case 0:
 			return new ExtendRacket(xPos, yPos);
@@ -127,6 +126,7 @@ public abstract class PowerUp extends Rectangle implements Movable {
 	}
 
 	public static class RetractRacket extends PowerUp {
+		private static final long serialVersionUID = -2425503375922462872L;
 
 		public RetractRacket(float xPos, float yPos) throws SlickException {
 			super(xPos, yPos, new Image("data/images/RetractRacket.png"));
@@ -139,6 +139,7 @@ public abstract class PowerUp extends Rectangle implements Movable {
 	}
 
 	public static class ExtendRacket extends PowerUp {
+		private static final long serialVersionUID = -4958823379809789717L;
 
 		public ExtendRacket(float xPos, float yPos) throws SlickException {
 			super(xPos, yPos, new Image("data/images/ExtendRacket.png"));
@@ -151,6 +152,7 @@ public abstract class PowerUp extends Rectangle implements Movable {
 	}
 
 	public static class AddBall extends PowerUp {
+		private static final long serialVersionUID = -6550943363444882422L;
 
 		public AddBall(float xPos, float yPos) throws SlickException {
 			super(xPos, yPos, new Image("data/images/multiplyballs.png"));
@@ -160,13 +162,12 @@ public abstract class PowerUp extends Rectangle implements Movable {
 		public void effect(LevelHandler level) throws SlickException {
 			ArrayList<Ball> balls = level.getBalls();
 			if (balls.size() > 0) {
-				float inc = 0.1f;
 				Ball origBall = balls.get(0);
-				Ball newBall = new Ball(origBall.getX(), origBall.getY());				
-				newBall.setXSpeed(-origBall.getXSpeed());				
+				Ball newBall = new Ball(origBall.getX(), origBall.getY());
+				newBall.setXSpeed(-origBall.getXSpeed());
 				newBall.setYSpeed(origBall.getYSpeed());
 				Ball newBall2 = new Ball(origBall.getX(), origBall.getY());
-				newBall2.setXSpeed(origBall.getXSpeed());				
+				newBall2.setXSpeed(origBall.getXSpeed());
 				newBall2.setYSpeed(-origBall.getYSpeed());
 				balls.add(newBall);
 				balls.add(newBall2);
@@ -175,6 +176,7 @@ public abstract class PowerUp extends Rectangle implements Movable {
 	}
 
 	public static class Speed extends PowerUp {
+		private static final long serialVersionUID = -8861061013150381349L;
 		private float multiplier;
 
 		public Speed(float xPos, float yPos, int dir) throws SlickException {
@@ -187,6 +189,7 @@ public abstract class PowerUp extends Rectangle implements Movable {
 			}
 		}
 
+		@Override
 		public void effect(LevelHandler level) {
 			ArrayList<Ball> balls = level.getBalls();
 			for (Ball ball : balls) {
@@ -201,6 +204,7 @@ public abstract class PowerUp extends Rectangle implements Movable {
 	}
 
 	public static class PewPewLasers extends PowerUp {
+		private static final long serialVersionUID = -1339389505069960388L;
 		private float shots = 20;
 		private Racket racket;
 		private ArrayList<Ball> balls;
@@ -209,6 +213,7 @@ public abstract class PowerUp extends Rectangle implements Movable {
 			super(xPos, yPos, new Image("data/images/lasers.png"));
 		}
 
+		@Override
 		public void effect(LevelHandler level) throws SlickException {
 			balls = level.getBalls();
 			racket = level.getRacket();
@@ -223,6 +228,8 @@ public abstract class PowerUp extends Rectangle implements Movable {
 		}
 
 		class LaserShot extends Ball {
+			private static final long serialVersionUID = 8834007952965136151L;
+
 			public LaserShot() throws SlickException {
 				super(racket.getCenterX(), racket.getY() - 20);
 				this.image = new Image("data/images/lasershot.png");
@@ -231,6 +238,7 @@ public abstract class PowerUp extends Rectangle implements Movable {
 				balls.add(this);
 			}
 
+			@Override
 			public void setYSpeed(float ySpeed) {
 				if (ySpeed == -this.getYSpeed())
 					this.ySpeed = 0;
@@ -241,6 +249,7 @@ public abstract class PowerUp extends Rectangle implements Movable {
 	}
 
 	public static class Life extends PowerUp {
+		private static final long serialVersionUID = -804012507251184235L;
 		private int plusMinus;
 
 		public Life(float xPos, float yPos, int plusMinus)
@@ -251,6 +260,7 @@ public abstract class PowerUp extends Rectangle implements Movable {
 				image = new Image("data/images/life-.png");
 		}
 
+		@Override
 		public void effect(LevelHandler level) throws SlickException {
 			if (plusMinus < 0)
 				level.getPlayer().decreaseLives();
@@ -260,6 +270,7 @@ public abstract class PowerUp extends Rectangle implements Movable {
 	}
 
 	public static class Fireballs extends PowerUp {
+		private static final long serialVersionUID = -6934067609858958243L;
 		private ArrayList<Ball> balls;
 		private ArrayList<Ball> extraBalls;
 		private ArrayList<Effect> animations;
@@ -268,6 +279,7 @@ public abstract class PowerUp extends Rectangle implements Movable {
 			super(xPos, yPos, new Image("data/images/fireballs.png"));
 		}
 
+		@Override
 		public void effect(LevelHandler level) throws SlickException {
 			this.balls = level.getBalls();
 			this.extraBalls = level.getExtraBalls();
@@ -290,6 +302,7 @@ public abstract class PowerUp extends Rectangle implements Movable {
 		}
 
 		class Fireball extends Ball {
+			private static final long serialVersionUID = -5400086564573984130L;
 			private int hits = 6;
 
 			public Fireball(float centerPointX, float centerPointY)
@@ -298,6 +311,7 @@ public abstract class PowerUp extends Rectangle implements Movable {
 				this.image = new Image("data/images/fireball.png");
 			}
 
+			@Override
 			public void setXSpeed(float xSpeed) {
 				if (xSpeed == -this.xSpeed) {
 					hits--;
@@ -314,6 +328,7 @@ public abstract class PowerUp extends Rectangle implements Movable {
 					removeFireball();
 			}
 
+			@Override
 			public void setYSpeed(float ySpeed) {
 				if (ySpeed == -this.ySpeed) {
 					hits--;
@@ -345,23 +360,29 @@ public abstract class PowerUp extends Rectangle implements Movable {
 				ArrayList<Ball> balls = new ArrayList<Ball>();
 
 				class InvisibleBall extends Ball {
+					private static final long serialVersionUID = -1950391023146557602L;
+
 					public InvisibleBall(float x, float y)
 							throws SlickException {
 						super(x, y);
 						this.image = new Image("data/images/invisibleball.png");
 					}
 
+					@Override
 					public void setXSpeed(float x) {
 						this.xSpeed = 0;
 					}
 
+					@Override
 					public void setYSpeed(float y) {
 						this.ySpeed = 0;
 					}
 
+					@Override
 					public void setX(float x) {
 					}
 
+					@Override
 					public void setY(float y) {
 					}
 

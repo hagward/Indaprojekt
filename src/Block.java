@@ -5,7 +5,7 @@ import org.newdawn.slick.geom.Rectangle;
 /**
  * @author Anders Hagward
  * @author Fredrik Hillnertz
- * @version 2010-04-27
+ * @version 2010-05-03
  */
 public class Block extends Rectangle {
 	private static final long serialVersionUID = 7260235503507495737L;

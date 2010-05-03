@@ -1,6 +1,7 @@
 /**
+ * @author Anders Hagward
  * @author Fredrik Hillnertz
- * @version 2010-04-07
+ * @version 2010-05-03
  */
 public interface Movable {
 	void move(int delta);

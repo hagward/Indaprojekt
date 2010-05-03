@@ -15,7 +15,7 @@ import org.newdawn.slick.state.StateBasedGame;
  * 
  * @author Anders Hagward
  * @author Fredrik Hillnertz
- * @version 2010-04-27
+ * @version 2010-05-03
  */
 public class GameplayState extends BasicGameState {
 	private int id = -1;

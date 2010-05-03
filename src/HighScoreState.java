@@ -12,7 +12,7 @@ import org.newdawn.slick.state.StateBasedGame;
 /**
  * @author Anders Hagward
  * @author Fredrik Hillnertz
- * @version 2010-04-27
+ * @version 2010-05-03
  */
 public class HighScoreState extends BasicGameState {
 	private int id = -1;
@@ -21,12 +21,12 @@ public class HighScoreState extends BasicGameState {
 	private StateBasedGame game;
 	private HighScoreHandler highScores;
 	private MouseOverArea backItem;
-	
+
 	public HighScoreState(int stateID, HighScoreHandler highScoreHandler) {
 		id = stateID;
 		highScores = highScoreHandler;
 	}
-	
+
 	@Override
 	public int getID() {
 		return id;
@@ -38,13 +38,12 @@ public class HighScoreState extends BasicGameState {
 		container = gc;
 		game = sbg;
 		background = new Image("data/images/highscore_bg.png");
-		
+
 		MenuListener menuListener = new MenuListener();
-		backItem = new MouseOverArea(
-				gc, new Image("data/images/menuitem-back.png"),
-				600, 400, menuListener);
-		backItem.setMouseOverImage(
-				new Image("data/images/menuitem-hover-back.png"));
+		backItem = new MouseOverArea(gc, new Image(
+				"data/images/menuitem-back.png"), 600, 400, menuListener);
+		backItem.setMouseOverImage(new Image(
+				"data/images/menuitem-hover-back.png"));
 	}
 
 	@Override
@@ -60,9 +59,9 @@ public class HighScoreState extends BasicGameState {
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
 			throws SlickException {
 		// TODO Auto-generated method stub
-		
+
 	}
-	
+
 	private class MenuListener implements ComponentListener {
 		@Override
 		public void componentActivated(AbstractComponent ac) {

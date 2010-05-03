@@ -10,7 +10,7 @@ import org.newdawn.slick.tiled.TiledMap;
 /**
  * @author Anders Hagward
  * @author Fredrik Hillnertz
- * @version 2010-04-27
+ * @version 2010-05-03
  */
 public class LevelHandler {
 	private TiledMap tiledMap;
@@ -22,7 +22,6 @@ public class LevelHandler {
 	private Racket racket;
 	private Player player;
 	private int currentLevel;
-	private int time;
 
 	public LevelHandler() throws SlickException {
 		currentLevel = 0;
@@ -52,9 +51,9 @@ public class LevelHandler {
 		animations = new ArrayList<Effect>();
 		racket = new Racket(400, 550);
 		balls = new ArrayList<Ball>();
-		balls.add(new Ball(350, 400));		
+		balls.add(new Ball(350, 400));
 	}
-	
+
 	public void reset() {
 		try {
 			player = new Player(3);
@@ -138,9 +137,9 @@ public class LevelHandler {
 						ball.setXSpeed(0);
 						ball.setYSpeed(0);
 					}
-				}				
+				}
 			} else if (ball.intersects(racket)) { // racket collision
-				
+
 				gs.getSounds().bounce();
 				if (ball.getY() < racket.getY()) {
 					float newXSpeed = ball.getCenterX() - racket.getCenterX();
@@ -168,23 +167,31 @@ public class LevelHandler {
 						float cX = ball.getCenterX();
 						float cY = ball.getCenterY();
 						if (cX < currBlock.getX()
-								&& ball.insideYArea(currBlock.getY()-20, currBlock.getMaxY()+20)) {
+								&& ball.insideYArea(currBlock.getY() - 20,
+										currBlock.getMaxY() + 20)) {
 							ball.setXSpeed(-ball.getXSpeed());
-							ball.setX(currBlock.getX() - (2 * ball.getRadius()));
+							ball
+									.setX(currBlock.getX()
+											- (2 * ball.getRadius()));
 						} else if (cX > currBlock.getMaxX()
-								&& ball.insideYArea(currBlock.getY()-20, currBlock.getMaxY()+20)) {
+								&& ball.insideYArea(currBlock.getY() - 20,
+										currBlock.getMaxY() + 20)) {
 							ball.setXSpeed(-ball.getXSpeed());
 							ball.setX(currBlock.getMaxX());
 						} else if (cY < currBlock.getY()
-								&& ball.insideXArea(currBlock.getX()-20, currBlock.getMaxX()+20)) {
+								&& ball.insideXArea(currBlock.getX() - 20,
+										currBlock.getMaxX() + 20)) {
 							ball.setYSpeed(-ball.getYSpeed());
-							ball.setY(currBlock.getY() - (2 * ball.getRadius()));
+							ball
+									.setY(currBlock.getY()
+											- (2 * ball.getRadius()));
 						} else if (cY > currBlock.getMaxY()
-								&& ball.insideXArea(currBlock.getX()-20, currBlock.getMaxX()+20)) {
+								&& ball.insideXArea(currBlock.getX() - 20,
+										currBlock.getMaxX() + 20)) {
 							ball.setYSpeed(-ball.getYSpeed());
 							ball.setY(currBlock.getMaxY());
 						}
-						
+
 						currBlock.hit();
 						gs.getSounds().bounce();
 
@@ -202,18 +209,18 @@ public class LevelHandler {
 			// removes stationary balls (and laser shots after hits)
 			if (ball.getXSpeed() == 0 && ball.getYSpeed() == 0)
 				ballIterator.remove();
-		}		
-		
+		}
+
 		balls.addAll(extraBalls);
-		extraBalls.clear();	
-		
-		if (balls.size() <= 0) {		
+		extraBalls.clear();
+
+		if (balls.size() <= 0) {
 			gs.getSounds().death();
-			player.decreaseLives();			
-			resetLevel();			
+			player.decreaseLives();
+			resetLevel();
 			gs.setState(GameplayState.State.START);
-		}		
-		
+		}
+
 		Iterator<PowerUp> it = powerUps.iterator();
 		while (it.hasNext()) {
 			PowerUp pu = it.next();
@@ -238,7 +245,7 @@ public class LevelHandler {
 				&& racket.getLaser() != null) {
 			racket.getLaser().shot();
 			gs.getSounds().laser();
-		}		
+		}
 	}
 
 	public boolean checkLevelBeaten() {

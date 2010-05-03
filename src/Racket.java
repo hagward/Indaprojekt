@@ -5,7 +5,7 @@ import org.newdawn.slick.geom.Rectangle;
 /**
  * @author Anders Hagward
  * @author Fredrik Hillnertz
- * @version 2010-04-27
+ * @version 2010-05-03
  */
 public class Racket extends Rectangle implements Movable {
 	private static final long serialVersionUID = 1467497140421312672L;
@@ -22,7 +22,7 @@ public class Racket extends Rectangle implements Movable {
 		super(x, y, 80, 16);
 		xSpeed = 0;
 		ySpeed = 0;
-		
+
 		try {
 			image = new Image(DEFAULT_IMG_PATH);
 		} catch (SlickException e) {
@@ -30,7 +30,7 @@ public class Racket extends Rectangle implements Movable {
 					+ DEFAULT_IMG_PATH + "'");
 		}
 	}
-	
+
 	@Override
 	public float getCenterX() {
 		return x + (width / 2);
@@ -83,14 +83,14 @@ public class Racket extends Rectangle implements Movable {
 
 	public void increaseSize() throws SlickException {
 		width += 40;
-		if(width > MAX_SIZE)
+		if (width > MAX_SIZE)
 			width = MAX_SIZE;
 		image = image.getScaledCopy((int) width, (int) height);
 	}
 
 	public void decreaseSize() throws SlickException {
 		width -= 40;
-		if(width < MIN_SIZE)
+		if (width < MIN_SIZE)
 			width = MIN_SIZE;
 		image = image.getScaledCopy((int) width, (int) height);
 	}
@@ -103,15 +103,15 @@ public class Racket extends Rectangle implements Movable {
 
 	public void removeLasers() throws SlickException {
 		lasers = null;
-		image = new Image("data/images/racket.png").getScaledCopy(
-				(int) width, (int) height);
+		image = new Image("data/images/racket.png").getScaledCopy((int) width,
+				(int) height);
 	}
 
 	public PowerUp.PewPewLasers getLaser() {
 		return lasers;
 	}
-	
+
 	public void draw() {
 		image.draw(x, y);
-	}	
+	}
 }

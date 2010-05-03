@@ -5,7 +5,7 @@ import org.newdawn.slick.geom.Circle;
 /**
  * @author Anders Hagward
  * @author Fredrik Hillnertz
- * @version 2010-04-27
+ * @version 2010-05-03
  */
 public class Ball extends Circle implements Movable {
 	private static final long serialVersionUID = 7889780389881617843L;
@@ -21,7 +21,7 @@ public class Ball extends Circle implements Movable {
 		super(centerPointX, centerPointY, 8);
 		xSpeed = 0;
 		ySpeed = DEFAULT_SPEED;
-		
+
 		try {
 			image = new Image(DEFAULT_IMG_PATH);
 		} catch (SlickException e) {
@@ -29,12 +29,12 @@ public class Ball extends Circle implements Movable {
 					+ DEFAULT_IMG_PATH + "'");
 		}
 	}
-	
+
 	@Override
 	public float getCenterX() {
 		return x + radius;
 	}
-	
+
 	@Override
 	public void setCenterX(float x) {
 		this.x = x - radius;
@@ -69,8 +69,8 @@ public class Ball extends Circle implements Movable {
 	@Override
 	public void setXSpeed(float xSpeed) {
 		this.xSpeed = xSpeed;
-		if(Math.abs(xSpeed) > MAX_SPEED) {
-			if(xSpeed >= 0)
+		if (Math.abs(xSpeed) > MAX_SPEED) {
+			if (xSpeed >= 0)
 				this.xSpeed = MAX_SPEED;
 			else
 				this.xSpeed = -MAX_SPEED;
@@ -80,12 +80,12 @@ public class Ball extends Circle implements Movable {
 	@Override
 	public void setYSpeed(float ySpeed) {
 		this.ySpeed = ySpeed;
-		if(Math.abs(ySpeed) > MAX_SPEED) {
-			if(ySpeed >= 0)
+		if (Math.abs(ySpeed) > MAX_SPEED) {
+			if (ySpeed >= 0)
 				this.ySpeed = MAX_SPEED;
 			else
 				this.ySpeed = -MAX_SPEED;
-		}			
+		}
 	}
 
 	@Override
@@ -97,11 +97,11 @@ public class Ball extends Circle implements Movable {
 	public void incrementYSpeed(float increment) {
 		ySpeed += increment;
 	}
-	
+
 	public boolean insideXArea(float x1, float x2) {
 		return (x > x1 && x < x2);
 	}
-	
+
 	public boolean insideYArea(float y1, float y2) {
 		return (y > y1 && y < y2);
 	}
