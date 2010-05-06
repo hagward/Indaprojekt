@@ -9,7 +9,7 @@ import org.newdawn.slick.state.StateBasedGame;
  * 
  * @author Anders Hagward
  * @author Fredrik Hillnertz
- * @version 2010-05-03
+ * @version 2010-05-06
  */
 public class BreakoutGame extends StateBasedGame {
 	public static final int MAINMENUSTATE = 0;

@@ -10,7 +10,7 @@ import org.newdawn.slick.tiled.TiledMap;
 /**
  * @author Anders Hagward
  * @author Fredrik Hillnertz
- * @version 2010-05-03
+ * @version 2010-05-06
  */
 public class LevelHandler {
 	private TiledMap tiledMap;

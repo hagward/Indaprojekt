@@ -15,7 +15,7 @@ import org.newdawn.slick.state.StateBasedGame;
  * 
  * @author Anders Hagward
  * @author Fredrik Hillnertz
- * @version 2010-05-03
+ * @version 2010-05-06
  */
 public class GameplayState extends BasicGameState {
 	private int id = -1;
@@ -55,7 +55,7 @@ public class GameplayState extends BasicGameState {
 	@Override
 	public void init(GameContainer gc, StateBasedGame sbg)
 			throws SlickException {
-		hud = new Image("data/images/hud.png");
+		hud = ResourceLoader.getInstance().getImage("hud.png");
 		currentState = State.START;
 	}
 

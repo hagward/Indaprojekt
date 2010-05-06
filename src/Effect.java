@@ -1,11 +1,10 @@
 import org.newdawn.slick.Animation;
-import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
 /**
  * @author Anders Hagward
  * @author Fredrik Hillnertz
- * @version 2010-05-03
+ * @version 2010-05-06
  */
 public abstract class Effect extends Animation {
 	protected float xPos;
@@ -28,12 +27,12 @@ public abstract class Effect extends Animation {
 	}
 
 	public static class FireSplash extends Effect {
-
 		protected FireSplash(float xPos, float yPos) throws SlickException {
 			super(xPos, yPos);
 			for (int i = 1; i < 7; i++)
 				this.addFrame(
-						new Image("data/effects/firesplash" + i + ".png"), 50);
+						ResourceLoader.getInstance().getImage(
+								"firesplash" + i + ".png"), 50);
 			nFrames = getFrameCount() - 1;
 		}
 	}

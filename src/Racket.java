@@ -5,30 +5,25 @@ import org.newdawn.slick.geom.Rectangle;
 /**
  * @author Anders Hagward
  * @author Fredrik Hillnertz
- * @version 2010-05-03
+ * @version 2010-05-06
  */
 public class Racket extends Rectangle implements Movable {
 	private static final long serialVersionUID = 1467497140421312672L;
-	private static final String DEFAULT_IMG_PATH = "data/images/racket.png";
 	private static final int MAX_SIZE = 600;
 	private static final int MIN_SIZE = 20;
 
 	private float xSpeed;
 	private final float ySpeed;
+	private ResourceLoader resources;
 	private Image image;
 	private PowerUp.PewPewLasers lasers;
 
 	public Racket(float x, float y) {
 		super(x, y, 80, 16);
+		resources = ResourceLoader.getInstance();
 		xSpeed = 0;
 		ySpeed = 0;
-
-		try {
-			image = new Image(DEFAULT_IMG_PATH);
-		} catch (SlickException e) {
-			System.err.println("Error: couldn't load image '"
-					+ DEFAULT_IMG_PATH + "'");
-		}
+		image = resources.getImage("racket.png");
 	}
 
 	@Override
@@ -97,13 +92,13 @@ public class Racket extends Rectangle implements Movable {
 
 	public void addLasers(PowerUp.PewPewLasers lasers) throws SlickException {
 		this.lasers = lasers;
-		image = new Image("data/images/laserracket.png").getScaledCopy(
+		image = resources.getImage("laserracket.png").getScaledCopy(
 				(int) width, (int) height);
 	}
 
 	public void removeLasers() throws SlickException {
 		lasers = null;
-		image = new Image("data/images/racket.png").getScaledCopy((int) width,
+		image = resources.getImage("racket.png").getScaledCopy((int) width,
 				(int) height);
 	}
 

@@ -1,7 +1,7 @@
 /**
  * @author Anders Hagward
  * @author Fredrik Hillnertz
- * @version 2010-05-03
+ * @version 2010-05-06
  */
 public class Score implements Comparable<Score> {
 	private String author;

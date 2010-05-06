@@ -12,19 +12,21 @@ import org.newdawn.slick.state.StateBasedGame;
 /**
  * @author Anders Hagward
  * @author Fredrik Hillnertz
- * @version 2010-05-03
+ * @version 2010-05-06
  */
 public class HighScoreState extends BasicGameState {
 	private int id = -1;
 	private Image background;
 	private GameContainer container;
 	private StateBasedGame game;
+	private ResourceLoader resources;
 	private HighScoreHandler highScores;
 	private MouseOverArea backItem;
 
 	public HighScoreState(int stateID, HighScoreHandler highScoreHandler) {
 		id = stateID;
 		highScores = highScoreHandler;
+		resources = ResourceLoader.getInstance();
 	}
 
 	@Override
@@ -37,13 +39,14 @@ public class HighScoreState extends BasicGameState {
 			throws SlickException {
 		container = gc;
 		game = sbg;
-		background = new Image("data/images/highscore_bg.png");
+		background = resources.getImage("highscore_bg.png");
 
 		MenuListener menuListener = new MenuListener();
-		backItem = new MouseOverArea(gc, new Image(
-				"data/images/menuitem-back.png"), 600, 400, menuListener);
-		backItem.setMouseOverImage(new Image(
-				"data/images/menuitem-hover-back.png"));
+		backItem = new MouseOverArea(gc,
+				resources.getImage("menuitem-back.png"),
+				600, 400, menuListener);
+		backItem.setMouseOverImage(
+				resources.getImage("menuitem-hover-back.png"));
 	}
 
 	@Override

@@ -1,15 +1,13 @@
 import org.newdawn.slick.Image;
-import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Circle;
 
 /**
  * @author Anders Hagward
  * @author Fredrik Hillnertz
- * @version 2010-05-03
+ * @version 2010-05-06
  */
 public class Ball extends Circle implements Movable {
 	private static final long serialVersionUID = 7889780389881617843L;
-	private static final String DEFAULT_IMG_PATH = "data/images/ball.png";
 	private static final float DEFAULT_SPEED = -0.2f;
 	private static final float MAX_SPEED = 1f;
 
@@ -21,13 +19,7 @@ public class Ball extends Circle implements Movable {
 		super(centerPointX, centerPointY, 8);
 		xSpeed = 0;
 		ySpeed = DEFAULT_SPEED;
-
-		try {
-			image = new Image(DEFAULT_IMG_PATH);
-		} catch (SlickException e) {
-			System.err.println("Error: couldn't load image '"
-					+ DEFAULT_IMG_PATH + "'");
-		}
+		image = ResourceLoader.getInstance().getImage("ball.png");
 	}
 
 	@Override

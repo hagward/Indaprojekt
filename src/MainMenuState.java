@@ -11,7 +11,7 @@ import org.newdawn.slick.state.StateBasedGame;
 /**
  * @author Anders Hagward
  * @author Fredrik Hillnertz
- * @version 2010-05-03
+ * @version 2010-05-06
  */
 public class MainMenuState extends BasicGameState {
 	private int id = -1;
@@ -26,6 +26,7 @@ public class MainMenuState extends BasicGameState {
 	private MouseOverArea quitItem;
 	private MouseOverArea backItem;
 	private MouseOverArea soundsOnOffItem;
+	private ResourceLoader resources;
 	private LevelHandler levels;
 	private SoundPlayer sounds;
 	private SubMenu currentMenu;
@@ -42,19 +43,15 @@ public class MainMenuState extends BasicGameState {
 	}
 
 	protected void setSubMenu(SubMenu menu) {
-		try {
-			switch (menu) {
-			case HELP:
-				background = new Image("data/images/mainmenu_help.png");
-				break;
-			default:
-				background = new Image("data/images/mainmenu.png");
-				break;
-			}
-			currentMenu = menu;
-		} catch (SlickException e) {
-			System.err.println("Failed to load image: " + e.getMessage());
+		switch (menu) {
+		case HELP:
+			background = resources.getImage("mainmenu_help.png");
+			break;
+		default:
+			background = resources.getImage("mainmenu.png");
+			break;
 		}
+		currentMenu = menu;
 	}
 
 	@Override
@@ -67,6 +64,10 @@ public class MainMenuState extends BasicGameState {
 			throws SlickException {
 		game = sbg;
 		container = gc;
+		
+		resources = ResourceLoader.getInstance();
+		resources.loadImages("data/images");
+		
 		setSubMenu(SubMenu.DEFAULT);
 		setupMenu();
 	}
@@ -101,49 +102,56 @@ public class MainMenuState extends BasicGameState {
 		int x = 600;
 		int y = 400;
 
-		newGameItem = new MouseOverArea(container, new Image(
-				"data/images/menuitem-new_game.png"), x, y, menuListener);
-		newGameItem.setMouseOverImage(new Image(
-				"data/images/menuitem-hover-new_game.png"));
-		highScoreItem = new MouseOverArea(container, new Image(
-				"data/images/menuitem-highscore.png"), x, y + 35, menuListener);
-		highScoreItem.setMouseOverImage(new Image(
-				"data/images/menuitem-hover-highscore.png"));
-		settingsItem = new MouseOverArea(container, new Image(
-				"data/images/menuitem-settings.png"), x, y + 70, menuListener);
-		settingsItem.setMouseOverImage(new Image(
-				"data/images/menuitem-hover-settings.png"));
-		helpItem = new MouseOverArea(container, new Image(
-				"data/images/menuitem-help.png"), x, y + 105, menuListener);
-		helpItem.setMouseOverImage(new Image(
-				"data/images/menuitem-hover-help.png"));
-		quitItem = new MouseOverArea(container, new Image(
-				"data/images/menuitem-quit.png"), x, y + 140, menuListener);
-		quitItem.setMouseOverImage(new Image(
-				"data/images/menuitem-hover-quit.png"));
-		soundsOnOffItem = new MouseOverArea(container, new Image(
-				"data/images/menuitem-sounds_on.png"), x, y, menuListener);
-		soundsOnOffItem.setMouseOverImage(new Image(
-				"data/images/menuitem-hover-sounds_on.png"));
-		backItem = new MouseOverArea(container, new Image(
-				"data/images/menuitem-back.png"), x, y + 35, menuListener);
-		backItem.setMouseOverImage(new Image(
-				"data/images/menuitem-hover-back.png"));
+		newGameItem = new MouseOverArea(container,
+				resources.getImage("menuitem-new_game.png"),
+				x, y, menuListener);
+		newGameItem.setMouseOverImage(
+				resources.getImage("menuitem-hover-new_game.png"));
+		highScoreItem = new MouseOverArea(container,
+				resources.getImage("menuitem-highscore.png"),
+				x, y + 35, menuListener);
+		highScoreItem.setMouseOverImage(
+				resources.getImage("menuitem-hover-highscore.png"));
+		settingsItem = new MouseOverArea(container,
+				resources.getImage("menuitem-settings.png"),
+				x, y + 70, menuListener);
+		settingsItem.setMouseOverImage(
+				resources.getImage("menuitem-hover-settings.png"));
+		helpItem = new MouseOverArea(container,
+				resources.getImage("menuitem-help.png"),
+				x, y + 105, menuListener);
+		helpItem.setMouseOverImage(
+				resources.getImage("menuitem-hover-help.png"));
+		quitItem = new MouseOverArea(container,
+				resources.getImage("menuitem-quit.png"),
+				x, y + 140, menuListener);
+		quitItem.setMouseOverImage(
+				resources.getImage("menuitem-hover-quit.png"));
+		soundsOnOffItem = new MouseOverArea(container,
+				resources.getImage("menuitem-sounds_on.png"),
+				x, y, menuListener);
+		soundsOnOffItem.setMouseOverImage(
+				resources.getImage("menuitem-hover-sounds_on.png"));
+		backItem = new MouseOverArea(container,
+				resources.getImage("menuitem-back.png"),
+				x, y + 35, menuListener);
+		backItem.setMouseOverImage(
+				resources.getImage("menuitem-hover-back.png"));
 	}
 
 	protected void toggleSounds() throws SlickException {
 		if (sounds.isEnabled()) {
 			sounds.setEnabled(false);
-			soundsOnOffItem.setNormalImage(new Image(
-					"data/images/menuitem-sounds_off.png"));
-			soundsOnOffItem.setMouseOverImage(new Image(
-					"data/images/menuitem-hover-sounds_off.png"));
+			soundsOnOffItem.setNormalImage(
+					resources.getImage("menuitem-sounds_off.png"));
+			soundsOnOffItem.setMouseOverImage(
+					resources.getImage("menuitem-hover-sounds_off.png"));
 		} else {
 			sounds.setEnabled(true);
-			soundsOnOffItem.setNormalImage(new Image(
-					"data/images/menuitem-sounds_on.png"));
-			soundsOnOffItem.setMouseOverImage(new Image(
-					"data/images/menuitem-hover-sounds_on.png"));
+			soundsOnOffItem.setNormalImage(
+					resources.getImage("menuitem-sounds_on.png"));
+			soundsOnOffItem.setMouseOverImage(
+					resources.getImage("menuitem-hover-sounds_on.png"));
 		}
 	}
 
